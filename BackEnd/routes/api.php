@@ -3,6 +3,7 @@ use App\Http\Controllers\ControladorUsuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Middleware\VerificarToken;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("/Registro", [ControladorUsuario::class,"Registro"]);
 Route::post("/Login", [ControladorUsuario::class,"Login"]);
-Route::get("/",[ControladorUsuario::class,"obtenerUsuarios"]);
+Route::get("/",[ControladorUsuario::class,"obtenerUsuarios"])->middleware(VerificarToken::class);
 
 

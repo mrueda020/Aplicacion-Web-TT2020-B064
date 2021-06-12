@@ -38,7 +38,7 @@ class ControladorUsuario extends Controller
            $customClaims = JWTFactory::customClaims($data);
            $payload = JWTFactory::make($data);
            $token = JWTAuth::encode($payload);
-           $response = ['token' => $token->get()];
+           $response = ['accessToken' => $token->get()];
            return response()->json($response,200);
        }
        $response = ['error' => "No existe el usuario"];
@@ -93,7 +93,6 @@ class ControladorUsuario extends Controller
     public function obtenerUsuarios()
     {   
         $usuarios = DB::table("usuario")->get();
-        
         return response()->json($usuarios,200);  
     }
 }
