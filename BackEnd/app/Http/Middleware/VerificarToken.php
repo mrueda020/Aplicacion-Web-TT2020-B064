@@ -38,7 +38,7 @@ class VerificarToken
         } 
         $sub = JWTAuth::setToken($token)->getPayload()->get('sub');
         $rol = $sub->rol;
-        if(Hash::check('evaluador', $rol))
+        if($rol=='evaluador')
         {
             return $next($request);
         }
