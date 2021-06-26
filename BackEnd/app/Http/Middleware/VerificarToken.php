@@ -30,19 +30,27 @@ class VerificarToken
             $response = ['error'=>'No hay token de acceso en la peticion'];
             return response()->json($response,400);
         }
-        $exp = JWTAuth::setToken($token)->getPayload()->get('exp');
-        if(Carbon::now()->timestamp > $exp)
-        {
+        try {
+            //code...
+            $exp = JWTAuth::setToken($token)->getPayload()->get('exp');
+            if(Carbon::now()->timestamp > $exp)
+            {
+                $response = ['error'=>'El token ha caducado'];
+                return response()->json($response,400);
+            } 
+            $sub = JWTAuth::setToken($token)->getPayload()->get('sub');
+            $rol = $sub->rol;
+            if($rol=='evaluador')
+            {
+                return $next($request);
+            }
+            $response = ['error'=>'No tienes el permiso para acceder'];
+            return response()->json($response,400);
+        } catch (\Throwable $th) {
+            //throw $th;
+            
             $response = ['error'=>'El token ha caducado'];
             return response()->json($response,400);
-        } 
-        $sub = JWTAuth::setToken($token)->getPayload()->get('sub');
-        $rol = $sub->rol;
-        if($rol=='evaluador')
-        {
-            return $next($request);
         }
-        $response = ['error'=>'No tienes el permiso para acceder'];
-        return response()->json($response,400);
     }
 }
