@@ -10,30 +10,31 @@ use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 
-
-class ControladorUsuario extends Controller
+class ControladorEvaluado extends Controller
 {
+    //
     public function Login(Request $request)
     {
        $email = $request["email"];
-       $contraseña = $request["contraseña"];
+       $contraseña = $request["password"];
        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
        {
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('usuario')->where('email', $email)->first();
+       $usuario = DB::table('evaluado')->where('email', $email)->first();
        
-       if($usuario && $usuario->email == $email)
-       {
-           if(!Hash::check($contraseña, $usuario->contraseña))
-           {
+       if($usuario && $usuario->Email == $email)
+       {    
+           if(!Hash::check($contraseña, $usuario->Password))
+           {    
                $response = ['error' => "Las contraseñas no coinciden"];
                return response()->json($response,400);
            }
            $data = ['sub'=>[
-               'email' => $usuario->email,
-               'rol' => $usuario->rol
+               'email' => $usuario->Email,
+               'id' => $usuario->idEvaluado,
+               'rol' => 'evaluado'
            ]];
            $customClaims = JWTFactory::customClaims($data);
            $payload = JWTFactory::make($data);
@@ -48,18 +49,21 @@ class ControladorUsuario extends Controller
 
     public function Registro(Request $request)
     {
+       //Todo verificar que el email no exista en admin , evaluador 
        $email = $request["email"];
-       $contraseña = $request["contraseña"];
-       $confirmarContraseña = $request["confirmarContraseña"];
-       $rol = $request["rol"];
+       $contraseña = $request["password"];
+       $confirmarContraseña = $request["confirmarPassword"];
+       $nombre = $request["nombre"];
+       $apPaterno = $request["apPaterno"];
+       $apMaterno = $request["apMaterno"];
       
        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
        {
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('usuario')->where('email', $email)->first();
-       if($usuario && $usuario->email)
+       $usuario = DB::table('evaluado')->where('Email', $email)->first();
+       if($usuario && $usuario->Email)
        {
            $response = ['error' => "Ya existe el email en el sistema"];
            return response()->json($response,400);
@@ -75,10 +79,10 @@ class ControladorUsuario extends Controller
        {
            return response()->json(['error'=>'La contraseña debe ser de 8 caracteres minimo'],400);
        }
-     
+       print($contraseña);
        $contraseña = Hash::make($contraseña);
-       $rol = Hash::make($rol);
-       $response = DB::insert("insert into usuario (email,contraseña,rol) values (?,?,?)",[$email,$contraseña,$rol]);
+       print($contraseña);
+       $response = DB::insert("insert into evaluado (Nombre,ApPaterno,ApMaterno,Email,Password) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
        if($response == 0)
        {    
            $response = ['error' => "Error en el servidor"];
@@ -95,4 +99,5 @@ class ControladorUsuario extends Controller
         $usuarios = DB::table("usuario")->get();
         return response()->json($usuarios,200);  
     }
+
 }

@@ -1,5 +1,7 @@
 <?php
-use App\Http\Controllers\ControladorUsuario;
+use App\Http\Controllers\ControladorEvaluado;
+use App\Http\Controllers\ControladorEvaluador;
+use App\Http\Controllers\ControladorAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +17,15 @@ use App\Http\Middleware\VerificarToken;
 |
 */
 
-Route::post("/Registro", [ControladorUsuario::class,"Registro"]);
-Route::post("/Login", [ControladorUsuario::class,"Login"]);
-Route::get("/",[ControladorUsuario::class,"obtenerUsuarios"])->middleware(VerificarToken::class);
+//Rutas para Evaluado
+Route::post("/Registro", [ControladorEvaluado::class,"Registro"]);
+Route::get("/Login", [ControladorEvaluado::class,"Login"]);
 
 
+//Rutas para Evaluador
+Route::get("/login-evaluador", [ControladorEvaluador::class,"Login"]);
+Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);;
+
+//Rutas para Admin
+Route::post("/registro-administrador",[ControladorAdmin::class,"Registro"]);
+Route::post("/registrar-evaluador",[ControladorAdmin::class,"registrarEvaluador"]);
