@@ -2,14 +2,15 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Navbar from "../components/User/Navbar/Navbar";
 import Sidebar from "../components/User/Sidebar/Sidebar";
-import SignIn from "../pages/SignIn/SignIn";
+import SignIn from "../pages/User/SignIn/SignIn";
 import "./LayoutUser.scss";
 import { Layout } from "antd";
 function LayoutUser(props) {
   const { routes } = props;
   const { Content } = Layout;
   const user = null;
-  if (user) {
+  console.log(props);
+  if (!user) {
     return (
       <>
         <Route path="/user/login" component={SignIn} />

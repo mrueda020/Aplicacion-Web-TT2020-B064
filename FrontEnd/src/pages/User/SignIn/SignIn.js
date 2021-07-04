@@ -1,10 +1,11 @@
 import React from "react";
 import { Layout, Tabs } from "antd";
-import Logo from "../../assets/png/logolinkex2.png";
-import LoginForm from "../../components/LoginForm/LoginForm";
-import RegisterForm from "../../components/RegisterForm/RegisterForm";
+import Logo from "../../../assets/png/logolinkex2.png";
+import LoginForm from "../../../components/LoginForm/LoginForm";
+import RegisterForm from "../../../components/RegisterForm/RegisterForm";
 import "./SignIn.scss";
 function SignIn() {
+  console.log("here")
   const { Content } = Layout;
   const { TabPane } = Tabs;
   return (
