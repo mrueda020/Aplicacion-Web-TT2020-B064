@@ -5,7 +5,6 @@ import LoginForm from "../../../components/LoginForm/LoginForm";
 import RegisterForm from "../../../components/RegisterForm/RegisterForm";
 import "./SignIn.scss";
 function SignIn() {
-  console.log("here")
   const { Content } = Layout;
   const { TabPane } = Tabs;
   return (

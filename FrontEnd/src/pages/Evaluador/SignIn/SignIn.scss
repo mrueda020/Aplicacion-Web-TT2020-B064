@@ -1,0 +1,38 @@
+@import "../../../scss/index.scss";
+.sign-in-evaluador {
+  background-image: url("../../../assets/jpg/ivan-aleksic-PDRFeeDniCk-unsplash.jpg") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  &__content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+
+    &-logo {
+      width: 300px;
+      padding: 60px 20px !important;
+      img {
+        width: 100% !important;
+      }
+    }
+    &-form {
+      width: 90vw;
+      @media (min-width: $media-breackpoint-up-lg) {
+        width: 30vw;
+      }
+      background-color: white;
+      justify-content: center;
+      .ant-card-head {
+        border-top: 4px solid $primary-color !important;
+        &-title {
+          text-align: center;
+          font-size: 0em + 19px / $defaultFontSize;
+          color: $primary-color;
+          border-radius: 0 !important;
+        }
+      }
+    }
+  }
+}

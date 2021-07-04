@@ -51,7 +51,9 @@ function RegisterForm() {
         <Input.Password placeholder="Confirma tu contraseña"></Input.Password>
       </Item>
       <Item>
-        <Button htmlType="submit">Registrate</Button>
+        <Button style={{ width: "100%" }} type="primary" htmlType="submit">
+          Registrate
+        </Button>
       </Item>
     </Form>
   );

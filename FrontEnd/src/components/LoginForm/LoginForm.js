@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Input } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import "./LoginForm.scss";
 function LoginForm() {
   const { Item } = Form;
   const submit = (values) => {
@@ -40,7 +41,8 @@ function LoginForm() {
           className="login-form__input"
         />
       </Item>
-      <Button className="login-form__button" htmlType="submit">
+
+      <Button type="primary" className="login-form__button" htmlType="submit">
         Entrar
       </Button>
     </Form>
