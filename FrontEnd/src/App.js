@@ -2,7 +2,6 @@ import React from "react";
 import routes from "./config/routes";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 function App() {
-  
   return (
     <div>
       <Router>

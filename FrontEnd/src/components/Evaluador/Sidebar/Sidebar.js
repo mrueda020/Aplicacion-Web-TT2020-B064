@@ -2,12 +2,12 @@ import React from "react";
 import {
   MdSettingsInputComponent,
   MdComputer,
-  MdHome,
+  MdCollectionsBookmark,
   MdPowerSettingsNew,
   MdClose,
 } from "react-icons/md";
 import { NavLink } from "react-router-dom";
-import "./Siderbar.scss";
+import "./Sidebar.scss";
 function Sidebar() {
   function closeMenu() {
     var mySidebar = document.getElementById("mySidebar");
@@ -47,21 +47,21 @@ function Sidebar() {
             </div>
           </a>
           <NavLink
-            to="/user/overview"
+            to="/evaluador/question"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div className="sidebar__item">
-              <MdHome
+              <MdCollectionsBookmark
                 fontSize={30}
                 alignmentBaseline="middle"
                 className="w3-margin-right"
               />
-              <span className="sidebar__span-text">Vista general</span>
+              <span className="sidebar__span-text">Preguntas</span>
             </div>
           </NavLink>
 
           <NavLink
-            to="/user/evaluations"
+            to="/evaluador/exams"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div className="sidebar__item">
@@ -74,7 +74,7 @@ function Sidebar() {
             </div>
           </NavLink>
           <NavLink
-            to="/user/settings"
+            to="/evaluador/settings"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div className="sidebar__item">
@@ -87,7 +87,7 @@ function Sidebar() {
             </div>
           </NavLink>
           <NavLink
-            to="/user/login"
+            to="/evaluador/login"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div className="sidebar__item">

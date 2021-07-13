@@ -1,15 +1,18 @@
 //Layout
-import LayoutUser from "../layouts/LayoutUser";
+import LayoutUser from "../layouts/User/LayoutUser";
 import LayoutEvaluador from "../layouts/Evaluador/LayoutEvaluador";
 import LayoutAdmin from "../layouts/Admin/LayoutAdmin";
 //User Pages
 import SignIn from "../pages/User/SignIn/SignIn";
-import Overview from "../pages/User/Overview";
-import Settings from "../pages/User/Settings";
-import Evaluations from "../pages/User/Evaluations";
-import Configuration from "../pages/User/Configuration";
+import Overview from "../pages/User/Menu/Overview/Overview";
+import Settings from "../pages/User/Menu/Settings/Settings";
+import Evaluations from "../pages/User/Menu/Evaluations/Evaluations";
+import Configuration from "../pages/User/Menu/Configuration/Configuration";
 //Evaluador pages
 import SignInEvaluador from "../pages/Evaluador/SignIn/SignIn";
+import Questions from "../pages/Evaluador/Menu/Questions/Questions";
+import Exams from "../pages/Evaluador/Menu/Exams/Exams";
+import SettingsEvaluador from "../pages/Evaluador/Menu/Settings/Settings";
 //Admin pages
 import SignInAdmin from "../pages/Admin/SignIn/SignIn";
 
@@ -43,6 +46,21 @@ const routes = [
     exact: false,
     routes: [
       { path: "/evaluador/login", exact: true, component: SignInEvaluador },
+      {
+        path: "/evaluador/question",
+        exact: true,
+        component: Questions,
+      },
+      {
+        path: "/evaluador/exams",
+        exact: true,
+        component: Exams,
+      },
+      {
+        path: "/evaluador/settings",
+        exact: true,
+        component: SettingsEvaluador,
+      },
     ],
   },
   {

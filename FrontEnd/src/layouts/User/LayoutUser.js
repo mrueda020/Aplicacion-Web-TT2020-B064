@@ -1,8 +1,8 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Navbar from "../components/User/Navbar/Navbar";
-import Sidebar from "../components/User/Sidebar/Sidebar";
-import SignIn from "../pages/User/SignIn/SignIn";
+import Navbar from "../../components/User/Navbar/Navbar";
+import Sidebar from "../../components/User/Sidebar/Sidebar";
+import SignIn from "../../pages/User/SignIn/SignIn";
 import "./LayoutUser.scss";
 import { Layout } from "antd";
 function LayoutUser(props) {
@@ -10,7 +10,7 @@ function LayoutUser(props) {
   const { Content } = Layout;
   const user = null;
   console.log(props);
-  if (!user) {
+  if (user) {
     return (
       <>
         <Route path="/user/login" component={SignIn} />
