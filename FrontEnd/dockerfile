@@ -1,0 +1,6 @@
+FROM node:12-alpine
+WORKDIR /front
+COPY package*.json .
+RUN npm install
+COPY . .
+EXPOSE 3000
