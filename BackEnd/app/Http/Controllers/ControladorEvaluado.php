@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 use JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
+use Carbon\Carbon;
 
 class ControladorEvaluado extends Controller
 {
@@ -31,15 +32,30 @@ class ControladorEvaluado extends Controller
                $response = ['error' => "Las contraseñas no coinciden"];
                return response()->json($response,400);
            }
+        //    Access Token
            $data = ['sub'=>[
                'email' => $usuario->Email,
                'id' => $usuario->idEvaluado,
                'rol' => 'evaluado'
            ]];
+           JWTAuth::factory()->setTTL(180);
            $customClaims = JWTFactory::customClaims($data);
            $payload = JWTFactory::make($data);
-           $token = JWTAuth::encode($payload);
-           $response = ['accessToken' => $token->get()];
+           $accesToken = JWTAuth::encode($payload);
+
+        //    Refresh Token
+           $data = ['sub'=>[
+                'id' => $usuario->idEvaluado,
+                'rol' => 'evaluado'
+           ]];
+           JWTAuth::factory()->setTTL(43200);
+           $customClaims = JWTFactory::customClaims($data);
+           $payload = JWTFactory::make($data);
+           $refreshToken = JWTAuth::encode($payload);
+
+           $response = ['accessToken' => $accesToken->get() ,
+                        'refreshToken' =>$refreshToken->get()
+                    ];
            return response()->json($response,200);
        }
        $response = ['error' => "No existe el usuario"];
@@ -79,9 +95,9 @@ class ControladorEvaluado extends Controller
        {
            return response()->json(['error'=>'La contraseña debe ser de 8 caracteres minimo'],400);
        }
-       print($contraseña);
+       
        $contraseña = Hash::make($contraseña);
-       print($contraseña);
+       
        $response = DB::insert("insert into evaluado (Nombre,ApPaterno,ApMaterno,Email,Password) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
        if($response == 0)
        {    

@@ -7,7 +7,7 @@ import SignIn from "../pages/User/SignIn/SignIn";
 import Overview from "../pages/User/Menu/Overview/Overview";
 import Settings from "../pages/User/Menu/Settings/Settings";
 import Evaluations from "../pages/User/Menu/Evaluations/Evaluations";
-import Configuration from "../pages/User/Menu/Configuration/Configuration";
+
 //Evaluador pages
 import SignInEvaluador from "../pages/Evaluador/SignIn/SignIn";
 import Questions from "../pages/Evaluador/Menu/Questions/Questions";

@@ -24,7 +24,7 @@ class ControladorEvaluador extends Controller
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('evaluador')->where('Email', $email)->first();
+       $usuario = DB::table('Evaluador')->where('Email', $email)->first();
        if($usuario && $usuario->Email == $email)
        {  
            if(!Hash::check($contraseña, $usuario->Password))
@@ -32,15 +32,28 @@ class ControladorEvaluador extends Controller
                $response = ['error' => "Las contraseñas no coinciden"];
                return response()->json($response,400);
            }
+        //    Access token
            $data = ['sub'=>[
                'email' => $usuario->Email,
                'id' => $usuario->idEvaluador,
                'rol' => 'evaluador'
            ]];
+           JWTAuth::factory()->setTTL(180);
            $customClaims = JWTFactory::customClaims($data);
            $payload = JWTFactory::make($data);
-           $token = JWTAuth::encode($payload);
-           $response = ['accessToken' => $token->get()];
+           $accessToken = JWTAuth::encode($payload);
+        //   Refresh Token
+           $data = ['sub'=>[
+            'id' => $usuario->idEvaluador,
+            'rol' => 'evaluador'
+           ]];
+           JWTAuth::factory()->setTTL(43200);
+           $customClaims = JWTFactory::customClaims($data);
+           $payload = JWTFactory::make($data);
+           $refreshToken = JWTAuth::encode($payload);
+           $response = ['accessToken' => $accessToken->get() ,
+                        'refreshToken' =>$refreshToken->get()
+                    ];
            return response()->json($response,200);
        }
        $response = ['error' => "No existe el usuario"];
@@ -60,14 +73,14 @@ class ControladorEvaluador extends Controller
         $idRespuestas = [];
         for($i=0; $i<4; $i++)
         {   
-            if($request["respuesta".$i+1]==$respuestaCorrecta)
+            if($request["respuesta".($i+1)]==$respuestaCorrecta)
             {
-                DB::insert('insert into respuesta (Respuesta, esCorrecta) values (?,?)',[$request["respuesta".$i+1],1]);
+                DB::insert('insert into respuesta (Respuesta, esCorrecta) values (?,?)',[$request["respuesta".($i+1)],1]);
                 $idRespuestas[$i] = DB::getPdo()->lastInsertId();
             }
             else
             {
-                DB::insert('insert into respuesta (Respuesta, esCorrecta) values (?,?)',[$request["respuesta".$i+1],0]);
+                DB::insert('insert into respuesta (Respuesta, esCorrecta) values (?,?)',[$request["respuesta".($i+1)],0]);
                 $idRespuestas[$i] = DB::getPdo()->lastInsertId();
             }
         }

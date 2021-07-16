@@ -19,13 +19,14 @@ use App\Http\Middleware\VerificarToken;
 
 //Rutas para Evaluado
 Route::post("/Registro", [ControladorEvaluado::class,"Registro"]);
-Route::get("/Login", [ControladorEvaluado::class,"Login"]);
+Route::post("/Login", [ControladorEvaluado::class,"Login"]);
 
 
 //Rutas para Evaluador
-Route::get("/login-evaluador", [ControladorEvaluador::class,"Login"]);
+Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
 Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);;
 
 //Rutas para Admin
+Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);
 Route::post("/registro-administrador",[ControladorAdmin::class,"Registro"]);
 Route::post("/registrar-evaluador",[ControladorAdmin::class,"registrarEvaluador"]);

@@ -1,14 +1,74 @@
-import React from "react";
-import { Form, Button, Input } from "antd";
+import React, { useState } from "react";
+import { Form, Button, Input, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { withRouter } from "react-router-dom";
+import { REFRESH_TOKEN, ACCESS_TOKEN, baseURL } from "../../utils/constants";
 import "./LoginForm.scss";
-function LoginForm() {
+function LoginForm(props) {
   const { Item } = Form;
-  const submit = (values) => {
-    console.log(values);
+  const [user, setUser] = useState({ email: "", password: "" });
+
+  const signIn = async (url, data, userType) => {
+    const params = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    console.log(url);
+    console.log(data);
+    try {
+      const response = await fetch(url, params);
+      const result = await response.json();
+      if (result.error) {
+        notification["error"]({ message: result.error });
+      } else {
+        const { accessToken, refreshToken } = result;
+        localStorage.setItem(ACCESS_TOKEN, accessToken);
+        localStorage.setItem(REFRESH_TOKEN, refreshToken);
+        notification["success"]({ message: "Login correcto" });
+        switch (userType) {
+          case "user":
+            props.history.push("/user");
+            break;
+          case "evaluador":
+            props.history.push("/evaluador");
+            break;
+          case "admin":
+            props.history.push("/admin");
+            break;
+          default:
+            console.log(userType);
+            break;
+        }
+      }
+    } catch (err) {
+      notification["error"]({ message: "Error en el servidor" });
+    }
   };
+
+  const submit = async () => {
+    const pathName = window.location.pathname;
+    const userType = pathName.split("/");
+    if (userType[1] === "evaluador") {
+      const url = `${baseURL}/login-evaluador`;
+      await signIn(url, user, userType[1]);
+    } else if (userType[1] === "admin") {
+      const url = `${baseURL}/login-administrador`;
+      await signIn(url, user, userType[1]);
+    } else if (userType[1] === "user") {
+      const url = `${baseURL}/Login`;
+      await signIn(url, user, userType[1]);
+    }
+  };
+
+  const onChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
   return (
-    <Form className="login-form" onFinish={submit}>
+    <Form className="login-form" onFinish={submit} onChange={onChange}>
       <Item
         type="email"
         name="email"
@@ -20,6 +80,7 @@ function LoginForm() {
         ]}
       >
         <Input
+          name="email"
           prefix={<UserOutlined style={{ color: "rgba(0,0,0,0.25)" }} />}
           placeholder="Email"
           className="login-form__input"
@@ -36,6 +97,7 @@ function LoginForm() {
         ]}
       >
         <Input.Password
+          name="password"
           prefix={<LockOutlined style={{ color: "rgba(0,0,0,0.25)" }} />}
           placeholder="Contraseña"
           className="login-form__input"
@@ -49,4 +111,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);
