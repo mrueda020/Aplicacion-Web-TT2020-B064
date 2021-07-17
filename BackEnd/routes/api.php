@@ -2,6 +2,7 @@
 use App\Http\Controllers\ControladorEvaluado;
 use App\Http\Controllers\ControladorEvaluador;
 use App\Http\Controllers\ControladorAdmin;
+use App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,6 @@ Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])
 Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);
 Route::post("/registro-administrador",[ControladorAdmin::class,"Registro"]);
 Route::post("/registrar-evaluador",[ControladorAdmin::class,"registrarEvaluador"]);
+
+//Rutas para Auth
+Route::post("/refrescar-token",[Auth::class,"refrescarToken"]);
