@@ -1,0 +1,16 @@
+.sidebar {
+  z-index: 3;
+  width: 300px;
+  &__title {
+    align-items: center;
+    margin-top: 40px;
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-left: 3.5em;
+  }
+  &__span-text {
+    font-size: 1.25em;
+  }
+}

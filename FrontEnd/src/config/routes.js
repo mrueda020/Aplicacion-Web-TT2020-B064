@@ -15,7 +15,8 @@ import Exams from "../pages/Evaluador/Menu/Exams/Exams";
 import SettingsEvaluador from "../pages/Evaluador/Menu/Settings/Settings";
 //Admin pages
 import SignInAdmin from "../pages/Admin/SignIn/SignIn";
-
+import Evaluadores from "../pages/Admin/Evaluadores/Evaluadores";
+import Evaluados from "../pages/Admin/Evaluados/Evaluados";
 const routes = [
   {
     path: "/user",
@@ -67,7 +68,19 @@ const routes = [
     path: "/admin",
     component: LayoutAdmin,
     exact: false,
-    routes: [{ path: "/admin/login", exact: true, component: SignInAdmin }],
+    routes: [
+      { path: "/admin/login", exact: true, component: SignInAdmin },
+      {
+        path: "/admin/evaluados",
+        extact: true,
+        component: Evaluados,
+      },
+      {
+        path: "/admin/evaluadores",
+        exact: true,
+        component: Evaluadores,
+      },
+    ],
   },
 ];
 
