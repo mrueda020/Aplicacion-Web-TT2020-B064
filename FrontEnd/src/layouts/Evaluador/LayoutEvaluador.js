@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignIn from "../../pages/Evaluador/SignIn/SignIn";
 import { Layout } from "antd";
 import Navbar from "../../components/Evaluador/Navbar/Navbar";
 import Sidebar from "../../components/Evaluador/Sidebar/Sidebar";
-
+import { AuthContext } from "../../provider/AuthProvider";
 import "./LayoutEvaluador.scss";
+
 function LayoutEvaluador(props) {
   const { Content } = Layout;
   const { routes } = props;
-  const user = null;
-  if (user) {
+  const { user, isLoading } = useContext(AuthContext);
+  if (!user && !isLoading) {
     return (
       <>
         <Route path="/evaluador/login" component={SignIn} />
@@ -18,16 +19,22 @@ function LayoutEvaluador(props) {
       </>
     );
   }
-
-  return (
-    <Layout className="layout-evaluador">
-      <Navbar />
-      <Sidebar />
-      <Content className="layout-evaluador__content w3-main">
-        <LoadRoutes routes={routes}></LoadRoutes>
-      </Content>
-    </Layout>
-  );
+  if (user && user.rol === "evaluador") {
+    return (
+      <Layout className="layout-evaluador">
+        <Navbar />
+        <Sidebar />
+        <Content className="layout-evaluador__content w3-main">
+          <LoadRoutes routes={routes}></LoadRoutes>
+        </Content>
+      </Layout>
+    );
+  } else if (user && user.rol === "evaluado") {
+    return <Redirect to="/user" />;
+  } else if (user && user.rol === "admin") {
+    return <Redirect to="/admin" />;
+  }
+  return null;
 }
 
 function LoadRoutes(props) {

@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Redirect } from "react-router-dom";
 import { Layout, Tabs } from "antd";
 import Logo from "../../../assets/png/logolinkex2.png";
 import LoginForm from "../../../components/LoginForm/LoginForm";
 import RegisterForm from "../../../components/RegisterForm/RegisterForm";
+import { AuthContext } from "../../../provider/AuthProvider";
 import "./SignIn.scss";
 function SignIn() {
+  const { user } = useContext(AuthContext);
   const { Content } = Layout;
   const { TabPane } = Tabs;
+
+  if (user && user.rol === "evaluado") {
+    return <Redirect to="/user" />;
+  } else if (user && user.rol === "evaluador") {
+    return <Redirect to="/evaluador" />;
+  } else if (user && user.rol === "admin") {
+    return <Redirect to="/admin" />;
+  }
+
   return (
     <Layout className="sign-in">
       <Content className="sign-in__content">
