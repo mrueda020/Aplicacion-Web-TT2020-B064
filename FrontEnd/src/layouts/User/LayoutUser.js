@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Navbar from "../../components/User/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/User/Sidebar/Sidebar";
 import SignIn from "../../pages/User/SignIn/SignIn";
 import { AuthContext } from "../../provider/AuthProvider";

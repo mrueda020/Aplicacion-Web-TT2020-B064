@@ -7,6 +7,7 @@ import {
   MdClose,
 } from "react-icons/md";
 import { NavLink } from "react-router-dom";
+import { logOut } from "../../../api/auth";
 import "./Sidebar.scss";
 function Sidebar() {
   function closeMenu() {
@@ -77,7 +78,13 @@ function Sidebar() {
             to="/admin/login"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
-            <div className="sidebar__item">
+            <div
+              className="sidebar__item"
+              onClick={() => {
+                logOut();
+                window.location.reload();
+              }}
+            >
               <MdPowerSettingsNew
                 fontSize={30}
                 alignmentBaseline="middle"

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignIn from "../../pages/Admin/SignIn/SignIn";
-import Navbar from "../../components/Admin/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Admin/Sidebar/Sidebar";
 import { Layout } from "antd";
 import { AuthContext } from "../../provider/AuthProvider";

@@ -30,13 +30,13 @@ function LoginForm(props) {
         notification["success"]({ message: "Login correcto" });
         switch (userType) {
           case "user":
-            props.history.push("/user");
+            window.location.reload();
             break;
           case "evaluador":
-            props.history.push("/evaluador");
+            window.location.reload();
             break;
           case "admin":
-            props.history.push("/admin");
+            window.location.reload();
             break;
           default:
             console.log(userType);

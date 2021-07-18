@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import SignIn from "../../pages/Evaluador/SignIn/SignIn";
 import { Layout } from "antd";
-import Navbar from "../../components/Evaluador/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Evaluador/Sidebar/Sidebar";
 import { AuthContext } from "../../provider/AuthProvider";
 import "./LayoutEvaluador.scss";
