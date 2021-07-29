@@ -37,11 +37,14 @@ export const refreshAccessToken = async (refreshToken) => {
       if (response.status !== 200) {
         return null;
       }
+      console.log(response);
       return response.json();
     })
     .then((result) => {
+      console.log(result);
       if (!result) {
-        logOut();
+        // logOut();
+        alert("Here");
       } else {
         const { accessToken, refreshToken } = result;
         localStorage.setItem(ACCESS_TOKEN, accessToken);
@@ -60,4 +63,13 @@ const hasExpired = (token) => {
   const { exp } = metaToken;
   const now = Date.now() / 1000;
   return now > exp;
+};
+
+export const getUserId = () => {
+  const accessToken = getAccesToken();
+  if (accessToken) {
+    const metaToken = jwtDecode(accessToken);
+    const { sub } = metaToken;
+    return sub.id;
+  }
 };
