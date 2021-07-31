@@ -22,7 +22,7 @@ function Sidebar() {
   return (
     <div>
       <nav
-        className="sidebar w3-sidebar w3-collapse w3-white w3-animate-left"
+        className="sidebar w3-sidebar w3-collapse w3-white w3-animate-left w3-card"
         id="mySidebar"
       >
         <br />

@@ -1,5 +1,9 @@
 @import "../../../../scss/index.scss";
 .Questions {
-  max-width: 1366px;
+  max-width: 1200px;
   margin: 0 auto;
+  background-color: white;
+  &__form {
+    padding: 1.5em;
+  }
 }

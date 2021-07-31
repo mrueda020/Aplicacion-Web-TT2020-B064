@@ -1,7 +1,24 @@
 .QuestionForm {
-  max-width: 1200px;
-  margin: 0 auto;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
+  text-align: center;
+  label {
+    font-family: Roboto;
+    font-size: 1.25em !important;
+    font-weight: lighter;
+  }
+  &__content-answers {
+    display: grid;
+    gap: 1fr;
+  }
+
+  @media (min-width: 650px) {
+    &__content-answers {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 760px) {
+    &__content-answers {
+      grid-template-columns: 1.5fr 1.5fr 1.5fr;
+    }
+  }
 }

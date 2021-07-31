@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Space, Select, notification } from "antd";
+import React, { useState } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  Space,
+  Select,
+  notification,
+  Typography,
+} from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { getUserId } from "../../../api/auth";
 import { addQuestion } from "../../../api/evaluador";
 import "./QuestionForm.scss";
 function QuestionForm() {
+  const { Title } = Typography;
   const [formData, setForm] = useState({
     pregunta: "",
     idEvaluador: "",
@@ -62,12 +71,25 @@ function QuestionForm() {
     }
     const payload = makePayload();
     const response = await addQuestion(payload);
-    console.log(response);
-    console.log(await response.json());
+    if (response) {
+      const result = await response.json();
+      if (response.status === 201) {
+        notification["success"]({ message: result.message });
+      } else {
+        notification["success"]({ message: result.error });
+      }
+    } else {
+      notification["success"]({ message: "Error en el servidor" });
+    }
   };
   return (
     <div className="QuestionForm">
-      <Form layout="vertical" onFinish={onFinish}>
+      <Title level={2}>Agregar Pregunta</Title>
+      <Form
+        className="QuestionForm__content"
+        layout="vertical"
+        onFinish={onFinish}
+      >
         <Form.Item label="Pregunta">
           <Input.TextArea
             name="pregunta"
@@ -82,48 +104,56 @@ function QuestionForm() {
         <Form.List name="Answers">
           {(fields, { add, remove }) => (
             <>
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
-                <Space key={key} style={{ display: "flex", marginBottom: 12 }}>
-                  <Form.Item
-                    label={`Respuesta ${key + 1}`}
-                    {...restField}
-                    name={[name, `answer`]}
-                    fieldKey={[fieldKey, "answer"]}
-                    rules={[
-                      { required: true, message: "Ingresa la respuesta" },
-                    ]}
-                  >
-                    <Input
-                      onChange={(e) => {
-                        setAnswers({
-                          ...answers,
-                          [`respuesta${key + 1}`]: e.target.value,
-                        });
-                      }}
-                    />
-                  </Form.Item>
-
-                  <MinusCircleOutlined
-                    style={{ marginTop: "15px" }}
-                    align="baseline"
-                    onClick={() => {
-                      remove(name);
-                      removeAnswer(`respuesta${key + 1}`);
-                    }}
-                  />
-                </Space>
-              ))}
-
               <Form.Item>
                 <Button
                   type="dashed"
-                  onClick={() => add()}
                   block
+                  onClick={() => add()}
                   icon={<PlusOutlined />}
                 >
                   Agregar Respuesta
                 </Button>
               </Form.Item>
+              <div className="QuestionForm__content-answers">
+                {fields.map(({ key, name, fieldKey, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{
+                      display: "flex",
+                      marginBottom: 12,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Form.Item
+                      label={`Respuesta ${key + 1}`}
+                      {...restField}
+                      name={[name, `answer`]}
+                      fieldKey={[fieldKey, "answer"]}
+                      rules={[
+                        { required: true, message: "Ingresa la respuesta" },
+                      ]}
+                    >
+                      <Input
+                        onChange={(e) => {
+                          setAnswers({
+                            ...answers,
+                            [`respuesta${key + 1}`]: e.target.value,
+                          });
+                        }}
+                      />
+                    </Form.Item>
+
+                    <MinusCircleOutlined
+                      style={{ marginTop: "15px", color: "red" }}
+                      align="baseline"
+                      onClick={() => {
+                        remove(name);
+                        removeAnswer(`respuesta${key + 1}`);
+                      }}
+                    />
+                  </Space>
+                ))}
+              </div>
             </>
           )}
         </Form.List>
@@ -149,7 +179,7 @@ function QuestionForm() {
         )}
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" block htmlType="submit">
             Agregar Pregunta
           </Button>
         </Form.Item>
