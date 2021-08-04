@@ -97,4 +97,25 @@ class ControladorEvaluador extends Controller
         }
        
     }
+
+    public function obtenerPreguntas($id)
+    {
+        try {
+           $preguntas = DB::table('pregunta')->where('Evaluador_idEvaluador_Creador',$id)->get();
+           if(count($preguntas))
+           {
+                $response = ["data" => $preguntas];
+                return response()->json($response,200);
+           }
+           else
+           {
+                $response = ["error" => "No hay preguntas"];
+                return response()->json($response,404);
+           }
+           
+        } catch (\Throwable $th) {
+            $response = ["error" => "Error en el servidor"];
+            return response()->json($response,500);
+        }
+    }
 }
