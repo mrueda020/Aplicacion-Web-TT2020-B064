@@ -76,10 +76,10 @@ function QuestionForm() {
       if (response.status === 201) {
         notification["success"]({ message: result.message });
       } else {
-        notification["success"]({ message: result.error });
+        notification["error"]({ message: result.error });
       }
     } else {
-      notification["success"]({ message: "Error en el servidor" });
+      notification["error"]({ message: "Error en el servidor" });
     }
   };
   return (
@@ -121,11 +121,13 @@ function QuestionForm() {
                     style={{
                       display: "flex",
                       marginBottom: 12,
-                      marginRight: 10,
+                      marginLeft: "auto",
+                      marginRight: "auto",
                     }}
+                    align="baseline"
                   >
                     <Form.Item
-                      label={`Respuesta ${key + 1}`}
+                      // label={`Respuesta ${key + 1}`}
                       {...restField}
                       name={[name, `answer`]}
                       fieldKey={[fieldKey, "answer"]}
@@ -134,6 +136,7 @@ function QuestionForm() {
                       ]}
                     >
                       <Input
+                        placeholder="Respuesta ..."
                         onChange={(e) => {
                           setAnswers({
                             ...answers,
