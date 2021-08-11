@@ -71,24 +71,17 @@ class ControladorEvaluador extends Controller
             $respuestaCorrecta = $request["respuestaCorrecta"];
             DB::insert('insert into pregunta (Pregunta,Evaluador_idEvaluador_Creador) values (?,?)', [$pregunta,$idEvaluador]);
             $idPregunta = DB::getPdo()->lastInsertId();
-            $idRespuestas = [];
             for($i=0; $i<$size-3; $i++)
             {   
                 if("respuesta".($i) == $respuestaCorrecta)
                 {
-                    DB::insert('insert into respuesta (Respuesta, esCorrecta) values (?,?)',[$request["respuesta".($i)],1]);
-                    $idRespuestas[$i] = DB::getPdo()->lastInsertId();
+                    DB::insert('insert into respuesta (Respuesta, esCorrecta, Pregunta_idPregunta) values (?,?,?)',[$request["respuesta".($i)],1,$idPregunta]); 
                 }
                 else
                 {
-                    DB::insert('insert into respuesta (Respuesta, esCorrecta) values (?,?)',[$request["respuesta".($i)],0]);
-                    $idRespuestas[$i] = DB::getPdo()->lastInsertId();
+                    DB::insert('insert into respuesta (Respuesta, esCorrecta, Pregunta_idPregunta) values (?,?,?)',[$request["respuesta".($i)],0,$idPregunta]);  
                 }
             }
-            for($i=0; $i<$size-3; $i++)
-            {
-                DB::insert('insert into respuestas_en_preguntas (Pregunta_idPregunta, Respuesta_idRespuesta) values (?, ?)', [$idPregunta, $idRespuestas[$i]]);
-            } 
             $response = ["message" => "Pregunta agregada"];
             return response()->json($response,201);  
         } catch (\Throwable $th) {
@@ -96,6 +89,28 @@ class ControladorEvaluador extends Controller
             return response()->json($response,500);
         }
        
+    }
+
+    public function eliminarPregunta($idEvaluador,$idPregunta)
+    {
+        try {
+            $preguntaEliminada = DB::delete('delete from pregunta where idPregunta = ? and Evaluador_idEvaluador_Creador = ? ',[$idPregunta, $idEvaluador]);
+            if($preguntaEliminada)
+            {
+                $response = ["message" => "Pregunta eliminada"];
+                return response()->json($response,200);
+            }
+            else
+            {
+                $response = ["error" => "No existe la pregunta"];
+                return response()->json($response,404);
+            }
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            return response()->json($response,500);
+        }
     }
 
     public function obtenerPreguntas($id)
@@ -117,5 +132,5 @@ class ControladorEvaluador extends Controller
             $response = ["error" => "Error en el servidor"];
             return response()->json($response,500);
         }
-    }
+    }  
 }

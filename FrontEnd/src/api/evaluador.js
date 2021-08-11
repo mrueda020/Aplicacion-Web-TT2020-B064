@@ -26,6 +26,6 @@ export const getQuestions = () => {
       return response.json();
     })
     .then((result) => {
-      return result.data;
+      return result;
     });
 };

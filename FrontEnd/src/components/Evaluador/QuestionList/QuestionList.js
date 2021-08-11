@@ -8,7 +8,9 @@ function QuestionList() {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    getQuestions().then((result) => setQuestions(result));
+    getQuestions().then((result) => {
+      if (result.data) setQuestions(result);
+    });
   }, []);
   return (
     <div className="QuestionList">

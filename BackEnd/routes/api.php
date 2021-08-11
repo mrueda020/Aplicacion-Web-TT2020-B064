@@ -27,6 +27,7 @@ Route::post("/Login", [ControladorEvaluado::class,"Login"]);
 Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
 Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);;
 Route::get("/preguntas/{id}",[ControladorEvaluador::class,"obtenerPreguntas"]);
+Route::delete("/eliminar-pregunta/{idEvaluador}/{idPregunta}",[ControladorEvaluador::class,"eliminarPregunta"]);
 
 //Rutas para Admin
 Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);
