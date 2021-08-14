@@ -29,3 +29,18 @@ export const getQuestions = () => {
       return result;
     });
 };
+
+export const deleteQuestion = (idPregunta) => {
+  const idEvaluador = getUserId();
+  const url = `${baseURL}/eliminar-pregunta/${idEvaluador}/${idPregunta}`;
+  const params = {
+    method: "DELETE",
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};

@@ -3,14 +3,18 @@ import QuestionForm from "../../../../components/Evaluador/QuestionForm/Question
 import QuestionList from "../../../../components/Evaluador/QuestionList/QuestionList";
 import "./Questions.scss";
 function Questions() {
+  const [confirmReloading, setConfirmReloading] = React.useState(false);
   return (
     <div className="Questions">
       <div className="Questions__form">
-        <QuestionForm />
+        <QuestionForm setConfirmReloading={setConfirmReloading} />
       </div>
       <hr />
       <div className="Questions__list">
-        <QuestionList />
+        <QuestionList
+          confirmReloading={confirmReloading}
+          setConfirmReloading={setConfirmReloading}
+        />
       </div>
     </div>
   );

@@ -12,7 +12,8 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { getUserId } from "../../../api/auth";
 import { addQuestion } from "../../../api/evaluador";
 import "./QuestionForm.scss";
-function QuestionForm() {
+function QuestionForm(props) {
+  const { setConfirmReloading } = props;
   const { Title } = Typography;
   const [formData, setForm] = useState({
     pregunta: "",
@@ -75,6 +76,7 @@ function QuestionForm() {
       const result = await response.json();
       if (response.status === 201) {
         notification["success"]({ message: result.message });
+        setConfirmReloading(true);
       } else {
         notification["error"]({ message: result.error });
       }
