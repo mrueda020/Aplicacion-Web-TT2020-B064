@@ -1,0 +1,12 @@
+@import "../../../../scss/index.scss";
+.Exams {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  &__form {
+    padding: 1.5em;
+  }
+  &__list {
+    padding: 1.5em;
+  }
+}

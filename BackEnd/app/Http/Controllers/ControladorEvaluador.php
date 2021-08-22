@@ -133,4 +133,24 @@ class ControladorEvaluador extends Controller
             return response()->json($response,500);
         }
     }  
+
+    public function cargarPreguntas()
+    {
+        try {
+            $preguntas = DB::select("select idPregunta, Pregunta from pregunta");
+            if($preguntas)
+            {
+                $response = ["data" => $preguntas];
+                return response()->json($response, 200);
+            }
+            else
+            {
+                $response = ["message" => "No hay preguntas"];
+                return response()->json($response, 404);
+            }
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

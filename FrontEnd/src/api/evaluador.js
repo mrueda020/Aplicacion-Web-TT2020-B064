@@ -44,3 +44,14 @@ export const deleteQuestion = (idPregunta) => {
       return result;
     });
 };
+
+export const fetchAllQuestions = () => {
+  const url = `${baseURL}/cargar-preguntas`;
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};
