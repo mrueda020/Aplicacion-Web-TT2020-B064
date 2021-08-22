@@ -10,7 +10,12 @@ function QuestionList(props) {
 
   useEffect(() => {
     getQuestions().then((result) => {
-      if (result.data) setQuestions(result.data);
+      console.log(result);
+      if (result.data) {
+        setQuestions(result.data);
+      } else {
+        setQuestions([]);
+      }
     });
     setConfirmReloading(false);
   }, [confirmReloading]);
