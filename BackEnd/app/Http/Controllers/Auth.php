@@ -135,11 +135,11 @@ class Auth extends Controller
                         return response()->json($response,200);
                     }
                     break;
-
+                $response = ['error'=>'El token ha caducado'];
+                return response()->json($response,400);
             }
         } catch (\Throwable $th) {
             //throw $th;
-            print($th);
             $response = ['error'=>'El token ha caducado'];
             return response()->json($response,400);
         }

@@ -17,47 +17,54 @@ class ControladorEvaluador extends Controller
     public function Login(Request $request)
     {
        
-       $email = $request["email"];
-       $contraseña = $request["password"];
-       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
-       {
-          $response = ['error' => 'Email invalido'];
-          return response()->json($response,400);
+       try {
+           //code...
+            $email = $request["email"];
+            $contraseña = $request["password"];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+            {
+                $response = ['error' => 'Email invalido'];
+                return response()->json($response,400);
+            }
+            $usuario = DB::table('Evaluador')->where('Email', $email)->first();
+            if($usuario && $usuario->Email == $email)
+            {  
+                if(!Hash::check($contraseña, $usuario->Password))
+                {
+                    $response = ['error' => "Las contraseñas no coinciden"];
+                    return response()->json($response,400);
+                }
+                //    Access token
+                $data = ['sub'=>[
+                    'email' => $usuario->Email,
+                    'id' => $usuario->idEvaluador,
+                    'rol' => 'evaluador'
+                ]];
+                JWTAuth::factory()->setTTL(180);
+                $customClaims = JWTFactory::customClaims($data);
+                $payload = JWTFactory::make($data);
+                $accessToken = JWTAuth::encode($payload);
+                //   Refresh Token
+                $data = ['sub'=>[
+                    'id' => $usuario->idEvaluador,
+                    'rol' => 'evaluador'
+                ]];
+                JWTAuth::factory()->setTTL(43200);
+                $customClaims = JWTFactory::customClaims($data);
+                $payload = JWTFactory::make($data);
+                $refreshToken = JWTAuth::encode($payload);
+                $response = ['accessToken' => $accessToken->get() ,
+                                'refreshToken' =>$refreshToken->get()
+                            ];
+                return response()->json($response,200);
+            }
+            $response = ['error' => "No existe el usuario"];
+            return response()->json($response,400);
+       } catch (\Throwable $th) {
+           //throw $th;
+           $response = ['error' => "Error en el servidor"];
+            return response()->json($response, 500);
        }
-       $usuario = DB::table('Evaluador')->where('Email', $email)->first();
-       if($usuario && $usuario->Email == $email)
-       {  
-           if(!Hash::check($contraseña, $usuario->Password))
-           {
-               $response = ['error' => "Las contraseñas no coinciden"];
-               return response()->json($response,400);
-           }
-        //    Access token
-           $data = ['sub'=>[
-               'email' => $usuario->Email,
-               'id' => $usuario->idEvaluador,
-               'rol' => 'evaluador'
-           ]];
-           JWTAuth::factory()->setTTL(180);
-           $customClaims = JWTFactory::customClaims($data);
-           $payload = JWTFactory::make($data);
-           $accessToken = JWTAuth::encode($payload);
-        //   Refresh Token
-           $data = ['sub'=>[
-            'id' => $usuario->idEvaluador,
-            'rol' => 'evaluador'
-           ]];
-           JWTAuth::factory()->setTTL(43200);
-           $customClaims = JWTFactory::customClaims($data);
-           $payload = JWTFactory::make($data);
-           $refreshToken = JWTAuth::encode($payload);
-           $response = ['accessToken' => $accessToken->get() ,
-                        'refreshToken' =>$refreshToken->get()
-                    ];
-           return response()->json($response,200);
-       }
-       $response = ['error' => "No existe el usuario"];
-       return response()->json($response,400);
        
     }
 
@@ -151,6 +158,8 @@ class ControladorEvaluador extends Controller
 
         } catch (\Throwable $th) {
             //throw $th;
+            $response = ["error" => "Error en el servidor"];
+            return response()->json($response, 500);
         }
     }
 }

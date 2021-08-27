@@ -21,6 +21,7 @@ export const getRefeshToken = () => {
 
 export const refreshAccessToken = async (refreshToken) => {
   const url = `${baseURL}/refrescar-token`;
+  console.log(url);
   const bodyObj = {
     refreshToken: refreshToken,
   };
@@ -37,18 +38,16 @@ export const refreshAccessToken = async (refreshToken) => {
       if (response.status !== 200) {
         return null;
       }
-      console.log(response);
       return response.json();
     })
     .then((result) => {
-      console.log(result);
       if (!result) {
-        // logOut();
-        alert("Here");
+        logOut();
       } else {
         const { accessToken, refreshToken } = result;
         localStorage.setItem(ACCESS_TOKEN, accessToken);
         localStorage.setItem(REFRESH_TOKEN, refreshToken);
+        window.location.reload();
       }
     });
 };
