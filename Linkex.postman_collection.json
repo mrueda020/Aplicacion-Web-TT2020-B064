@@ -1,245 +1,305 @@
 {
 	"info": {
-		"_postman_id": "8259c4b8-2c3b-47a3-b89c-ea74bc9aef80",
+		"_postman_id": "989a0618-fb7a-4f7a-a6d1-cbd93b5f2d7e",
 		"name": "Linkex",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Registro Admin",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\" :\"mrueda010@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Evaluador",
+			"item": [
+				{
+					"name": "Agregar Pregunta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbi1ldmFsdWFkb3IiLCJpYXQiOjE2Mjc1MjQzNTksImV4cCI6MTYyNzUzNTE1OSwibmJmIjoxNjI3NTI0MzU5LCJqdGkiOiI5T3o3MFNvUEV5cml3ZG5qIiwic3ViIjp7ImVtYWlsIjoibXJ1ZWRhQGhvdG1haWwuY29tIiwiaWQiOjEsInJvbCI6ImV2YWx1YWRvciJ9fQ.5pV2nLJm3c0VQvQ-tNcLRPJQZDbCfpyy2RAt4bghy28",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/agregar-pregunta",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"agregar-pregunta"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://{{url}}/api/registro-administrador",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"registro-administrador"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Login Evaluado",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\" :\"mrueda070@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Cargar Preguntas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/cargar-preguntas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cargar-preguntas"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/api/Login",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"Login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Login Administrador",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"mrueda010@hotmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Obtener Preguntas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/preguntas/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"preguntas",
+								"1"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://{{url}}/api/login-administrador",
-					"protocol": "http",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"login-administrador"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Registar Evaluador",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\" :\"mrueda@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Login Evaluador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" :\"mrueda@hotmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/login-evaluador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"login-evaluador"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/api/registrar-evaluador",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"registrar-evaluador"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Login   Evaluador",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"mrueda@hotmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Eliminar Pregunta",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/eliminar-pregunta/1/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"eliminar-pregunta",
+								"1",
+								"1"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/api/login-evaluador",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"login-evaluador"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Refrescar Token",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"refreshToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9Mb2dpbiIsImlhdCI6MTYyNjU1MzM3OCwiZXhwIjoxNjI5MTQ1Mzc4LCJuYmYiOjE2MjY1NTMzNzgsImp0aSI6IkxraENpakVndDJtNE9PUk8iLCJzdWIiOnsiaWQiOjEsInJvbCI6ImV2YWx1YWRvIn19.03P1LTE8EAFrIkeMiacpKIxRBH9WKXOOQcqYpMDe2zg\" \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Evaluado",
+			"item": [
+				{
+					"name": "Login Evaluado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" :\"mrueda070@hotmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Login"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/api/refrescar-token",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"refrescar-token"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Agregar Pregunta",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbi1ldmFsdWFkb3IiLCJpYXQiOjE2Mjc1MjQzNTksImV4cCI6MTYyNzUzNTE1OSwibmJmIjoxNjI3NTI0MzU5LCJqdGkiOiI5T3o3MFNvUEV5cml3ZG5qIiwic3ViIjp7ImVtYWlsIjoibXJ1ZWRhQGhvdG1haWwuY29tIiwiaWQiOjEsInJvbCI6ImV2YWx1YWRvciJ9fQ.5pV2nLJm3c0VQvQ-tNcLRPJQZDbCfpyy2RAt4bghy28",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Registro Evaluado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" :\"mrueda070@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/Registro",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Registro"
+							]
 						}
-					}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Login Administrador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mrueda010@hotmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/api/login-administrador",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"login-administrador"
+							]
+						}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{url}}/api/agregar-pregunta",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"agregar-pregunta"
-					]
+				{
+					"name": "Registro Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" :\"mrueda010@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/api/registro-administrador",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"registro-administrador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registar Evaluador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" :\"mrueda@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/registrar-evaluador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"registrar-evaluador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refrescar Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9Mb2dpbiIsImlhdCI6MTYyNjU1MzM3OCwiZXhwIjoxNjI5MTQ1Mzc4LCJuYmYiOjE2MjY1NTMzNzgsImp0aSI6IkxraENpakVndDJtNE9PUk8iLCJzdWIiOnsiaWQiOjEsInJvbCI6ImV2YWx1YWRvIn19.03P1LTE8EAFrIkeMiacpKIxRBH9WKXOOQcqYpMDe2zg\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/refrescar-token",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"refrescar-token"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Obtener Preguntas",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/api/preguntas/1",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"preguntas",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Eliminar Pregunta",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/api/eliminar-pregunta/1/1",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api",
-						"eliminar-pregunta",
-						"1",
-						"1"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	],
 	"variable": [
