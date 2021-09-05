@@ -18,10 +18,12 @@
       }
     }
     &-form {
+      min-width: 330px;
       width: 90vw;
-      @media (min-width: $media-breackpoint-up-lg) {
-        width: 30vw;
+      @media (min-width: $media-breackpoint-up-xl) {
+        width: 35vw;
       }
+
       background-color: white;
       justify-content: center;
       .ant-card-head {

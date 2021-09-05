@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Form, Button, Input, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
-import { REFRESH_TOKEN, ACCESS_TOKEN, baseURL } from "../../utils/constants";
+import {
+  REFRESH_TOKEN,
+  ACCESS_TOKEN,
+  baseURL,
+  siteKey,
+} from "../../utils/constants";
+import ReCAPTCHA from "react-google-recaptcha";
 import "./LoginForm.scss";
 function LoginForm(props) {
   const { Item } = Form;
   const [user, setUser] = useState({ email: "", password: "" });
+  const [isCaptchaSolved, setIsCaptchaSolved] = useState(false);
+  const recaptchaRef = useRef(null);
 
   const signIn = async (url, data, userType) => {
     const params = {
@@ -16,8 +24,6 @@ function LoginForm(props) {
         "Content-Type": "application/json",
       },
     };
-    console.log(url);
-    console.log(data);
     try {
       const response = await fetch(url, params);
       const result = await response.json();
@@ -49,6 +55,10 @@ function LoginForm(props) {
   };
 
   const submit = async () => {
+    if (!isCaptchaSolved) {
+      notification["error"]({ message: "Resuelve el captcha" });
+      return;
+    }
     const pathName = window.location.pathname;
     const userType = pathName.split("/");
     if (userType[1] === "evaluador") {
@@ -66,6 +76,18 @@ function LoginForm(props) {
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+
+  const onCaptchaChange = () => {
+    if (recaptchaRef.current.getValue()) {
+      console.log(recaptchaRef.current.getValue());
+      console.log(recaptchaRef.current.getWidgetId());
+      setIsCaptchaSolved(true);
+    }
+  };
+
+  useEffect(() => {
+    console.log(recaptchaRef.current.getWidgetId());
+  }, []);
 
   return (
     <Form className="login-form" onFinish={submit} onChange={onChange}>
@@ -107,6 +129,13 @@ function LoginForm(props) {
       <Button type="primary" className="login-form__button" htmlType="submit">
         Entrar
       </Button>
+      <div className="login-form__captcha">
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={siteKey}
+          onChange={onCaptchaChange}
+        />
+      </div>
     </Form>
   );
 }

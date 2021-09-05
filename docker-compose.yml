@@ -5,13 +5,13 @@ services:
     container_name: reactjs
     build: ./FrontEnd
     environment:
-       CHOKIDAR_USEPOLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
     command: npm start
-    volumes :
-        - /front/node_modules
-        - ./FrontEnd:/front  
+    volumes:
+      - /front/node_modules
+      - ./FrontEnd:/front
     ports:
-        - 3000:3000
+      - 3000:3000
 
   mariadb:
     container_name: mariadb
@@ -21,11 +21,11 @@ services:
       - MARIADB_USER=root
       - MARIADB_DATABASE=mydb
       - MARIADB_PASSWORD=my_password
-    volumes :
-      - ./BackEnd/mariadb_data:/bitnami/mariadb  
+    volumes:
+      - ./BackEnd/mariadb_data:/bitnami/mariadb
     ports:
       - 3306:3306
-      
+
   laravel:
     container_name: laravel
     tty: true
