@@ -7,8 +7,9 @@ import {
 } from "@ant-design/icons";
 import { deleteQuestion } from "../../../api/evaluador";
 function QuestionCard(props) {
-  const { Pregunta, idPregunta } = props;
+  const { Pr_pregunta, Pr_id } = props;
   const { setConfirmReloading } = props;
+
   return (
     <Card
       style={{ width: "auto" }}
@@ -19,7 +20,7 @@ function QuestionCard(props) {
           okText="Si"
           cancelText="No"
           onConfirm={async () => {
-            const result = await deleteQuestion(idPregunta);
+            const result = await deleteQuestion(Pr_id);
             if (result.message) {
               message.success(result.message);
               setConfirmReloading(true);
@@ -34,7 +35,7 @@ function QuestionCard(props) {
         <EditOutlined key="edit" style={{ color: "green" }} />,
       ]}
     >
-      <Card.Meta title={`Pregunta ${idPregunta}`} description={Pregunta} />
+      <Card.Meta title={`Pregunta ${Pr_id}`} description={Pr_pregunta} />
     </Card>
   );
 }

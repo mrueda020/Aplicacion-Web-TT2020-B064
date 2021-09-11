@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Transfer,
+  Input,
   Typography,
   Form,
   Switch,
@@ -18,11 +19,12 @@ function ExamsForm() {
   const [targetKeys, setTargetKeys] = useState([]);
   const [isMockExam, setIsMockExam] = useState(true);
   const [dates, setDates] = useState([]);
+  const [description, setDescription] = useState("");
   const cleanData = () => {
     const data = questions.map((q) => {
       const question = {
-        key: q.idPregunta,
-        Pregunta: q.Pregunta,
+        key: q.Pr_id,
+        Pregunta: q.Pr_pregunta,
       };
       return question;
     });
@@ -59,10 +61,18 @@ function ExamsForm() {
 
   const onFinish = () => {
     let payload = {};
+
     if (!targetKeys.length) {
       notification["error"]({ message: "No has seleccionado las preguntas" });
       return;
     }
+
+    if (description === "") {
+      notification["error"]({ message: "Agrega la descripcion al examen" });
+      return;
+    }
+    payload.questionsIds = targetKeys;
+    payload.description = description;
     if (!isMockExam) {
       if (!dates.length) {
         console.log("here");
@@ -71,12 +81,14 @@ function ExamsForm() {
         });
         return;
       }
-      console.log(dates);
-      console.log(targetKeys);
+      payload.dates = dates;
+      console.log(payload);
       return;
     }
-    console.log(targetKeys);
+
+    console.log(payload);
   };
+
   const range = (start, end) => {
     const result = [];
     for (let i = start; i < end; i++) {
@@ -147,6 +159,17 @@ function ExamsForm() {
             />
           </Form.Item>
         )}
+        <Form.Item label="Descripcion del examen">
+          <Input.TextArea
+            name="description"
+            placeholder="Descripcion del examen"
+            allowClear
+            bordered
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+          />
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Crear Examen
