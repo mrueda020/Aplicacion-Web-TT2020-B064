@@ -22,9 +22,9 @@ class ControladorAdmin extends Controller
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('Admin')->where('email', $email)->first();
+       $usuario = DB::table('Admin')->where('Ad_email', $email)->first();
        
-       if($usuario && $usuario->Email == $email)
+       if($usuario && $usuario->Ad_email == $email)
        {    
            if(!Hash::check($contraseña, $usuario->Password))
            {    
@@ -33,8 +33,8 @@ class ControladorAdmin extends Controller
            }
         //    Access Token
            $data = ['sub'=>[
-               'email' => $usuario->Email,
-               'id' => $usuario->idAdmin,
+               'email' => $usuario->Ad_email,
+               'id' => $usuario->Ad_id,
                'rol' => 'admin'
            ]];
            JWTAuth::factory()->setTTL(180);
@@ -44,7 +44,7 @@ class ControladorAdmin extends Controller
 
         //    Refresh Token
            $data = ['sub'=>[
-                'id' => $usuario->idAdmin,
+                'id' => $usuario->Ad_id,
                 'rol' => 'admin'
            ]];
            JWTAuth::factory()->setTTL(43200);
@@ -78,8 +78,8 @@ class ControladorAdmin extends Controller
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('admin')->where('Email', $email)->first();
-       if($usuario && $usuario->Email)
+       $usuario = DB::table('admin')->where('Ad_email', $email)->first();
+       if($usuario && $usuario->Ad_email)
        {
            $response = ['error' => "Ya existe el email en el sistema"];
            return response()->json($response,400);
@@ -98,7 +98,7 @@ class ControladorAdmin extends Controller
      
        $contraseña = Hash::make($contraseña);
        
-       $response = DB::insert("insert into admin (Nombre,ApPaterno,ApMaterno,Email,Password) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
+       $response = DB::insert("insert into admin (Ad_nombre,Ad_apellido_paterno,Ad_apellido_materno,Ad_email,Ad_contraseña) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
        if($response == 0)
        {    
            $response = ['error' => "Error en el servidor"];
@@ -125,8 +125,8 @@ class ControladorAdmin extends Controller
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('evaluador')->where('email', $email)->first();
-       if($usuario && $usuario->Email)
+       $usuario = DB::table('evaluador')->where('Evaluador_email', $email)->first();
+       if($usuario && $usuario->Evaluador_email)
        {
            $response = ['error' => "Ya existe el email en el sistema"];
            return response()->json($response,400);
@@ -145,7 +145,7 @@ class ControladorAdmin extends Controller
      
        $contraseña = Hash::make($contraseña);
        
-       $response = DB::insert("insert into evaluador (Nombre,ApPaterno,ApMaterno,Email,Password) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
+       $response = DB::insert("insert into evaluador (Evaluador_nombre,Evaluador_apellido_paterno,Evaluador_apellido_materno,Evaluador_email,Evaluador_contraseña) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
        if($response == 0)
        {    
            $response = ['error' => "Error en el servidor"];

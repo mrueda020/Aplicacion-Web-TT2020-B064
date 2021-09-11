@@ -23,19 +23,19 @@ class ControladorEvaluado extends Controller
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('evaluado')->where('email', $email)->first();
+       $usuario = DB::table('evaluado')->where('Eva_email', $email)->first();
        
-       if($usuario && $usuario->Email == $email)
+       if($usuario && $usuario->Eva_email == $email)
        {    
-           if(!Hash::check($contraseña, $usuario->Password))
+           if(!Hash::check($contraseña, $usuario->Eva_contraseña))
            {    
                $response = ['error' => "Las contraseñas no coinciden"];
                return response()->json($response,400);
            }
         //    Access Token
            $data = ['sub'=>[
-               'email' => $usuario->Email,
-               'id' => $usuario->idEvaluado,
+               'email' => $usuario->Eva_email,
+               'id' => $usuario->Eva_id,
                'rol' => 'evaluado'
            ]];
            JWTAuth::factory()->setTTL(180);
@@ -45,7 +45,7 @@ class ControladorEvaluado extends Controller
 
         //    Refresh Token
            $data = ['sub'=>[
-                'id' => $usuario->idEvaluado,
+                'id' => $usuario->Eva_id,
                 'rol' => 'evaluado'
            ]];
            JWTAuth::factory()->setTTL(43200);
@@ -78,8 +78,8 @@ class ControladorEvaluado extends Controller
           $response = ['error' => 'Email invalido'];
           return response()->json($response,400);
        }
-       $usuario = DB::table('evaluado')->where('Email', $email)->first();
-       if($usuario && $usuario->Email)
+       $usuario = DB::table('evaluado')->where('Eva_email', $email)->first();
+       if($usuario && $usuario->Eva_email)
        {
            $response = ['error' => "Ya existe el email en el sistema"];
            return response()->json($response,400);
@@ -98,7 +98,7 @@ class ControladorEvaluado extends Controller
        
        $contraseña = Hash::make($contraseña);
        
-       $response = DB::insert("insert into evaluado (Nombre,ApPaterno,ApMaterno,Email,Password) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
+       $response = DB::insert("insert into evaluado (Eva_nombre,Eva_apellido_paterno,Eva_apellido_materno,Eva_email,Eva_contraseña) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
        if($response == 0)
        {    
            $response = ['error' => "Error en el servidor"];

@@ -26,18 +26,18 @@ class ControladorEvaluador extends Controller
                 $response = ['error' => 'Email invalido'];
                 return response()->json($response,400);
             }
-            $usuario = DB::table('Evaluador')->where('Email', $email)->first();
-            if($usuario && $usuario->Email == $email)
+            $usuario = DB::table('Evaluador')->where('Evaluador_email', $email)->first();
+            if($usuario && $usuario->Evaluador_email == $email)
             {  
-                if(!Hash::check($contraseña, $usuario->Password))
+                if(!Hash::check($contraseña, $usuario->Evaluador_contraseña))
                 {
                     $response = ['error' => "Las contraseñas no coinciden"];
                     return response()->json($response,400);
                 }
                 //    Access token
                 $data = ['sub'=>[
-                    'email' => $usuario->Email,
-                    'id' => $usuario->idEvaluador,
+                    'email' => $usuario->Evaluador_email,
+                    'id' => $usuario->Evaluador_id,
                     'rol' => 'evaluador'
                 ]];
                 JWTAuth::factory()->setTTL(180);
@@ -46,7 +46,7 @@ class ControladorEvaluador extends Controller
                 $accessToken = JWTAuth::encode($payload);
                 //   Refresh Token
                 $data = ['sub'=>[
-                    'id' => $usuario->idEvaluador,
+                    'id' => $usuario->Evaluador_id,
                     'rol' => 'evaluador'
                 ]];
                 JWTAuth::factory()->setTTL(43200);
@@ -76,17 +76,17 @@ class ControladorEvaluador extends Controller
             $pregunta = $request["pregunta"];
             $area = $request["area"];
             $respuestaCorrecta = $request["respuestaCorrecta"];
-            DB::insert('insert into pregunta (Pregunta,Evaluador_idEvaluador_Creador) values (?,?)', [$pregunta,$idEvaluador]);
+            DB::insert('insert into pregunta (Pr_pregunta,Evaluador_Evaluador_id) values (?,?)', [$pregunta,$idEvaluador]);
             $idPregunta = DB::getPdo()->lastInsertId();
             for($i=0; $i<$size-3; $i++)
             {   
                 if("respuesta".($i) == $respuestaCorrecta)
                 {
-                    DB::insert('insert into respuesta (Respuesta, esCorrecta, Pregunta_idPregunta) values (?,?,?)',[$request["respuesta".($i)],1,$idPregunta]); 
+                    DB::insert('insert into respuesta (Res_respuesta, Res_es_correcta, Pregunta_Pr_id) values (?,?,?)',[$request["respuesta".($i)],1,$idPregunta]); 
                 }
                 else
                 {
-                    DB::insert('insert into respuesta (Respuesta, esCorrecta, Pregunta_idPregunta) values (?,?,?)',[$request["respuesta".($i)],0,$idPregunta]);  
+                    DB::insert('insert into respuesta (Res_respuesta, Res_es_correcta, Pregunta_Pr_id) values (?,?,?)',[$request["respuesta".($i)],0,$idPregunta]);  
                 }
             }
             $response = ["message" => "Pregunta agregada"];
@@ -101,7 +101,7 @@ class ControladorEvaluador extends Controller
     public function eliminarPregunta($idEvaluador,$idPregunta)
     {
         try {
-            $preguntaEliminada = DB::delete('delete from pregunta where idPregunta = ? and Evaluador_idEvaluador_Creador = ? ',[$idPregunta, $idEvaluador]);
+            $preguntaEliminada = DB::delete('delete from pregunta where Pr_id = ? and Evaluador_Evaluador_id = ? ',[$idPregunta, $idEvaluador]);
             if($preguntaEliminada)
             {
                 $response = ["message" => "Pregunta eliminada"];
@@ -123,7 +123,7 @@ class ControladorEvaluador extends Controller
     public function obtenerPreguntas($id)
     {
         try {
-           $preguntas = DB::table('pregunta')->where('Evaluador_idEvaluador_Creador',$id)->get();
+           $preguntas = DB::table('pregunta')->where('Evaluador_Evaluador_id',$id)->get();
            if(count($preguntas))
            {
                 $response = ["data" => $preguntas];
@@ -144,7 +144,7 @@ class ControladorEvaluador extends Controller
     public function cargarPreguntas()
     {
         try {
-            $preguntas = DB::select("select idPregunta, Pregunta from pregunta");
+            $preguntas = DB::select("select Pr_id, Pr_pregunta from pregunta");
             if($preguntas)
             {
                 $response = ["data" => $preguntas];
