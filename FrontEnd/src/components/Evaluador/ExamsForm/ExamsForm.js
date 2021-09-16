@@ -10,8 +10,9 @@ import {
   notification,
 } from "antd";
 import moment from "moment";
-import { fetchAllQuestions } from "../../../api/evaluador";
+import { createExam, fetchAllQuestions } from "../../../api/evaluador";
 import "./ExamsForm.scss";
+
 function ExamsForm() {
   const { Title } = Typography;
   const [questions, setQuestions] = useState([]);
@@ -20,6 +21,7 @@ function ExamsForm() {
   const [isMockExam, setIsMockExam] = useState(true);
   const [dates, setDates] = useState([]);
   const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
   const cleanData = () => {
     const data = questions.map((q) => {
       const question = {
@@ -30,6 +32,7 @@ function ExamsForm() {
     });
     setMockData(data);
   };
+
   useEffect(() => {
     fetchAllQuestions().then((result) => {
       if (result.data) {
@@ -45,13 +48,13 @@ function ExamsForm() {
   }, [questions]);
 
   const onChange = (newTargetKeys, direction, moveKeys) => {
-    console.log(newTargetKeys, direction, moveKeys);
+    // console.log(newTargetKeys, direction, moveKeys);
     setTargetKeys(newTargetKeys);
   };
 
   const onChangeDatePicker = (value, dateString) => {
-    console.log("Selected Time: ", value);
-    console.log("Formatted Selected Time: ", dateString);
+    // console.log("Selected Time: ", value);
+    // console.log("Formatted Selected Time: ", dateString);
     if (value === null) {
       setDates([]);
       return;
@@ -59,7 +62,7 @@ function ExamsForm() {
     setDates(dateString);
   };
 
-  const onFinish = () => {
+  const onFinish = async () => {
     let payload = {};
 
     if (!targetKeys.length) {
@@ -71,22 +74,30 @@ function ExamsForm() {
       notification["error"]({ message: "Agrega la descripcion al examen" });
       return;
     }
+
+    if (name === "") {
+      notification["error"]({ message: "Agrega un nombre al examen" });
+      return;
+    }
+
     payload.questionsIds = targetKeys;
     payload.description = description;
+    payload.name = name;
+    payload.typeExam = isMockExam;
     if (!isMockExam) {
       if (!dates.length) {
-        console.log("here");
         notification["error"]({
           message: "Selecciona el periodo de aplicacion",
         });
         return;
       }
       payload.dates = dates;
-      console.log(payload);
-      return;
     }
 
-    console.log(payload);
+    const result = await createExam(payload);
+    if (result.status === 200)
+      notification["success"]({ message: "Examen creado" });
+    else notification["error"]({ message: "Error en el servidor" });
   };
 
   const range = (start, end) => {
@@ -138,6 +149,17 @@ function ExamsForm() {
           span: 14,
         }}
       >
+        <Form.Item label="Nombre del examen">
+          <Input
+            name="nombre"
+            placeholder="Nombre del examen"
+            allowClear
+            bordered
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </Form.Item>
         <Form.Item label="Tipo de examen">
           <Switch
             defaultChecked

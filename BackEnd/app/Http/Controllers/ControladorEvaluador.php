@@ -162,4 +162,37 @@ class ControladorEvaluador extends Controller
             return response()->json($response, 500);
         }
     }
+
+    public function crearExamen(Request $request)
+    {
+        try {
+            $examenData = $request->all();
+            $noPreguntas = count($examenData["questionsIds"]);
+            DB::insert('insert into Examen (Exa_nombre, Exa_description, Evaluador_Evaluador_id
+            , Exa_tipo_de_examen,Exa_no_preguntas) values (?,?,?,?,?)',[
+               $examenData["name"], $examenData["description"], $examenData["idEvaluador"], $examenData["typeExam"],
+               $noPreguntas
+            ]);
+            $idExamen = DB::getPdo()->lastInsertId();
+            if(!$examenData["typeExam"]) //Si no es un examen de prueba
+                DB::table('Examen')->where('Exa_id',$idExamen)->update(['Exa_fecha_aplicacion'=>$examenData["dates"][0]]);
+            
+            for($i=0; $i<$noPreguntas; $i++)
+            {
+                DB::insert('insert into Preguntas_En_Examen (Examen_Exa_id, Pregunta_Pr_id) 
+                values(?,?)',[$idExamen, $examenData["questionsIds"][$i]] );
+
+            }
+            
+            
+            $response = ["data" => $examenData];
+            return response()->json($response, 200);
+
+        } catch (\Throwable $th) {
+            $response = ["error" => $th];
+            return response()->json($response, 500);
+        }
+        
+        
+    }
 }

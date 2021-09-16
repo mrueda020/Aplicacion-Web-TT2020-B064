@@ -29,6 +29,7 @@ Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])
 Route::get("/preguntas/{id}",[ControladorEvaluador::class,"obtenerPreguntas"]);
 Route::delete("/eliminar-pregunta/{idEvaluador}/{idPregunta}",[ControladorEvaluador::class,"eliminarPregunta"]);
 Route::get("/cargar-preguntas",[ControladorEvaluador::class,"cargarPreguntas"]);
+Route::post("/crear-examen",[ControladorEvaluador::class,"crearExamen"]);
 
 //Rutas para Admin
 Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);

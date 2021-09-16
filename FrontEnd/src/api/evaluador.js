@@ -55,3 +55,19 @@ export const fetchAllQuestions = () => {
       return result;
     });
 };
+
+export const createExam = (payload) => {
+  const url = `${baseURL}/crear-examen`;
+  payload.idEvaluador = getUserId();
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};
