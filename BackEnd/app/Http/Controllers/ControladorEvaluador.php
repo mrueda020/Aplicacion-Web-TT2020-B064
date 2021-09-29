@@ -195,4 +195,75 @@ class ControladorEvaluador extends Controller
         
         
     }
+
+    public function obtenerEvaluados()
+    {
+        try {
+            //code...
+            $evaluados = DB::table('Evaluado')->select('Eva_id',"Eva_nombre",
+                "Eva_apellido_paterno","Eva_apellido_materno")->get();
+            $response = ["data" => $evaluados];
+            return response()->json($response,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            return response()->json($response,500);
+        }
+    }
+
+    public function crearGrupo(Request $request)
+    {
+        try {
+            $idEvaluador = $request["idEvaluador"];
+            $nombre = $request["name"];
+            $descripcion = $request["description"];
+            $usersIds = $request["usersIds"];
+            DB::insert('insert into Grupo (Evaluador_Evaluador_id, Gr_nombre, Gr_descripcion)
+            values (?,?,?)',[$idEvaluador, $nombre, $descripcion]);
+            $idGrupo = DB::getPdo()->lastInsertId();
+            // print($idGrupo);
+            DB::insert('insert into Grupos_Evaluador (Evaluador_Evaluador_id, Grupo_Gr_id) 
+            values(?,?)',[$idEvaluador, $idGrupo]);
+
+            for($i=0; $i<count($usersIds); $i++)
+            {
+                DB::insert('insert into Grupos_Evaluado (Evaluado_Eva_id, Grupo_Gr_id ) 
+                values(?,?)',[$usersIds[$i],$idGrupo]);
+            }
+
+            return response()->json(["data"=>"Grupo creado"],200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(["error"=>$th],500);
+        }
+    }
+
+    public function obtenerExamenes()
+    {
+        try {
+            //code...
+            $examenes = DB::select("select * from Examen");
+            $reponse = ["data"=>$examenes];
+            return response()->json($reponse,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            return response()->json($response,500);
+        }
+    }
+
+    public function obtenerGrupos($idEvaluador)
+    {
+        try {
+            //code...
+            $grupos = DB::select('select * from grupo where Evaluador_Evaluador_id = ?',[$idEvaluador]);
+            $reponse = ["data"=>$grupos];
+            return response()->json($reponse,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            return response()->json($response,500);
+        }
+    }
+
 }

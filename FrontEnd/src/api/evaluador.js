@@ -71,3 +71,53 @@ export const createExam = (payload) => {
     return response;
   });
 };
+
+export const getUsers = () => {
+  const url = `${baseURL}/obtener-evaluados`;
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};
+
+export const createGroup = (payload) => {
+  const url = `${baseURL}/crear-grupo`;
+  payload.idEvaluador = getUserId();
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};
+
+export const getExams = () => {
+  const url = `${baseURL}/obtener-examenes`;
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};
+
+export const getGroups = () => {
+  const idEvaluador = getUserId();
+  const url = `${baseURL}/grupos/${idEvaluador}`;
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};

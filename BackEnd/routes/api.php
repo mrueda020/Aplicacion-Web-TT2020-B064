@@ -30,6 +30,10 @@ Route::get("/preguntas/{id}",[ControladorEvaluador::class,"obtenerPreguntas"]);
 Route::delete("/eliminar-pregunta/{idEvaluador}/{idPregunta}",[ControladorEvaluador::class,"eliminarPregunta"]);
 Route::get("/cargar-preguntas",[ControladorEvaluador::class,"cargarPreguntas"]);
 Route::post("/crear-examen",[ControladorEvaluador::class,"crearExamen"]);
+Route::get("/obtener-evaluados",[ControladorEvaluador::class,"obtenerEvaluados"]);
+Route::post("/crear-grupo",[ControladorEvaluador::class,"crearGrupo"]);
+Route::get("/obtener-examenes",[ControladorEvaluador::class,"obtenerExamenes"]);
+Route::get("/grupos/{idEvaluador}",[ControladorEvaluador::class,"obtenerGrupos"]);
 
 //Rutas para Admin
 Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);
