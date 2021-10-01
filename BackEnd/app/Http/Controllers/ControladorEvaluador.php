@@ -266,4 +266,34 @@ class ControladorEvaluador extends Controller
         }
     }
 
+    public function asignarExamenes(Request $request)
+    {
+        try {
+            //code...
+            $data = $request->all();
+            $gruposIds = $data["groupIds"];
+            $examenesIds = $data["examsIds"];
+            
+            for($i=0; $i<count($gruposIds); $i++)
+            {
+                for($j=0; $j<count($examenesIds); $j++)
+                {
+                    $rows = DB::select('select * from Grupo_Examenes where Grupo_Gr_id = ? 
+                    and Examen_Exa_id = ? ',[$gruposIds[$i],$examenesIds[$j]]);
+                    if(count($rows)==0)
+                        DB::insert('insert ignore  into Grupo_Examenes (Grupo_Gr_id, Examen_Exa_id) 
+                        values(?,?)',[$gruposIds[$i],$examenesIds[$j]]);
+                }
+            }
+
+            $response = ["data"=>"Examen asignado"];
+            return response()->json($response,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            // printf($th);
+            return response()->json($response,500);
+        }
+    }
+
 }

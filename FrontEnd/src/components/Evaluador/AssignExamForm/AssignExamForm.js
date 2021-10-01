@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Transfer, Typography, Select, Form, Button } from "antd";
+import {
+  Transfer,
+  Typography,
+  Select,
+  Form,
+  Button,
+  notification,
+  Tag,
+} from "antd";
 import { getExams, getGroups } from "../../../api/evaluador";
+import { assignExams } from "../../../api/evaluador";
 import "./AssignExamForm.scss";
 
 function AssignExamForm() {
@@ -43,8 +52,25 @@ function AssignExamForm() {
     setSelectedGroups(selectedItems);
   };
 
-  const onFinish = () => {
-    console.log("Here");
+  const onFinish = async () => {
+    let payload = {};
+    let groupdIds = selectedGroups.map((g) => {
+      return g.value;
+    });
+    payload.groupIds = groupdIds;
+    payload.examsIds = targetKeys;
+    if (groupdIds.length === 0) {
+      notification["error"]({ message: "Selecione los grupos" });
+      return;
+    }
+
+    const response = await assignExams(payload);
+    const result = await response.json();
+    notification["success"]({ message: result.data });
+  };
+
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   };
 
   return (
@@ -57,7 +83,9 @@ function AssignExamForm() {
         pagination
         showSearch
         oneWay
-        render={(item) => item.Exa_nombre}
+        render={(item) => {
+          return `${item.Exa_nombre} - ${truncate(item.Exa_description, 15)}`;
+        }}
         onChange={onChange}
       />
 
@@ -83,34 +111,6 @@ function AssignExamForm() {
         </Form>
       )}
     </div>
-  );
-}
-function ExamDescription(props) {
-  const { item } = props;
-  return (
-    <>
-      <table class="w3-table-all w3-hoverable">
-        <tr>
-          <td>Eve</td>
-          <td>Jackson</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-          <td>94</td>
-        </tr>
-      </table>
-    </>
   );
 }
 

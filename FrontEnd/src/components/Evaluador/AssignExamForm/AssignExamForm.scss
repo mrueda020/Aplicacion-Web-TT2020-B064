@@ -10,5 +10,8 @@
   .ant-transfer {
     justify-content: center;
     margin-top: 2.5em;
+    .ant-transfer-list-with-pagination {
+      width: auto;
+    }
   }
 }

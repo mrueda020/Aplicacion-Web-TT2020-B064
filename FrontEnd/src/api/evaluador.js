@@ -121,3 +121,18 @@ export const getGroups = () => {
       return result;
     });
 };
+
+export const assignExams = (payload) => {
+  payload.idEvaluador = getUserId();
+  const url = `${baseURL}/asignar-examen`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};
