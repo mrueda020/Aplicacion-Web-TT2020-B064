@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-09-2021 a las 19:48:12
+-- Tiempo de generación: 01-10-2021 a las 21:37:36
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -51,6 +51,17 @@ CREATE TABLE `evaluado` (
   `Eva_contraseña` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `evaluado`
+--
+
+INSERT INTO `evaluado` (`Eva_id`, `Eva_nombre`, `Eva_apellido_paterno`, `Eva_apellido_materno`, `Eva_email`, `Eva_contraseña`) VALUES
+(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda010@hotmail.com', '$2y$10$VumEXRSvMEpCz0gAiP3GGuHI3hIe5GjHF8hXCXvWyhnlNsIDEIisK'),
+(2, 'Miguel', 'Rueda', 'Carbajal', 'mrueda020@hotmail.com', '$2y$10$5w4OoNk7dwg0BOivQ8hTK.o0WbcQdvLz5mQVh0ysalCNhWFvn3l0W'),
+(3, 'Miguel', 'Rueda', 'Carbajal', 'mrueda030@hotmail.com', '$2y$10$Yldb20GS1b5D4L60jnrAgu5O5QRKhFt4kaYeR6uBEb4nK2/SWrylG'),
+(4, 'Miguel', 'Rueda', 'Carbajal', 'mrueda040@hotmail.com', '$2y$10$ItvPMSj7VbJKyCzX3sJbPuPw8qJikTvbDa.vSBfQb92ITk0ErV5aq'),
+(5, 'Miguel', 'Rueda', 'Carbajal', 'mrueda050@hotmail.com', '$2y$10$5e89IRpzHV1wXEfztx1rHOZvoVNy9XmAB6FdIdmzfPL6wegrCnBuy');
+
 -- --------------------------------------------------------
 
 --
@@ -71,7 +82,7 @@ CREATE TABLE `evaluador` (
 --
 
 INSERT INTO `evaluador` (`Evaluador_id`, `Evaluador_nombre`, `Evaluador_apellido_paterno`, `Evaluador_apellido_materno`, `Evaluador_email`, `Evaluador_contraseña`) VALUES
-(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda@hotmail.com', '$2y$10$O4rflNH2JshG1qEBAJ/VIe.CmURyGSr0HiFPSUNNKQrZJPjLgQw1q');
+(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda@hotmail.com', '$2y$10$heemYKx9eSxJtGahrIS3LOf82aDIkzs24Bp6P3MmymIYg1ZlHkFxy');
 
 -- --------------------------------------------------------
 
@@ -94,8 +105,12 @@ CREATE TABLE `examen` (
 --
 
 INSERT INTO `examen` (`Exa_id`, `Exa_nombre`, `Exa_description`, `Exa_fecha_aplicacion`, `Evaluador_Evaluador_id`, `Exa_tipo_de_examen`, `Exa_no_preguntas`) VALUES
-(4, 'htrfhyf', 'hthtrhft', '2021-09-17 17:36:01', 1, '0', 4),
-(5, 'htrfhyf', 'hthtrhft', '2021-09-13 17:43:25', 1, '1', 4);
+(1, 'grdgdr', 'geg', '2021-09-27 16:06:34', 1, '1', 1),
+(2, 'gdrgge', 'geedge', '2021-09-27 16:06:44', 1, '1', 3),
+(3, 'gtgrg', 'rgrrgrtg', '2021-09-29 17:50:42', 1, '1', 2),
+(4, 'wwtgte4te4t', '3tw4tkfnieofgwginegwggewge', '2021-09-29 21:55:42', 1, '1', 1),
+(5, 'wwtgte4te4t', '3tw4tkfnieofgwginegwggewge', '2021-09-29 21:56:00', 1, '1', 1),
+(6, 'gferg', 'ewffwefef', '2021-09-30 22:01:26', 1, '0', 1);
 
 -- --------------------------------------------------------
 
@@ -110,6 +125,20 @@ CREATE TABLE `grupo` (
   `Gr_descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `grupo`
+--
+
+INSERT INTO `grupo` (`Gr_id`, `Evaluador_Evaluador_id`, `Gr_nombre`, `Gr_descripcion`) VALUES
+(1, 1, 'gdg', 'ergeg'),
+(2, 1, 'grgrg', 'grgrjth54'),
+(3, 1, 'grgrg', 'grgrjth54'),
+(4, 1, 'grgrg', 'grgrjth54'),
+(5, 1, 'grgrg', 'grgrjth54'),
+(6, 1, 'eeg', 'gerg'),
+(7, 1, 'eeg', 'gerg'),
+(8, 1, 'tthyh', '656y46');
+
 -- --------------------------------------------------------
 
 --
@@ -120,6 +149,31 @@ CREATE TABLE `grupos_evaluado` (
   `Evaluado_Eva_id` int(11) NOT NULL,
   `Grupo_Gr_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `grupos_evaluado`
+--
+
+INSERT INTO `grupos_evaluado` (`Evaluado_Eva_id`, `Grupo_Gr_id`) VALUES
+(1, 1),
+(3, 1),
+(1, 2),
+(3, 2),
+(1, 3),
+(3, 3),
+(1, 4),
+(3, 4),
+(1, 5),
+(3, 5),
+(1, 6),
+(4, 6),
+(1, 7),
+(4, 7),
+(1, 8),
+(2, 8),
+(3, 8),
+(4, 8),
+(5, 8);
 
 -- --------------------------------------------------------
 
@@ -132,6 +186,20 @@ CREATE TABLE `grupos_evaluador` (
   `Grupo_Gr_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `grupos_evaluador`
+--
+
+INSERT INTO `grupos_evaluador` (`Evaluador_Evaluador_id`, `Grupo_Gr_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8);
+
 -- --------------------------------------------------------
 
 --
@@ -142,6 +210,17 @@ CREATE TABLE `grupo_examenes` (
   `Grupo_Gr_id` int(11) NOT NULL,
   `Examen_Exa_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `grupo_examenes`
+--
+
+INSERT INTO `grupo_examenes` (`Grupo_Gr_id`, `Examen_Exa_id`) VALUES
+(8, 1),
+(8, 2),
+(8, 3),
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -160,10 +239,12 @@ CREATE TABLE `pregunta` (
 --
 
 INSERT INTO `pregunta` (`Pr_id`, `Pr_pregunta`, `Evaluador_Evaluador_id`) VALUES
-(1, 'tyhthth', 1),
-(2, 'tyhththhyh', 1),
-(3, 'hththt', 1),
-(4, '66y6y5', 1);
+(1, 'gdrg', 1),
+(2, 'gdrg', 1),
+(3, 'gdrg', 1),
+(4, 'gdrg', 1),
+(5, 'gdrg', 1),
+(6, '6jj66j6', 1);
 
 -- --------------------------------------------------------
 
@@ -181,14 +262,15 @@ CREATE TABLE `preguntas_en_examen` (
 --
 
 INSERT INTO `preguntas_en_examen` (`Examen_Exa_id`, `Pregunta_Pr_id`) VALUES
+(1, 1),
+(2, 3),
+(2, 4),
+(2, 1),
+(3, 2),
+(3, 1),
 (4, 1),
-(4, 2),
-(4, 3),
-(4, 4),
 (5, 1),
-(5, 2),
-(5, 3),
-(5, 4);
+(6, 4);
 
 -- --------------------------------------------------------
 
@@ -208,17 +290,18 @@ CREATE TABLE `respuesta` (
 --
 
 INSERT INTO `respuesta` (`Res_id`, `Res_respuesta`, `Res_es_correcta`, `Pregunta_Pr_id`) VALUES
-(1, 'thth', 0, 1),
-(2, 'htyhty', 1, 1),
-(3, 'htht', 0, 1),
-(4, 'ththhth', 1, 2),
-(5, 'htyhtyht', 0, 2),
-(6, 'htht', 0, 2),
-(7, 'htyhtyht', 1, 3),
-(8, 'htht', 0, 3),
-(9, 'hth', 0, 4),
-(10, 'htht', 0, 4),
-(11, 'hththt', 1, 4);
+(1, 'ggdr', 0, 1),
+(2, 'dggd', 1, 1),
+(3, 'ggdr', 0, 2),
+(4, 'dggd', 1, 2),
+(5, 'ggdr', 0, 3),
+(6, 'dggd', 1, 3),
+(7, 'ggdr', 0, 4),
+(8, 'dggd', 1, 4),
+(9, 'ggdr', 0, 5),
+(10, 'dggd', 1, 5),
+(11, '6', 0, 6),
+(12, '6', 1, 6);
 
 --
 -- Índices para tablas volcadas
@@ -312,7 +395,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `evaluado`
 --
 ALTER TABLE `evaluado`
-  MODIFY `Eva_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Eva_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluador`
@@ -324,19 +407,25 @@ ALTER TABLE `evaluador`
 -- AUTO_INCREMENT de la tabla `examen`
 --
 ALTER TABLE `examen`
-  MODIFY `Exa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Exa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `grupo`
+--
+ALTER TABLE `grupo`
+  MODIFY `Gr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `Pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-  MODIFY `Res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `Res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Restricciones para tablas volcadas
