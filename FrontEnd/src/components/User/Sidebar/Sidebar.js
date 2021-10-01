@@ -27,7 +27,7 @@ function Sidebar() {
       >
         <br />
         <div className="sidebar__title w3-container w3-row w3-center">
-          <h1 className="w3-xxxlarge">LinkEx</h1>
+          <h2>Sistema de Examenes</h2>
         </div>
 
         <div className="w3-container"></div>
