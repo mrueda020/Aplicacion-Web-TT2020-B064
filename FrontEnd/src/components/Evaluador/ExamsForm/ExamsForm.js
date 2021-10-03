@@ -13,7 +13,7 @@ import moment from "moment";
 import { createExam, fetchAllQuestions } from "../../../api/evaluador";
 import "./ExamsForm.scss";
 
-function ExamsForm() {
+function ExamsForm({ setConfirmReloading }) {
   const { Title } = Typography;
   const [questions, setQuestions] = useState([]);
   const [mockData, setMockData] = useState([]);
@@ -95,9 +95,10 @@ function ExamsForm() {
     }
 
     const result = await createExam(payload);
-    if (result.status === 200)
+    if (result.status === 200) {
       notification["success"]({ message: "Examen creado" });
-    else notification["error"]({ message: "Error en el servidor" });
+      setConfirmReloading(true);
+    } else notification["error"]({ message: "Error en el servidor" });
   };
 
   const range = (start, end) => {

@@ -12,7 +12,12 @@ import { getExams, getGroups } from "../../../api/evaluador";
 import { assignExams } from "../../../api/evaluador";
 import "./AssignExamForm.scss";
 
-function AssignExamForm() {
+function AssignExamForm({
+  confirmReloading,
+  setConfirmReloading,
+  confirmReloadingGroups,
+  setConfirmReloadingGroups,
+}) {
   const { Title } = Typography;
 
   const [exams, setExams] = useState([]);
@@ -25,13 +30,15 @@ function AssignExamForm() {
     getExams().then((result) => {
       if (result.data.length) setExams(result.data);
     });
-  }, []);
+    setConfirmReloading(false);
+  }, [confirmReloading]);
 
   useEffect(() => {
     getGroups().then((result) => {
       if (result.data.length) setGroups(result.data);
     });
-  }, []);
+    setConfirmReloadingGroups(false);
+  }, [confirmReloadingGroups]);
 
   useEffect(() => {
     let options = groups.map((g) => {

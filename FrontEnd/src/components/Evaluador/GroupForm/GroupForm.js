@@ -3,7 +3,7 @@ import { Transfer, Typography, Input, Form, Button, notification } from "antd";
 import { getUsers, createGroup } from "../../../api/evaluador";
 import "./GroupForm.scss";
 
-function GroupForm() {
+function GroupForm({ setConfirmReloading }) {
   const { Title } = Typography;
   const [users, setUsers] = useState([]);
   const [data, setData] = useState([]);
@@ -65,6 +65,7 @@ function GroupForm() {
       notification["success"]({
         message: "Grupo creado",
       });
+      setConfirmReloading(true);
       return;
     }
   };
