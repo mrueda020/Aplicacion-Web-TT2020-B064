@@ -10,7 +10,7 @@ function LayoutUser(props) {
   const { routes } = props;
   const { Content } = Layout;
   const { user, isLoading } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
   if (!user && !isLoading) {
     return (
       <>

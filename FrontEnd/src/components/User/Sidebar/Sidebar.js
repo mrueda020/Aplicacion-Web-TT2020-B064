@@ -89,7 +89,7 @@ function Sidebar() {
           </NavLink>
           <NavLink
             to="/user/login"
-            className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom w3-card"
+            className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div
               className="sidebar__item"

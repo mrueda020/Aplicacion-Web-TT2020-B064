@@ -11,6 +11,10 @@ use JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
 use Carbon\Carbon;
 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 class ControladorEvaluado extends Controller
 {
     //
@@ -114,6 +118,39 @@ class ControladorEvaluado extends Controller
     {   
         $usuarios = DB::table("usuario")->get();
         return response()->json($usuarios,200);  
+    }
+
+    public function cargarGrupos(Request $request, $idEvaluado)
+    {   
+        try{
+            //code...
+            $grupos = DB::table('Grupos_Evaluado')->where('Evaluado_Eva_id',$idEvaluado)->get();
+            $gruposData = [];
+            for($i=0; $i<count($grupos); $i++)
+            {
+                $grupo = DB::table('Grupo')->where('Gr_id',$grupos[$i]->Grupo_Gr_id)->get();
+                // echo($grupo[0]->Evaluador_Evaluador_id);
+                $evaluador = DB::table('Evaluador')->select("Evaluador_nombre", "Evaluador_apellido_paterno", "Evaluador_apellido_materno")->where('Evaluador_id',$grupo[0]->Evaluador_Evaluador_id)->get();
+               
+                array_push($gruposData, (object) array_merge( (array) $grupo[0],(array) $evaluador[0]));
+            }
+            $myCollectionObj = collect($gruposData);  
+            $data = $this->paginate($myCollectionObj,3);
+            $response = ["data"=>$data];
+            return response()->json($data,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error"=>$th];
+            return response()->json($response,500);
+        }  
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+       
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, ['path' => Paginator::resolveCurrentPath()]);
     }
 
 }
