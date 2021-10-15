@@ -124,6 +124,111 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener Evaluados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/obtener-evaluados",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"obtener-evaluados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Examenes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/obtener-examenes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"obtener-examenes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Grupos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/grupos/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Asignar Examenes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/asignar-examen",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"asignar-examen"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{url}}/?page=1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/?page=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -179,6 +284,25 @@
 							"path": [
 								"api",
 								"Registro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargar Grupos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/cargar-grupos/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cargar-grupos",
+								"1"
 							]
 						}
 					},
