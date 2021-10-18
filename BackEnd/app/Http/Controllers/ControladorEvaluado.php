@@ -145,6 +145,30 @@ class ControladorEvaluado extends Controller
         }  
     }
 
+
+    public function cargarExamens($idEvaluado, $idGrupo)
+    {   
+        try {
+            //code...
+
+            $grupo = DB::select('select Grupo_Gr_id from Grupos_Evaluado where Evaluado_Eva_id = ? and Grupo_Gr_id = ?',[$idEvaluado,$idGrupo]);
+            $examenes = DB::table('Grupo_Examenes')->where('Grupo_Gr_id',$idGrupo)->get();
+            $examenesData = [];
+            for($i=0; $i<count($examenes); $i++)
+            {
+                $examen = DB::table('Examen')->where('Exa_id',$examenes[$i]->Examen_Exa_id)->get();  
+                array_push($examenesData, $examen[0] );
+            }
+            $response = ["data"=>$examenesData];
+            return response()->json($response,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error"=>$th];
+            return response()->json($examenesData,500);
+        }
+        
+    }
+
     public function paginate($items, $perPage = 5, $page = null, $options = [])
     {
        

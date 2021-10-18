@@ -22,6 +22,7 @@ use App\Http\Middleware\VerificarToken;
 Route::post("/Registro", [ControladorEvaluado::class,"Registro"]);
 Route::post("/Login", [ControladorEvaluado::class,"Login"]);
 Route::get("/cargar-grupos/{idEvaluado}",[ControladorEvaluado::class,"cargarGrupos"]);
+Route::get("/cargar-examanes/{idEvaluado}/{idGrupo}",[ControladorEvaluado::class,"cargarExamens"]);
 
 //Rutas para Evaluador
 Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
