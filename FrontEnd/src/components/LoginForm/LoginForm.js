@@ -78,11 +78,7 @@ function LoginForm(props) {
   };
 
   const onCaptchaChange = () => {
-    if (recaptchaRef.current.getValue()) {
-      console.log(recaptchaRef.current.getValue());
-      console.log(recaptchaRef.current.getWidgetId());
-      setIsCaptchaSolved(true);
-    }
+    setIsCaptchaSolved(!isCaptchaSolved);
   };
 
   useEffect(() => {
