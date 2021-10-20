@@ -169,9 +169,9 @@ class ControladorEvaluador extends Controller
             $examenData = $request->all();
             $noPreguntas = count($examenData["questionsIds"]);
             DB::insert('insert into Examen (Exa_nombre, Exa_description, Evaluador_Evaluador_id
-            , Exa_tipo_de_examen,Exa_no_preguntas) values (?,?,?,?,?)',[
+            , Exa_tipo_de_examen,Exa_no_preguntas,Exa_fecha_aplicacion) values (?,?,?,?,?,?)',[
                $examenData["name"], $examenData["description"], $examenData["idEvaluador"], $examenData["typeExam"],
-               $noPreguntas
+               $noPreguntas, $examenData["dates"][0]
             ]);
             $idExamen = DB::getPdo()->lastInsertId();
             if(!$examenData["typeExam"]) //Si no es un examen de prueba
