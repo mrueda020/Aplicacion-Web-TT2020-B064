@@ -4,7 +4,7 @@ import LayoutEvaluador from "../layouts/Evaluador/LayoutEvaluador";
 import LayoutAdmin from "../layouts/Admin/LayoutAdmin";
 //User Pages
 import SignIn from "../pages/User/SignIn/SignIn";
-import Overview from "../pages/User/Menu/Overview/Overview";
+import Groups from "../pages/User/Menu/Groups/Groups";
 import Settings from "../pages/User/Menu/Settings/Settings";
 import Evaluations from "../pages/User/Menu/Evaluations/Evaluations";
 
@@ -25,8 +25,8 @@ const routes = [
     routes: [
       { path: "/user/login", component: SignIn, exact: true },
       {
-        path: "/user/overview",
-        component: Overview,
+        path: "/user/groups",
+        component: Groups,
         exact: true,
       },
       {

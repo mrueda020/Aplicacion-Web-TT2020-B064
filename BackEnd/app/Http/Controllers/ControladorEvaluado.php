@@ -136,12 +136,12 @@ class ControladorEvaluado extends Controller
             }
             $myCollectionObj = collect($gruposData);  
             $data = $this->paginate($myCollectionObj,3);
-            $response = ["data"=>$data];
-            return response()->json($data,200);
+            $response = ["data"=>$gruposData];
+            return response()->json($response,200);
         } catch (\Throwable $th) {
             //throw $th;
             $response = ["error"=>$th];
-            return response()->json($response,500);
+            return response()->json($th,500);
         }  
     }
 

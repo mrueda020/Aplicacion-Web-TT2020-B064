@@ -27,12 +27,12 @@ function QuestionCard(props) {
             }
           }}
           onCancel={() => {
-            message.error("No se agrego la pregunta");
+            message.error("No se elimino la pregunta");
           }}
         >
           <DeleteOutlined key="delete" style={{ color: "red" }} />
         </Popconfirm>,
-        <EditOutlined key="edit" style={{ color: "green" }} />,
+        // <EditOutlined key="edit" style={{ color: "green" }} />,
       ]}
     >
       <Card.Meta title={`Pregunta ${Pr_id}`} description={Pr_pregunta} />

@@ -22,7 +22,7 @@ function Sidebar() {
   return (
     <div>
       <nav
-        className="sidebar w3-sidebar w3-collapse w3-white w3-animate-left"
+        className="sidebar w3-sidebar w3-collapse w3-white w3-animate-left w3-card"
         id="mySidebar"
       >
         <br />
@@ -48,7 +48,7 @@ function Sidebar() {
             </div>
           </a>
           <NavLink
-            to="/user/overview"
+            to="/user/groups"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div className="sidebar__item">
@@ -57,7 +57,7 @@ function Sidebar() {
                 alignmentBaseline="middle"
                 className="w3-margin-right"
               />
-              <span className="sidebar__span-text">Vista general</span>
+              <span className="sidebar__span-text">Grupos</span>
             </div>
           </NavLink>
 
