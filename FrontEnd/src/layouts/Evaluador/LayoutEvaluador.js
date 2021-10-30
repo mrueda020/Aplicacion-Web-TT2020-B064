@@ -34,7 +34,7 @@ function LayoutEvaluador(props) {
   } else if (user && user.rol === "admin") {
     return <Redirect to="/admin" />;
   }
-  return null;
+  return <Redirect to="/evaluador/question" />;
 }
 
 function LoadRoutes(props) {

@@ -169,6 +169,35 @@ class ControladorEvaluado extends Controller
         
     }
 
+
+    public function cargarExamen($idEvaluado, $idExamen)
+    {
+        try {
+            //code...
+            $idPreguntas = DB::table('Preguntas_En_Examen')->where('Examen_Exa_id', $idExamen)->get();
+            $examen = [];
+            for($i=0; $i<count($idPreguntas); $i++)
+            {   
+                
+                $pregunta = DB::select('select * from Pregunta where Pr_id = ?',[$idPreguntas[$i]->Pregunta_Pr_id]);
+                // array_push($aux, $pregunta);
+                $aux1 = ['pregunta'=> $pregunta];
+                $respuestas = DB::select('select * from Respuesta where Pregunta_Pr_id =  ? ',[$idPreguntas[$i]->Pregunta_Pr_id]);
+                // array_push($aux, $respuestas);
+                $aux2 = ['repuestas'=>$respuestas];
+                // array_push($examen, (object)$aux);
+                array_push($examen, (object) array_merge( (array) $aux1,(array) $aux2));
+            }
+            $response = ["data"=>$examen];
+            return response()->json($response,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error"=>$th];
+            return response()->json($response,500);
+        }
+        
+    }
+
     public function paginate($items, $perPage = 5, $page = null, $options = [])
     {
        

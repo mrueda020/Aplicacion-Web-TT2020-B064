@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, List } from "antd";
 import { getGroups } from "../../../api/evaluado";
+import { NavLink } from "react-router-dom";
 import "./GroupList.scss";
 function GroupList() {
   const { Title } = Typography;
@@ -22,8 +23,11 @@ function GroupList() {
         renderItem={(group) => (
           <List.Item>
             <List.Item.Meta
-              // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title={group.Gr_nombre}
+              title={
+                <NavLink to={`/user/evaluations/${group.Gr_id}`}>
+                  {group.Gr_nombre}{" "}
+                </NavLink>
+              }
               description={group.Gr_descripcion}
             />
             <div>

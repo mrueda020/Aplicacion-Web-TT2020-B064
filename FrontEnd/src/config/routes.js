@@ -7,7 +7,7 @@ import SignIn from "../pages/User/SignIn/SignIn";
 import Groups from "../pages/User/Menu/Groups/Groups";
 import Settings from "../pages/User/Menu/Settings/Settings";
 import Evaluations from "../pages/User/Menu/Evaluations/Evaluations";
-
+import Evaluation from "../pages/User/Menu/Evaluation/Evaluation";
 //Evaluador pages
 import SignInEvaluador from "../pages/Evaluador/SignIn/SignIn";
 import Questions from "../pages/Evaluador/Menu/Questions/Questions";
@@ -35,7 +35,12 @@ const routes = [
         exact: true,
       },
       {
-        path: "/user/evaluations",
+        path: "/user/evaluations/:groupId",
+        component: Evaluations,
+        exact: true,
+      },
+      {
+        path: "/user/evaluation/:examId",
         component: Evaluations,
         exact: true,
       },

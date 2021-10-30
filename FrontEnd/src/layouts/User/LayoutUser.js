@@ -10,7 +10,7 @@ function LayoutUser(props) {
   const { routes } = props;
   const { Content } = Layout;
   const { user, isLoading } = useContext(AuthContext);
-  // console.log(user);
+
   if (!user && !isLoading) {
     return (
       <>
@@ -34,7 +34,7 @@ function LayoutUser(props) {
     return <Redirect to="/admin" />;
   }
 
-  return null;
+  return <Redirect to="/user/groups" />;
 }
 
 function LoadRoutes(props) {

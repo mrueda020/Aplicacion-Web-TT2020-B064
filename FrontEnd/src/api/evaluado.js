@@ -12,3 +12,15 @@ export const getGroups = () => {
       return result;
     });
 };
+
+export const getExams = (groupId) => {
+  const id = getUserId();
+  const url = `${baseURL}/cargar-examanes/${id}/${groupId}`;
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};
