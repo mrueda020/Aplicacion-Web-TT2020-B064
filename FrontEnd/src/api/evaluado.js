@@ -24,3 +24,15 @@ export const getExams = (groupId) => {
       return result;
     });
 };
+
+export const getEvaluation = (examId) => {
+  const id = getUserId();
+  const url = `${baseURL}/cargar-examen/${id}/${examId}`;
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};

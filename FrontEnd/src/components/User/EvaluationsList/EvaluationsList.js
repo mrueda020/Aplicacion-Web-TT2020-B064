@@ -1,10 +1,11 @@
 import React from "react";
 import { Typography, List } from "antd";
+import { NavLink } from "react-router-dom";
 import "./EvaluationsList.scss";
 function EvaluationsList(props) {
   const { evaluations } = props;
   const { Title } = Typography;
-
+  console.log(evaluations);
   return (
     <div className="EvaluationsList">
       <Title level={2}>Mis Examenes</Title>
@@ -15,11 +16,15 @@ function EvaluationsList(props) {
         renderItem={(evaluation) => (
           <List.Item>
             <List.Item.Meta
-              title="Titulo del examen"
-              description="Descripcion del examen"
+              title={
+                <NavLink to={`/user/evaluation/${evaluation.Exa_id}`}>
+                  {evaluation.Exa_nombre}
+                </NavLink>
+              }
+              description={evaluation.Exa_description}
             />
             <div>
-              <p>Evaluador TODO Obtener evaluador</p>
+              <p>Fecha de Aplicacion: {evaluation.Exa_fecha_aplicacion}</p>
             </div>
           </List.Item>
         )}

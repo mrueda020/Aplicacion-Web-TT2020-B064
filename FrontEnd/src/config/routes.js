@@ -41,7 +41,7 @@ const routes = [
       },
       {
         path: "/user/evaluation/:examId",
-        component: Evaluations,
+        component: Evaluation,
         exact: true,
       },
     ],

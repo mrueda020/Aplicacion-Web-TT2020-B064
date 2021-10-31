@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getEvaluation } from "../../../../api/evaluado";
+function Evaluation(props) {
+  const [evaluation, setEvaluation] = useState([]);
+  useEffect(() => {
+    const examId = props.match.params.examId;
+    getEvaluation(examId).then((result) => {
+      console.log(result);
+      setEvaluation(result);
+    });
+  }, []);
 
-function Evaluation() {
-  return <div>Estamos en el Examen</div>;
+  return (
+    <>
+      <div>Estamos en el Examen</div>
+    </>
+  );
 }
 
 export default Evaluation;
