@@ -1,11 +1,14 @@
 import React from "react";
-import { Typography, List } from "antd";
-import { NavLink } from "react-router-dom";
+import { Typography, List, Popconfirm } from "antd";
+
+import { withRouter } from "react-router-dom";
 import "./EvaluationsList.scss";
 function EvaluationsList(props) {
   const { evaluations } = props;
   const { Title } = Typography;
-  console.log(evaluations);
+  const redirectToExam = (evaluation) => {
+    props.history.push(`/user/evaluation/${evaluation.Exa_id}`);
+  };
   return (
     <div className="EvaluationsList">
       <Title level={2}>Mis Examenes</Title>
@@ -17,14 +20,40 @@ function EvaluationsList(props) {
           <List.Item>
             <List.Item.Meta
               title={
-                <NavLink to={`/user/evaluation/${evaluation.Exa_id}`}>
-                  {evaluation.Exa_nombre}
-                </NavLink>
+                <Popconfirm
+                  title={
+                    evaluation.Exa_tipo_de_examen == 0
+                      ? "Estas seguro que quieres iniciar la prueba, una vez iniciada debes terminarla"
+                      : "Quieres hacer el examen de prueba"
+                  }
+                  okText="Si"
+                  cancelText="No"
+                  onConfirm={() => {
+                    redirectToExam(evaluation);
+                  }}
+                >
+                  <a href="#">{evaluation.Exa_nombre}</a>
+                </Popconfirm>
               }
               description={evaluation.Exa_description}
             />
             <div>
-              <p>Fecha de Aplicacion: {evaluation.Exa_fecha_aplicacion}</p>
+              {evaluation.Exa_tipo_de_examen == 0 ? (
+                <>
+                  <p>
+                    Fecha de inicio: {evaluation.Exa_fecha_aplicacion_inicio}
+                  </p>
+                  <p>
+                    Fecha de finalizacion: {evaluation.Exa_fecha_aplicacion_fin}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    Fecha de inicio: {evaluation.Exa_fecha_aplicacion_inicio}
+                  </p>
+                </>
+              )}
             </div>
           </List.Item>
         )}
@@ -33,4 +62,4 @@ function EvaluationsList(props) {
   );
 }
 
-export default EvaluationsList;
+export default withRouter(EvaluationsList);
