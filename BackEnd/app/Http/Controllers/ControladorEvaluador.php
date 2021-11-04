@@ -169,13 +169,13 @@ class ControladorEvaluador extends Controller
             $examenData = $request->all();
             $noPreguntas = count($examenData["questionsIds"]);
             DB::insert('insert into Examen (Exa_nombre, Exa_description, Evaluador_Evaluador_id
-            , Exa_tipo_de_examen,Exa_no_preguntas,Exa_fecha_aplicacion) values (?,?,?,?,?,?)',[
+            , Exa_tipo_de_examen,Exa_no_preguntas,Exa_fecha_aplicacion_inicio, Exa_fecha_aplicacion_fin) values (?,?,?,?,?,?,?)',[
                $examenData["name"], $examenData["description"], $examenData["idEvaluador"], $examenData["typeExam"],
-               $noPreguntas, $examenData["dates"][0]
+               $noPreguntas, $examenData["dates"][0], $examenData["dates"][1]
             ]);
             $idExamen = DB::getPdo()->lastInsertId();
             if(!$examenData["typeExam"]) //Si no es un examen de prueba
-                DB::table('Examen')->where('Exa_id',$idExamen)->update(['Exa_fecha_aplicacion'=>$examenData["dates"][0]]);
+                DB::table('Examen')->where('Exa_id',$idExamen)->update(['Exa_fecha_aplicacion_inicio'=>$examenData["dates"][0], 'Exa_fecha_aplicacion_fin'=>$examenData["dates"][1]]);
             
             for($i=0; $i<$noPreguntas; $i++)
             {

@@ -92,10 +92,12 @@ function ExamsForm({ setConfirmReloading }) {
         return;
       }
       payload.dates = dates;
-    }
-    else{
-      console.log(moment().format('YYYY-MM-DD h:mm:ss'))
-      payload.dates = [moment().format('YYYY-MM-DD h:mm:ss')]
+    } else {
+      console.log(moment().format("YYYY-MM-DD h:mm:ss"));
+      payload.dates = [
+        moment().format("YYYY-MM-DD h:mm:ss"),
+        moment().format("YYYY-MM-DD h:mm:ss"),
+      ];
     }
     const result = await createExam(payload);
     if (result.status === 200) {
