@@ -184,7 +184,7 @@ class ControladorEvaluado extends Controller
                 $aux1 = ['pregunta'=> $pregunta];
                 $respuestas = DB::select('select * from Respuesta where Pregunta_Pr_id =  ? ',[$idPreguntas[$i]->Pregunta_Pr_id]);
                 // array_push($aux, $respuestas);
-                $aux2 = ['repuestas'=>$respuestas];
+                $aux2 = ['respuestas'=>$respuestas];
                 // array_push($examen, (object)$aux);
                 array_push($examen, (object) array_merge( (array) $aux1,(array) $aux2));
             }

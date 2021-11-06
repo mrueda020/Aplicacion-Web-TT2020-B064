@@ -2,6 +2,10 @@
   &__content {
     margin-left: 300px;
     margin-top: 43px;
-    height: 100vh;
+    // height: 100vh;
   }
+}
+
+.ant-layout-content {
+  min-height: 100vh !important;
 }

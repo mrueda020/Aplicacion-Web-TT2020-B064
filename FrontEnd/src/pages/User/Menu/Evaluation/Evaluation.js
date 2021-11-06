@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { getEvaluation } from "../../../../api/evaluado";
+import EvaluationForm from "../../../../components/User/Evaluation/Evaluation";
+import "./Evaluation.scss";
 function Evaluation(props) {
   const [evaluation, setEvaluation] = useState([]);
   useEffect(() => {
     const examId = props.match.params.examId;
     getEvaluation(examId).then((result) => {
-      console.log(result);
-      setEvaluation(result);
+      setEvaluation(result.data);
     });
   }, []);
 
   return (
-    <>
-      <div>Estamos en el Examen</div>
-    </>
+    <div className="Evaluation">
+      <EvaluationForm evaluation={evaluation} />
+    </div>
   );
 }
 
