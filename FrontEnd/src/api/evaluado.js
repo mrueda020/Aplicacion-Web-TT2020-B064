@@ -36,3 +36,17 @@ export const getEvaluation = (examId) => {
       return result;
     });
 };
+
+export const sendAnswers = (payload) => {
+  const url = `${baseURL}/enviar-respuestas`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};

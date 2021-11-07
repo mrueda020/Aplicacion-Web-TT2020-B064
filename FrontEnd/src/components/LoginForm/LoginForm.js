@@ -45,7 +45,6 @@ function LoginForm(props) {
             window.location.reload();
             break;
           default:
-            console.log(userType);
             break;
         }
       }

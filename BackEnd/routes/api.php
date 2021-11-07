@@ -24,6 +24,8 @@ Route::post("/Login", [ControladorEvaluado::class,"Login"]);
 Route::get("/cargar-grupos/{idEvaluado}",[ControladorEvaluado::class,"cargarGrupos"]);
 Route::get("/cargar-examanes/{idEvaluado}/{idGrupo}",[ControladorEvaluado::class,"cargarExamens"]);
 Route::get("/cargar-examen/{idEvaluado}/{idExamen}",[ControladorEvaluado::class,"cargarExamen"]);
+Route::post('/enviar-respuestas',[ControladorEvaluado::class,"enviarRespuestas"]);
+
 //Rutas para Evaluador
 Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
 Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);;

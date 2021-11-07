@@ -188,7 +188,9 @@ class ControladorEvaluado extends Controller
                 // array_push($examen, (object)$aux);
                 array_push($examen, (object) array_merge( (array) $aux1,(array) $aux2));
             }
-            $response = ["data"=>$examen];
+            $examenInfo = DB::table('Examen')->where('Exa_id',$idExamen)->get();
+            // array_push($examen, ['examenInfo'=>$examenInfo]);
+            $response = ["data"=>$examen,"examenInfo"=>$examenInfo];
             return response()->json($response,200);
         } catch (\Throwable $th) {
             //throw $th;
@@ -196,6 +198,12 @@ class ControladorEvaluado extends Controller
             return response()->json($response,500);
         }
         
+    }
+
+    public function enviarRespuestas(Request $request)
+    {
+        $data = $request->all();
+        return response()->json($data,200);
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])

@@ -93,7 +93,6 @@ function ExamsForm({ setConfirmReloading }) {
       }
       payload.dates = dates;
     } else {
-      console.log(moment().format("YYYY-MM-DD h:mm:ss"));
       payload.dates = [
         moment().format("YYYY-MM-DD h:mm:ss"),
         moment().format("YYYY-MM-DD h:mm:ss"),

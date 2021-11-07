@@ -10,7 +10,6 @@ function QuestionList(props) {
 
   useEffect(() => {
     getQuestions().then((result) => {
-      console.log(result);
       if (result.data) {
         setQuestions(result.data);
       } else {

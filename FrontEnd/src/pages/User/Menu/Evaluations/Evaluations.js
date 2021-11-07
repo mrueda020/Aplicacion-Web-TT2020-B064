@@ -9,7 +9,6 @@ function Evaluations(props) {
     const groupId = props.match.params.groupId;
     getExams(groupId).then((result) => {
       setEvaluations(result.data);
-      console.log(result.data);
     });
   }, []);
   return (

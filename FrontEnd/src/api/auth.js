@@ -21,7 +21,6 @@ export const getRefeshToken = () => {
 
 export const refreshAccessToken = async (refreshToken) => {
   const url = `${baseURL}/refrescar-token`;
-  console.log(url);
   const bodyObj = {
     refreshToken: refreshToken,
   };
