@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-10-2021 a las 21:37:36
+-- Tiempo de generación: 08-11-2021 a las 00:55:42
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -56,11 +56,7 @@ CREATE TABLE `evaluado` (
 --
 
 INSERT INTO `evaluado` (`Eva_id`, `Eva_nombre`, `Eva_apellido_paterno`, `Eva_apellido_materno`, `Eva_email`, `Eva_contraseña`) VALUES
-(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda010@hotmail.com', '$2y$10$VumEXRSvMEpCz0gAiP3GGuHI3hIe5GjHF8hXCXvWyhnlNsIDEIisK'),
-(2, 'Miguel', 'Rueda', 'Carbajal', 'mrueda020@hotmail.com', '$2y$10$5w4OoNk7dwg0BOivQ8hTK.o0WbcQdvLz5mQVh0ysalCNhWFvn3l0W'),
-(3, 'Miguel', 'Rueda', 'Carbajal', 'mrueda030@hotmail.com', '$2y$10$Yldb20GS1b5D4L60jnrAgu5O5QRKhFt4kaYeR6uBEb4nK2/SWrylG'),
-(4, 'Miguel', 'Rueda', 'Carbajal', 'mrueda040@hotmail.com', '$2y$10$ItvPMSj7VbJKyCzX3sJbPuPw8qJikTvbDa.vSBfQb92ITk0ErV5aq'),
-(5, 'Miguel', 'Rueda', 'Carbajal', 'mrueda050@hotmail.com', '$2y$10$5e89IRpzHV1wXEfztx1rHOZvoVNy9XmAB6FdIdmzfPL6wegrCnBuy');
+(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda020@hotmail.com', '$2y$10$UP1jdL4Xstm5bZisict/.O0oynH9ScRNRDfJk8tJJBFZi/4a9yrwe');
 
 -- --------------------------------------------------------
 
@@ -82,7 +78,7 @@ CREATE TABLE `evaluador` (
 --
 
 INSERT INTO `evaluador` (`Evaluador_id`, `Evaluador_nombre`, `Evaluador_apellido_paterno`, `Evaluador_apellido_materno`, `Evaluador_email`, `Evaluador_contraseña`) VALUES
-(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda@hotmail.com', '$2y$10$heemYKx9eSxJtGahrIS3LOf82aDIkzs24Bp6P3MmymIYg1ZlHkFxy');
+(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda@hotmail.com', '$2y$10$xNUJ5fQ1UeSxGK4ZhGBzcOLe1IueA1pY.irfCc1RvveQF8MfjCVNK');
 
 -- --------------------------------------------------------
 
@@ -94,23 +90,20 @@ CREATE TABLE `examen` (
   `Exa_id` int(11) NOT NULL,
   `Exa_nombre` varchar(50) NOT NULL,
   `Exa_description` varchar(50) NOT NULL,
-  `Exa_fecha_aplicacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `Exa_fecha_aplicacion_inicio` timestamp NULL DEFAULT NULL,
   `Evaluador_Evaluador_id` int(11) NOT NULL,
   `Exa_tipo_de_examen` varchar(45) NOT NULL,
-  `Exa_no_preguntas` int(11) NOT NULL
+  `Exa_no_preguntas` int(11) NOT NULL,
+  `Exa_fecha_aplicacion_fin` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `examen`
 --
 
-INSERT INTO `examen` (`Exa_id`, `Exa_nombre`, `Exa_description`, `Exa_fecha_aplicacion`, `Evaluador_Evaluador_id`, `Exa_tipo_de_examen`, `Exa_no_preguntas`) VALUES
-(1, 'grdgdr', 'geg', '2021-09-27 16:06:34', 1, '1', 1),
-(2, 'gdrgge', 'geedge', '2021-09-27 16:06:44', 1, '1', 3),
-(3, 'gtgrg', 'rgrrgrtg', '2021-09-29 17:50:42', 1, '1', 2),
-(4, 'wwtgte4te4t', '3tw4tkfnieofgwginegwggewge', '2021-09-29 21:55:42', 1, '1', 1),
-(5, 'wwtgte4te4t', '3tw4tkfnieofgwginegwggewge', '2021-09-29 21:56:00', 1, '1', 1),
-(6, 'gferg', 'ewffwefef', '2021-09-30 22:01:26', 1, '0', 1);
+INSERT INTO `examen` (`Exa_id`, `Exa_nombre`, `Exa_description`, `Exa_fecha_aplicacion_inicio`, `Evaluador_Evaluador_id`, `Exa_tipo_de_examen`, `Exa_no_preguntas`, `Exa_fecha_aplicacion_fin`) VALUES
+(1, 'Examen de prueba 1', 'Descripción del Examen 1', '2021-11-03 13:13:53', 1, '1', 5, '2021-11-03 13:13:53'),
+(2, 'Examen de prueba 2', 'Examen de prueba 2', '2021-11-04 13:10:56', 1, '0', 5, '2021-11-05 13:10:56');
 
 -- --------------------------------------------------------
 
@@ -130,14 +123,7 @@ CREATE TABLE `grupo` (
 --
 
 INSERT INTO `grupo` (`Gr_id`, `Evaluador_Evaluador_id`, `Gr_nombre`, `Gr_descripcion`) VALUES
-(1, 1, 'gdg', 'ergeg'),
-(2, 1, 'grgrg', 'grgrjth54'),
-(3, 1, 'grgrg', 'grgrjth54'),
-(4, 1, 'grgrg', 'grgrjth54'),
-(5, 1, 'grgrg', 'grgrjth54'),
-(6, 1, 'eeg', 'gerg'),
-(7, 1, 'eeg', 'gerg'),
-(8, 1, 'tthyh', '656y46');
+(1, 1, 'Grupo 1', 'Descripción del grupo 1');
 
 -- --------------------------------------------------------
 
@@ -155,25 +141,7 @@ CREATE TABLE `grupos_evaluado` (
 --
 
 INSERT INTO `grupos_evaluado` (`Evaluado_Eva_id`, `Grupo_Gr_id`) VALUES
-(1, 1),
-(3, 1),
-(1, 2),
-(3, 2),
-(1, 3),
-(3, 3),
-(1, 4),
-(3, 4),
-(1, 5),
-(3, 5),
-(1, 6),
-(4, 6),
-(1, 7),
-(4, 7),
-(1, 8),
-(2, 8),
-(3, 8),
-(4, 8),
-(5, 8);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -191,14 +159,7 @@ CREATE TABLE `grupos_evaluador` (
 --
 
 INSERT INTO `grupos_evaluador` (`Evaluador_Evaluador_id`, `Grupo_Gr_id`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(1, 7),
-(1, 8);
+(1, 1);
 
 -- --------------------------------------------------------
 
@@ -216,11 +177,8 @@ CREATE TABLE `grupo_examenes` (
 --
 
 INSERT INTO `grupo_examenes` (`Grupo_Gr_id`, `Examen_Exa_id`) VALUES
-(8, 1),
-(8, 2),
-(8, 3),
-(1, 2),
-(1, 3);
+(1, 1),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -239,12 +197,11 @@ CREATE TABLE `pregunta` (
 --
 
 INSERT INTO `pregunta` (`Pr_id`, `Pr_pregunta`, `Evaluador_Evaluador_id`) VALUES
-(1, 'gdrg', 1),
-(2, 'gdrg', 1),
-(3, 'gdrg', 1),
-(4, 'gdrg', 1),
-(5, 'gdrg', 1),
-(6, '6jj66j6', 1);
+(1, 'Pregunta de prueba 1?', 1),
+(2, 'Pregunta de prueba 2?', 1),
+(3, 'Pregunta de prueba 3?', 1),
+(4, 'Pregunta de prueba 4?', 1),
+(5, 'Pregunta de prueba 5?', 1);
 
 -- --------------------------------------------------------
 
@@ -263,14 +220,15 @@ CREATE TABLE `preguntas_en_examen` (
 
 INSERT INTO `preguntas_en_examen` (`Examen_Exa_id`, `Pregunta_Pr_id`) VALUES
 (1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(2, 1),
+(2, 2),
 (2, 3),
 (2, 4),
-(2, 1),
-(3, 2),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 4);
+(2, 5);
 
 -- --------------------------------------------------------
 
@@ -290,18 +248,25 @@ CREATE TABLE `respuesta` (
 --
 
 INSERT INTO `respuesta` (`Res_id`, `Res_respuesta`, `Res_es_correcta`, `Pregunta_Pr_id`) VALUES
-(1, 'ggdr', 0, 1),
-(2, 'dggd', 1, 1),
-(3, 'ggdr', 0, 2),
-(4, 'dggd', 1, 2),
-(5, 'ggdr', 0, 3),
-(6, 'dggd', 1, 3),
-(7, 'ggdr', 0, 4),
-(8, 'dggd', 1, 4),
-(9, 'ggdr', 0, 5),
-(10, 'dggd', 1, 5),
-(11, '6', 0, 6),
-(12, '6', 1, 6);
+(1, 'Respuesta 1', 0, 1),
+(2, 'Respuesta 2', 1, 1),
+(3, 'Respuesta 3', 0, 1),
+(4, 'Respuesta 1', 1, 2),
+(5, 'Respuesta 2', 0, 2),
+(6, 'Respuesta 3', 0, 2),
+(7, 'Respuesta 1', 0, 3),
+(8, 'Respuesta 2', 0, 3),
+(9, 'Respuesta 3', 0, 3),
+(10, 'Respuesta 4', 1, 3),
+(11, 'Respuesta 1', 0, 4),
+(12, 'Respuesta 2', 0, 4),
+(13, 'Respuesta 3', 1, 4),
+(14, 'Respuesta 4', 0, 4),
+(15, 'Respuesta 1', 0, 5),
+(16, 'Respuesta 2', 0, 5),
+(17, 'Respuesta 3', 1, 5),
+(18, 'Respuesta 4', 0, 5),
+(19, 'Respuesta 5', 0, 5);
 
 --
 -- Índices para tablas volcadas
@@ -395,7 +360,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `evaluado`
 --
 ALTER TABLE `evaluado`
-  MODIFY `Eva_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Eva_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluador`
@@ -407,25 +372,25 @@ ALTER TABLE `evaluador`
 -- AUTO_INCREMENT de la tabla `examen`
 --
 ALTER TABLE `examen`
-  MODIFY `Exa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Exa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `Gr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `Gr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `Pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Pr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `respuesta`
 --
 ALTER TABLE `respuesta`
-  MODIFY `Res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Restricciones para tablas volcadas
