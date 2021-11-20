@@ -1,18 +1,18 @@
 import React, { useRef, useEffect } from "react";
 import { sendAnswers } from "../../../api/evaluado";
+import moment from "moment";
 import "./Evaluation.scss";
 function Evaluation(props) {
-  const { evaluation, evaluationInfo } = props;
-
+  const { evaluation, evaluationInfo, groupId } = props;
   const refExam = useRef(null);
-
+  if (evaluationInfo.length)
+    console.log(moment(evaluationInfo[0].Exa_fecha_aplicacion_fin).valueOf());
   const submitExam = async (e) => {
     /* name = Pregunta_Pr_id, value[0] = Res_es_correcta , value[1,..]= Res_id*/
     e.preventDefault();
     const examData = new FormData(refExam.current);
     const questions = [];
     examData.forEach((value, name) => {
-      // console.log(value.slice(1, value.length), value[0]);
       const question = {
         idRespuesta: value.slice(1, value.length),
         idPregunta: name,
@@ -21,6 +21,13 @@ function Evaluation(props) {
       questions.push(question);
     });
     const payload = {
+      fechaRealizacion: moment().format("YYYY-MM-DD h:mm:ss"),
+      fechaInicio: evaluationInfo[0].Exa_fecha_aplicacion_inicio,
+      fechaFin: evaluationInfo[0].Exa_fecha_aplicacion_fin,
+      tipoExamen: evaluationInfo[0].Exa_tipo_de_examen,
+      idEvaluador: evaluationInfo[0].Evaluador_Evaluador_id,
+      idExamen: evaluationInfo[0].Exa_id,
+      idGrupo: groupId,
       respuestas: questions,
     };
     const response = await sendAnswers(payload);
@@ -29,28 +36,45 @@ function Evaluation(props) {
   };
 
   return (
-    <div className="Evaluation">
-      {evaluationInfo.length > 0 && (
-        <>
-          <h3>{evaluationInfo[0].Exa_nombre}</h3>
-          <h5>{evaluationInfo[0].Exa_description}</h5>
-        </>
-      )}
-
-      <form className="w3-container" onSubmit={submitExam} ref={refExam}>
-        <hr></hr>
-        {evaluation.map((eva, index) => (
-          <Question key={index} eva={eva} />
-        ))}
-        <hr></hr>
-        <br></br>
-        <p>
-          <button type="submit" className="w3-btn w3-green">
-            Enviar Examen
-          </button>
-        </p>
-      </form>
-    </div>
+    <>
+      <div className="Evaluation">
+        {evaluationInfo.length > 0 && (
+          <>
+            {(moment(evaluationInfo[0].Exa_fecha_aplicacion_fin).valueOf() >
+              moment.now() &&
+              moment(evaluationInfo[0].Exa_fecha_aplicacion_inicio).valueOf() <
+                moment.now()) ||
+            evaluationInfo[0].Exa_tipo_de_examen === "1" ? (
+              <>
+                <h3>{evaluationInfo[0].Exa_nombre}</h3>
+                <h5>{evaluationInfo[0].Exa_description}</h5>
+                <form
+                  className="w3-container"
+                  onSubmit={submitExam}
+                  ref={refExam}
+                >
+                  <hr></hr>
+                  {evaluation.map((eva, index) => (
+                    <Question key={index} eva={eva} />
+                  ))}
+                  <hr></hr>
+                  <br></br>
+                  <p>
+                    <button type="submit" className="w3-btn w3-green">
+                      Enviar Examen
+                    </button>
+                  </p>
+                </form>
+              </>
+            ) : (
+              <>
+                <h3>Examen no Disponible</h3>
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

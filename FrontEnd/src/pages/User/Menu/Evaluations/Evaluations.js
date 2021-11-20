@@ -5,15 +5,17 @@ import "./Evaluations.scss";
 
 function Evaluations(props) {
   const [evaluations, setEvaluations] = useState([]);
+  const [groupId, setGroupId] = useState(null);
   useEffect(() => {
     const groupId = props.match.params.groupId;
+    setGroupId(groupId);
     getExams(groupId).then((result) => {
       setEvaluations(result.data);
     });
   }, []);
   return (
     <div className="Evaluations">
-      <EvalautionsList evaluations={evaluations} />
+      <EvalautionsList evaluations={evaluations} groupId={groupId} />
     </div>
   );
 }

@@ -5,8 +5,11 @@ import "./Evaluation.scss";
 function Evaluation(props) {
   const [evaluation, setEvaluation] = useState([]);
   const [evaluationInfo, setEvaluationInfo] = useState([]);
+  const [groupId, setGroupId] = useState(null);
   useEffect(() => {
     const examId = props.match.params.examId;
+    const groupId = props.match.params.groupId;
+    setGroupId(groupId);
     getEvaluation(examId).then((result) => {
       setEvaluation(result.data);
       setEvaluationInfo(result.examenInfo);
@@ -15,7 +18,11 @@ function Evaluation(props) {
 
   return (
     <div className="Evaluation">
-      <EvaluationForm evaluation={evaluation} evaluationInfo={evaluationInfo} />
+      <EvaluationForm
+        evaluation={evaluation}
+        evaluationInfo={evaluationInfo}
+        groupId={groupId}
+      />
     </div>
   );
 }

@@ -4,10 +4,10 @@ import { Typography, List, Popconfirm } from "antd";
 import { withRouter } from "react-router-dom";
 import "./EvaluationsList.scss";
 function EvaluationsList(props) {
-  const { evaluations } = props;
+  const { evaluations, groupId } = props;
   const { Title } = Typography;
   const redirectToExam = (evaluation) => {
-    props.history.push(`/user/evaluation/${evaluation.Exa_id}`);
+    props.history.push(`/user/evaluation/${evaluation.Exa_id}/${groupId}`);
   };
   return (
     <div className="EvaluationsList">

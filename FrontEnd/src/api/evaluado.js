@@ -38,6 +38,7 @@ export const getEvaluation = (examId) => {
 };
 
 export const sendAnswers = (payload) => {
+  payload.idEvaluado = getUserId();
   const url = `${baseURL}/enviar-respuestas`;
   const params = {
     method: "POST",

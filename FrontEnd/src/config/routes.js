@@ -40,7 +40,7 @@ const routes = [
         exact: true,
       },
       {
-        path: "/user/evaluation/:examId",
+        path: "/user/evaluation/:examId/:groupId",
         component: Evaluation,
         exact: true,
       },
