@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2021 a las 00:55:42
+-- Tiempo de generación: 21-11-2021 a las 00:06:53
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -56,7 +56,9 @@ CREATE TABLE `evaluado` (
 --
 
 INSERT INTO `evaluado` (`Eva_id`, `Eva_nombre`, `Eva_apellido_paterno`, `Eva_apellido_materno`, `Eva_email`, `Eva_contraseña`) VALUES
-(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda020@hotmail.com', '$2y$10$UP1jdL4Xstm5bZisict/.O0oynH9ScRNRDfJk8tJJBFZi/4a9yrwe');
+(1, 'Miguel', 'Rueda', 'Carbajal', 'mrueda020@hotmail.com', '$2y$10$UP1jdL4Xstm5bZisict/.O0oynH9ScRNRDfJk8tJJBFZi/4a9yrwe'),
+(2, 'Alan', 'Almanza', 'Medina', 'alan@hotmail.com', '$2y$10$4zb.7zMDf.coCaMkFxy.P.OxFlegUEhqs3149lxNiFn9/dQ2aZ0Um'),
+(3, 'Gil', 'Casimiro', 'Ramirez', 'gil@hotmail.com', '$2y$10$.yA19GIUWJIUqjTP2BdBfepZOR4z9w5bPkqsqYgmfnoCMSH5EIDrG');
 
 -- --------------------------------------------------------
 
@@ -103,7 +105,7 @@ CREATE TABLE `examen` (
 
 INSERT INTO `examen` (`Exa_id`, `Exa_nombre`, `Exa_description`, `Exa_fecha_aplicacion_inicio`, `Evaluador_Evaluador_id`, `Exa_tipo_de_examen`, `Exa_no_preguntas`, `Exa_fecha_aplicacion_fin`) VALUES
 (1, 'Examen de prueba 1', 'Descripción del Examen 1', '2021-11-03 13:13:53', 1, '1', 5, '2021-11-03 13:13:53'),
-(2, 'Examen de prueba 2', 'Examen de prueba 2', '2021-11-04 13:10:56', 1, '0', 5, '2021-11-05 13:10:56');
+(2, 'Examen de prueba 2', 'Examen de prueba 2', '2021-11-04 13:10:56', 1, '0', 5, '2022-11-05 13:10:56');
 
 -- --------------------------------------------------------
 
@@ -123,7 +125,8 @@ CREATE TABLE `grupo` (
 --
 
 INSERT INTO `grupo` (`Gr_id`, `Evaluador_Evaluador_id`, `Gr_nombre`, `Gr_descripcion`) VALUES
-(1, 1, 'Grupo 1', 'Descripción del grupo 1');
+(1, 1, 'Grupo 1', 'Descripción del grupo 1'),
+(2, 1, 'Grupo de Prueba', 'Este es un ejemplo de un grupo');
 
 -- --------------------------------------------------------
 
@@ -141,7 +144,10 @@ CREATE TABLE `grupos_evaluado` (
 --
 
 INSERT INTO `grupos_evaluado` (`Evaluado_Eva_id`, `Grupo_Gr_id`) VALUES
-(1, 1);
+(1, 1),
+(1, 2),
+(2, 2),
+(3, 2);
 
 -- --------------------------------------------------------
 
@@ -159,7 +165,8 @@ CREATE TABLE `grupos_evaluador` (
 --
 
 INSERT INTO `grupos_evaluador` (`Evaluador_Evaluador_id`, `Grupo_Gr_id`) VALUES
-(1, 1);
+(1, 1),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -268,6 +275,30 @@ INSERT INTO `respuesta` (`Res_id`, `Res_respuesta`, `Res_es_correcta`, `Pregunta
 (18, 'Respuesta 4', 0, 5),
 (19, 'Respuesta 5', 0, 5);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `resultados`
+--
+
+CREATE TABLE `resultados` (
+  `Evaluado_Eva_id` int(11) NOT NULL,
+  `Evaluador_Evaluador_id` int(11) NOT NULL,
+  `Examen_Exa_id` int(11) NOT NULL,
+  `Grupo_Gr_id` int(11) NOT NULL,
+  `Resultados_calificacion` int(11) NOT NULL,
+  `Resultados_id` int(11) NOT NULL,
+  `Resultados_fecha_de_realizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `resultados`
+--
+
+INSERT INTO `resultados` (`Evaluado_Eva_id`, `Evaluador_Evaluador_id`, `Examen_Exa_id`, `Grupo_Gr_id`, `Resultados_calificacion`, `Resultados_id`, `Resultados_fecha_de_realizacion`) VALUES
+(1, 1, 1, 1, 0, 1, '2021-11-20 10:33:11'),
+(1, 1, 2, 1, 0, 2, '2021-11-20 10:53:42');
+
 --
 -- Índices para tablas volcadas
 --
@@ -347,6 +378,16 @@ ALTER TABLE `respuesta`
   ADD KEY `fk_Respuesta_Pregunta1_idx` (`Pregunta_Pr_id`);
 
 --
+-- Indices de la tabla `resultados`
+--
+ALTER TABLE `resultados`
+  ADD PRIMARY KEY (`Resultados_id`),
+  ADD KEY `fk_Resultados_Evaluado1_idx` (`Evaluado_Eva_id`),
+  ADD KEY `fk_Resultados_Evaluador1_idx` (`Evaluador_Evaluador_id`),
+  ADD KEY `fk_Resultados_Examen1_idx` (`Examen_Exa_id`),
+  ADD KEY `fk_Resultados_Grupo1_idx` (`Grupo_Gr_id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -360,7 +401,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT de la tabla `evaluado`
 --
 ALTER TABLE `evaluado`
-  MODIFY `Eva_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Eva_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluador`
@@ -378,7 +419,7 @@ ALTER TABLE `examen`
 -- AUTO_INCREMENT de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  MODIFY `Gr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Gr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
@@ -391,6 +432,12 @@ ALTER TABLE `pregunta`
 --
 ALTER TABLE `respuesta`
   MODIFY `Res_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT de la tabla `resultados`
+--
+ALTER TABLE `resultados`
+  MODIFY `Resultados_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -447,6 +494,15 @@ ALTER TABLE `preguntas_en_examen`
 --
 ALTER TABLE `respuesta`
   ADD CONSTRAINT `fk_Respuesta_Pregunta1` FOREIGN KEY (`Pregunta_Pr_id`) REFERENCES `pregunta` (`Pr_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `resultados`
+--
+ALTER TABLE `resultados`
+  ADD CONSTRAINT `fk_Resultados_Evaluado1` FOREIGN KEY (`Evaluado_Eva_id`) REFERENCES `evaluado` (`Eva_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_Resultados_Evaluador1` FOREIGN KEY (`Evaluador_Evaluador_id`) REFERENCES `evaluador` (`Evaluador_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_Resultados_Examen1` FOREIGN KEY (`Examen_Exa_id`) REFERENCES `examen` (`Exa_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_Resultados_Grupo1` FOREIGN KEY (`Grupo_Gr_id`) REFERENCES `grupo` (`Gr_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
