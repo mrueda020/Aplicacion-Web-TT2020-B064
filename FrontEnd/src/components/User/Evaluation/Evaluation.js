@@ -1,12 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { sendAnswers } from "../../../api/evaluado";
+import { Modal, notification, Result } from "antd";
 import moment from "moment";
 import "./Evaluation.scss";
 function Evaluation(props) {
   const { evaluation, evaluationInfo, groupId } = props;
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const refExam = useRef(null);
-  if (evaluationInfo.length)
-    console.log(moment(evaluationInfo[0].Exa_fecha_aplicacion_fin).valueOf());
+
   const submitExam = async (e) => {
     /* name = Pregunta_Pr_id, value[0] = Res_es_correcta , value[1,..]= Res_id*/
     e.preventDefault();
@@ -32,7 +33,16 @@ function Evaluation(props) {
     };
     const response = await sendAnswers(payload);
     const result = await response.json();
-    console.log(result);
+    if (response.status === 200)
+      notification["success"]({ message: "Se han enviado tus respuestas" });
+    else
+      notification["error"]({
+        message: "Error en el servidor intenta mas tarde por favor",
+      });
+    setIsModalVisible(false);
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
   };
 
   return (
@@ -50,7 +60,10 @@ function Evaluation(props) {
                 <h5>{evaluationInfo[0].Exa_description}</h5>
                 <form
                   className="w3-container"
-                  onSubmit={submitExam}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setIsModalVisible(true);
+                  }}
                   ref={refExam}
                 >
                   <hr></hr>
@@ -74,6 +87,15 @@ function Evaluation(props) {
           </>
         )}
       </div>
+      <Modal
+        title="Confirmacion"
+        visible={isModalVisible}
+        onOk={(e) => submitExam(e)}
+        onCancel={() => setIsModalVisible(false)}
+        centered
+      >
+        <p>Estas seguro de enviar tus respuestas</p>
+      </Modal>
     </>
   );
 }
