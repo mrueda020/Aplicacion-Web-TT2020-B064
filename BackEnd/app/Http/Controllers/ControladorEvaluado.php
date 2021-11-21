@@ -256,6 +256,30 @@ class ControladorEvaluado extends Controller
         return $calificacion = ($resultado / count($respuestas))*100; 
     }
 
+    public function obtenerResultados($idEvaluado)
+    {
+        try {
+            //code...
+            $resultados = [];
+            $response = DB::select("select * from Resultados where Evaluado_Eva_id = ?",[$idEvaluado]);
+           
+            for($i=0; $i<count($response); $i++)
+            {
+                $data = [];    
+                $grupo = DB::select("select Gr_nombre from Grupo where Gr_id = ?",[$response[$i]->Grupo_Gr_id]);
+                $examen = DB::select("select Exa_nombre from Examen where Exa_id = ?",[$response[$i]->Examen_Exa_id]);
+                array_push($data,  (object) array_merge((array)$grupo[0], (array)$examen[0]));
+                array_push($resultados, array_merge((array)$data[0], (array)$response[$i]));
+            
+            }
+
+            return response()->json($resultados,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error"=>$th];
+            return response()->json($response,500);
+        }
+    }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])
     {
