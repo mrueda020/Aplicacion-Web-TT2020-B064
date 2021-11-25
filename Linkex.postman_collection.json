@@ -206,35 +206,32 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "{{url}}/?page=1",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/?page=1",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								""
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
 		{
 			"name": "Evaluado",
 			"item": [
+				{
+					"name": "Cargar Examenes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/cargar-examanes/1/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cargar-examanes",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Login Evaluado",
 					"request": {
@@ -269,7 +266,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" :\"mrueda070@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
+							"raw": "{\r\n    \"email\" :\"mrueda020@hotmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"confirmarPassword\":\"12345678\",\r\n    \"nombre\":\"Miguel\",\r\n    \"apPaterno\":\"Rueda\",\r\n    \"apMaterno\":\"Carbajal\" \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -302,6 +299,45 @@
 							"path": [
 								"api",
 								"cargar-grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cargar Examen",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/cargar-examen/1/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cargar-examen",
+								"1",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Resultados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/resultados/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"resultados",
 								"1"
 							]
 						}
