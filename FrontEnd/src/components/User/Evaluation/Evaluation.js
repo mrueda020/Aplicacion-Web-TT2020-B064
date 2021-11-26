@@ -35,6 +35,8 @@ function Evaluation(props) {
     const result = await response.json();
     if (response.status === 200)
       notification["success"]({ message: "Se han enviado tus respuestas" });
+    else if (response.status === 404)
+      notification["error"]({ message: "El Examen ya fue contestado" });
     else
       notification["error"]({
         message: "Error en el servidor intenta mas tarde por favor",
