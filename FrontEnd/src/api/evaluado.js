@@ -51,3 +51,15 @@ export const sendAnswers = (payload) => {
     return response;
   });
 };
+
+export const getResults = () => {
+  const idEvaluado = getUserId();
+  const url = `${baseURL}/resultados/${idEvaluado}`;
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};

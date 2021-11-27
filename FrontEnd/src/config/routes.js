@@ -8,6 +8,7 @@ import Groups from "../pages/User/Menu/Groups/Groups";
 import Settings from "../pages/User/Menu/Settings/Settings";
 import Evaluations from "../pages/User/Menu/Evaluations/Evaluations";
 import Evaluation from "../pages/User/Menu/Evaluation/Evaluation";
+import Results from "../pages/User/Menu/Results/Results";
 //Evaluador pages
 import SignInEvaluador from "../pages/Evaluador/SignIn/SignIn";
 import Questions from "../pages/Evaluador/Menu/Questions/Questions";
@@ -42,6 +43,11 @@ const routes = [
       {
         path: "/user/evaluation/:examId/:groupId",
         component: Evaluation,
+        exact: true,
+      },
+      {
+        path: "/user/results",
+        component: Results,
         exact: true,
       },
     ],

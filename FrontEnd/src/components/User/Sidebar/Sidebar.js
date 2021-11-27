@@ -61,8 +61,8 @@ function Sidebar() {
             </div>
           </NavLink>
 
-          {/* <NavLink
-            to="/user/evaluations"
+          <NavLink
+            to="/user/results"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div className="sidebar__item">
@@ -71,9 +71,10 @@ function Sidebar() {
                 alignmentBaseline="middle"
                 className="w3-margin-right"
               />
-              <span className="sidebar__span-text">Examenes</span>
+              <span className="sidebar__span-text">Resultados</span>
             </div>
-          </NavLink> */}
+          </NavLink>
+
           <NavLink
             to="/user/settings"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
