@@ -1,14 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Row,
-  Col,
-  Typography,
-  notification,
-  Result,
-} from "antd";
+import { Form, Input, Button, Row, Col, Typography, notification } from "antd";
 import { updateInfo } from "../../../api/evaluado";
 import { siteKey } from "../../../utils/constants";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -37,6 +28,11 @@ function Settings() {
     const response = await updateInfo(user);
     const result = await response.json();
     console.log(result);
+    if (response.status === 400 || response.status === 500) {
+      notification["error"]({ message: result.error });
+      return;
+    }
+    notification["success"]({ message: result.message });
   };
   return (
     <div className="SettingsForm">

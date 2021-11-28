@@ -292,7 +292,7 @@ class ControladorEvaluado extends Controller
             $nombre = $data["name"];
             $apellidos = $data["surname"];
 
-            if(!$email && !$nombre && !$surname && !$password && !$apellidos )
+            if(!$email && !$nombre && !$apellidos && !$contraseña && !$confirmarContraseña )
             {
                 $response = ['error' => 'Los campos no deben estar vacios'];
                 return response()->json($response,400);
@@ -340,7 +340,7 @@ class ControladorEvaluado extends Controller
             return response()->json($response,200);
         } catch (\Throwable $th) {
             //throw $th;
-            $response = ["error"=>$th];
+            $response = ["error"=>"Error en el servidor"];
             return response()->json($response,500);
         }
     }
