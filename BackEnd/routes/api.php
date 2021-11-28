@@ -26,6 +26,7 @@ Route::get("/cargar-examanes/{idEvaluado}/{idGrupo}",[ControladorEvaluado::class
 Route::get("/cargar-examen/{idEvaluado}/{idExamen}",[ControladorEvaluado::class,"cargarExamen"]);
 Route::post("/enviar-respuestas",[ControladorEvaluado::class,"enviarRespuestas"]);
 Route::get("/resultados/{idEvaluado}",[ControladorEvaluado::class,"obtenerResultados"]);
+Route::post("/actualizar-info/{idEvaluado}",[ControladorEvaluado::class,"actualizarInfo"]);
 
 //Rutas para Evaluador
 Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);

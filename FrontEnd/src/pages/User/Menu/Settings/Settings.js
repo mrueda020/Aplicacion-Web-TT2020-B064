@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
-import { getGroups } from "../../../../api/evaluado";
+import React from "react";
+import SettingsForm from "../../../../components/User/Settings/Settings";
+import "./Settings.scss";
 function Settings() {
-  useEffect(() => {
-    getGroups().then((result) => {
-      console.log(result);
-    });
-  }, []);
-
-  return <div>Estamos en configuracion</div>;
+  return (
+    <div className="Settings">
+      <SettingsForm />
+    </div>
+  );
 }
 
 export default Settings;

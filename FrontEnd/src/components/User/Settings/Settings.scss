@@ -1,0 +1,21 @@
+@import "../../../scss/variables";
+
+.SettingsForm {
+  padding: 2em;
+  margin-left: auto;
+  margin-right: auto;
+  .form-edit {
+    text-align: center;
+    .ant-form-item {
+      margin-top: 15px;
+      margin-bottom: 5px;
+      i {
+        color: rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    .btn-submit {
+      width: 100%;
+    }
+  }
+}

@@ -281,6 +281,70 @@ class ControladorEvaluado extends Controller
         }
     }
 
+    public function actualizarInfo($idEvaluado, Request $request)
+    {
+        try {
+            //code...
+            $data = $request->all();
+            $contraseña = $data["password"];
+            $confirmarContraseña = $data["confirmPassword"];
+            $email = $data["email"];
+            $nombre = $data["name"];
+            $apellidos = $data["surname"];
+
+            if(!$email && !$nombre && !$surname && !$password && !$apellidos )
+            {
+                $response = ['error' => 'Los campos no deben estar vacios'];
+                return response()->json($response,400);
+            }
+
+            if($contraseña)
+            {
+                if($confirmarContraseña != $contraseña)
+                {
+                    $response = ['error' => "Las contraseñas no coinciden"];
+                    return response()->json($response,400);
+                }
+           
+                if(strlen($contraseña) < 8)
+                {
+                    return response()->json(['error'=>'La contraseña debe ser de 8 caracteres minimo'],400);
+                }
+                $nuevaContraseña = Hash::make($contraseña);
+                DB::update("update Evaluado set Eva_contraseña = ? where Eva_id = ?",[$nuevaContraseña, $idEvaluado]);
+            }
+            
+            if($email)
+            {
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+                {
+                   $response = ['error' => 'Email invalido'];
+                   return response()->json($response,400);
+                }
+                DB::update("update Evaluado set Eva_email = ? where Eva_id = ?",[$email, $idEvaluado]);
+            }
+
+            if($nombre)
+            {
+                DB::update("update Evaluado set Eva_nombre = ? where Eva_id = ?",[$nombre, $idEvaluado]);
+            }
+
+            if($apellidos)
+            {
+                $apellidos = explode(" ",$apellidos);
+                DB::update("update Evaluado set Eva_apellido_paterno = ?, Eva_apellido_materno = ? where Eva_id = ?",
+                [$apellidos[0], $apellidos[1], $idEvaluado]);
+            }
+
+            $response = ["message"=>"Usuario Actualizado"];
+            return response()->json($response,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error"=>$th];
+            return response()->json($response,500);
+        }
+    }
+
     public function paginate($items, $perPage = 5, $page = null, $options = [])
     {
        

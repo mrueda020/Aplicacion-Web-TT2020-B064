@@ -63,3 +63,18 @@ export const getResults = () => {
       return result;
     });
 };
+
+export const updateInfo = (payload) => {
+  const idEvaluado = getUserId();
+  const url = `${baseURL}/actualizar-info/${idEvaluado}`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};
