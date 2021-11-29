@@ -40,6 +40,7 @@ Route::post("/crear-grupo",[ControladorEvaluador::class,"crearGrupo"]);
 Route::get("/obtener-examenes",[ControladorEvaluador::class,"obtenerExamenes"]);
 Route::get("/grupos/{idEvaluador}",[ControladorEvaluador::class,"obtenerGrupos"]);
 Route::post("/asignar-examen",[ControladorEvaluador::class,"asignarExamenes"]);
+Route::post("/actualizar-info-evaluador/{idEvaluador}",[ControladorEvaluador::class,"actualizarInfo"]);
 
 //Rutas para Admin
 Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);

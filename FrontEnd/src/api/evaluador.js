@@ -136,3 +136,18 @@ export const assignExams = (payload) => {
     return response;
   });
 };
+
+export const updateInfo = (payload) => {
+  const idEvaluador = getUserId();
+  const url = `${baseURL}/actualizar-info-evaluador/${idEvaluador}`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};

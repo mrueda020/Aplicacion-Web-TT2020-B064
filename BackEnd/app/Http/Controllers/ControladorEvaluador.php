@@ -296,4 +296,68 @@ class ControladorEvaluador extends Controller
         }
     }
 
+    public function actualizarInfo($idEvaluador, Request $request)
+    {
+        try {
+            //code...
+            $data = $request->all();
+            $contraseña = $data["password"];
+            $confirmarContraseña = $data["confirmPassword"];
+            $email = $data["email"];
+            $nombre = $data["name"];
+            $apellidos = $data["surname"];
+
+            if(!$email && !$nombre && !$apellidos && !$contraseña && !$confirmarContraseña )
+            {
+                $response = ['error' => 'Los campos no deben estar vacios'];
+                return response()->json($response,400);
+            }
+
+            if($contraseña)
+            {
+                if($confirmarContraseña != $contraseña)
+                {
+                    $response = ['error' => "Las contraseñas no coinciden"];
+                    return response()->json($response,400);
+                }
+           
+                if(strlen($contraseña) < 8)
+                {
+                    return response()->json(['error'=>'La contraseña debe ser de 8 caracteres minimo'],400);
+                }
+                $nuevaContraseña = Hash::make($contraseña);
+                DB::update("update Evaluador set Evaluador_contraseña = ? where Evaluador_id = ?",[$nuevaContraseña, $idEvaluador]);
+            }
+            
+            if($email)
+            {
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+                {
+                   $response = ['error' => 'Email invalido'];
+                   return response()->json($response,400);
+                }
+                DB::update("update Evaluador set Evaluador_email = ? where Evaluador_id = ?",[$email, $idEvaluador]);
+            }
+
+            if($nombre)
+            {
+                DB::update("update Evaluador set Evaluador_nombre = ? where Evaluador_id = ?",[$nombre, $idEvaluador]);
+            }
+
+            if($apellidos)
+            {
+                $apellidos = explode(" ",$apellidos);
+                DB::update("update Evaluador set Evaluador_apellido_paterno = ?, Evaluador_apellido_materno = ? where Evaluador_id = ?",
+                [$apellidos[0], $apellidos[1], $idEvaluador]);
+            }
+
+            $response = ["message"=>"Usuario Actualizado"];
+            return response()->json($response,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error"=>"Error en el servidor"];
+            return response()->json($th,500);
+        }
+    }
+
 }
