@@ -12,13 +12,6 @@ function ResultsList() {
     });
   }, []);
 
-  const color = (result) => {
-    if (result >= 70) return "green";
-    else if (result < 70 && result >= 60) return "yellow";
-
-    return "red";
-  };
-
   return (
     <div className="ResultsList">
       <Title level={2}>Resultados</Title>
@@ -29,19 +22,14 @@ function ResultsList() {
         renderItem={(result) => (
           <List.Item>
             <List.Item.Meta
-              title={result.Exa_nombre}
+              title={<h5>{result.Exa_nombre}</h5>}
               description={
                 <Description
+                  score={result.Resultados_calificacion}
                   groupName={result.Gr_nombre}
                   date={result.Resultados_fecha_de_realizacion}
                 />
               }
-            />
-            <Progress
-              type="circle"
-              width={80}
-              percent={result.Resultados_calificacion}
-              strokeColor={color(result.Resultados_calificacion)}
             />
           </List.Item>
         )}
@@ -51,12 +39,27 @@ function ResultsList() {
 }
 
 function Description(props) {
-  const { groupName, date } = props;
+  const { groupName, date, score } = props;
+
+  const color = (result) => {
+    if (result >= 70) return "green";
+    else if (result < 70 && result >= 60) return "yellow";
+
+    return "red";
+  };
+
   return (
     <div>
-      {groupName}
-      <br></br>
-      Fecha de realizacion {moment(date).format()}
+      <h5 className="w3-text-gray">{groupName}</h5>
+      <h5 className="w3-text-gray">
+        Fecha de realizacion: {moment(date).format()}
+      </h5>
+
+      <h5 className="w3-text-gray">
+        Respondiste el{" "}
+        <span className={`w3-text-${color(score)}`}>{score}%</span> de las
+        preguntas de manera correcta{" "}
+      </h5>
     </div>
   );
 }

@@ -7,7 +7,14 @@ function QuestionList(props) {
   const { confirmReloading, setConfirmReloading } = props;
   const { Title } = Typography;
   const [questions, setQuestions] = useState([]);
-
+  useEffect(() => {
+    let emptyDescription = document.getElementsByClassName(
+      "ant-empty-description"
+    );
+    for (let i = 0; i < emptyDescription.length; i++) {
+      emptyDescription[i].innerHTML = "Vacio";
+    }
+  });
   useEffect(() => {
     getQuestions().then((result) => {
       if (result.data) {

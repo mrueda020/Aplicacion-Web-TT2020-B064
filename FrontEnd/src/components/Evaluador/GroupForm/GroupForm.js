@@ -22,6 +22,27 @@ function GroupForm({ setConfirmReloading }) {
     cleanData();
   }, [users]);
 
+  useEffect(() => {
+    let inputs = document.getElementsByClassName("ant-transfer-list-search");
+    for (let i = 0; i < inputs.length; i++) inputs[i].placeholder = "Buscar";
+  }, []);
+
+  useEffect(() => {
+    let emptyDescription = document.getElementsByClassName(
+      "ant-empty-description"
+    );
+    // if (emptyDescription.length) emptyDescription[0].innerHTML = "Vacio";
+    for (let i = 0; i < emptyDescription.length; i++) {
+      emptyDescription[i].innerHTML = "Vacio";
+    }
+  });
+
+  useEffect(() => {
+    let inputs = document.getElementsByClassName("ant-transfer-list-search");
+    inputs[0].placeholder = "Buscar";
+    inputs[1].placeholder = "Buscar";
+  }, []);
+
   const cleanData = () => {
     const cleanedData = users.map((user) => {
       const u = {
@@ -74,6 +95,20 @@ function GroupForm({ setConfirmReloading }) {
     <div className="GroupForm">
       <Title level={2}>Crear Grupo</Title>
       <Transfer
+        selectAllLabels={[
+          ({ selectedCount, totalCount }) => (
+            <span>
+              {selectedCount} de {totalCount} evaluados
+            </span>
+          ),
+          ({ selectedCount, totalCount }) => (
+            <span>{selectedCount} evaluados</span>
+          ),
+        ]}
+        listStyle={{
+          width: 350,
+          height: 550,
+        }}
         dataSource={data}
         targetKeys={targetKeys}
         pagination

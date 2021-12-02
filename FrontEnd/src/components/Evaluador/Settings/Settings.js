@@ -1,13 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, Row, Col, Typography, notification } from "antd";
 import { updateInfo } from "../../../api/evaluador";
-import { siteKey } from "../../../utils/constants";
-import ReCAPTCHA from "react-google-recaptcha";
+
 import "./Settings.scss";
 function Settings() {
   const { Title } = Typography;
-  const [isCaptchaSolved, setIsCaptchaSolved] = useState(false);
-  const recaptchaRef = useRef(null);
+
   const [user, setUser] = useState({
     name: "",
     surname: "",
@@ -16,15 +14,7 @@ function Settings() {
     confirmPassword: "",
   });
 
-  const onCaptchaChange = () => {
-    setIsCaptchaSolved(!isCaptchaSolved);
-  };
-
   const updateUser = async () => {
-    if (!isCaptchaSolved) {
-      notification["error"]({ message: "Resuelve el captcha" });
-      return;
-    }
     const response = await updateInfo(user);
     const result = await response.json();
     console.log(result);
@@ -102,13 +92,6 @@ function Settings() {
           </Button>
         </Form.Item>
       </Form>
-      <div className="login-form__captcha">
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          sitekey={siteKey}
-          onChange={onCaptchaChange}
-        />
-      </div>
     </div>
   );
 }

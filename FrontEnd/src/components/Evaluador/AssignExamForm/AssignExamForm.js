@@ -27,6 +27,21 @@ function AssignExamForm({
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
+    let inputs = document.getElementsByClassName("ant-transfer-list-search");
+    for (let i = 0; i < inputs.length; i++) inputs[i].placeholder = "Buscar";
+  }, []);
+
+  useEffect(() => {
+    let emptyDescription = document.getElementsByClassName(
+      "ant-empty-description"
+    );
+    // if (emptyDescription.length) emptyDescription[0].innerHTML = "Vacio";
+    for (let i = 0; i < emptyDescription.length; i++) {
+      emptyDescription[i].innerHTML = "Vacio";
+    }
+  });
+
+  useEffect(() => {
     getExams().then((result) => {
       if (result.data.length) setExams(result.data);
     });
@@ -84,6 +99,20 @@ function AssignExamForm({
     <div className="AssignExamForm">
       <Title level={2}>Asignar Examenes</Title>
       <Transfer
+        selectAllLabels={[
+          ({ selectedCount, totalCount }) => (
+            <span>
+              {selectedCount} de {totalCount} examenes
+            </span>
+          ),
+          ({ selectedCount, totalCount }) => (
+            <span>{selectedCount} examenes</span>
+          ),
+        ]}
+        listStyle={{
+          width: 350,
+          height: 550,
+        }}
         rowKey={(record) => record.Exa_id}
         dataSource={exams}
         targetKeys={targetKeys}

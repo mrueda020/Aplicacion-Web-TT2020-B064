@@ -47,6 +47,21 @@ function ExamsForm({ setConfirmReloading }) {
     cleanData();
   }, [questions]);
 
+  useEffect(() => {
+    let inputs = document.getElementsByClassName("ant-transfer-list-search");
+    for (let i = 0; i < inputs.length; i++) inputs[i].placeholder = "Buscar";
+  }, []);
+
+  useEffect(() => {
+    let emptyDescription = document.getElementsByClassName(
+      "ant-empty-description"
+    );
+    // if (emptyDescription.length) emptyDescription[0].innerHTML = "Vacio";
+    for (let i = 0; i < emptyDescription.length; i++) {
+      emptyDescription[i].innerHTML = "Vacio";
+    }
+  });
+
   const onChange = (newTargetKeys, direction, moveKeys) => {
     // console.log(newTargetKeys, direction, moveKeys);
     setTargetKeys(newTargetKeys);
@@ -136,6 +151,20 @@ function ExamsForm({ setConfirmReloading }) {
     <div className="ExamsForm">
       <Title level={2}>Crear Examen</Title>
       <Transfer
+        selectAllLabels={[
+          ({ selectedCount, totalCount }) => (
+            <span>
+              {selectedCount} de {totalCount} preguntas
+            </span>
+          ),
+          ({ selectedCount, totalCount }) => (
+            <span>{selectedCount} preguntas</span>
+          ),
+        ]}
+        listStyle={{
+          width: 350,
+          height: 550,
+        }}
         dataSource={mockData}
         targetKeys={targetKeys}
         onChange={onChange}
@@ -179,6 +208,7 @@ function ExamsForm({ setConfirmReloading }) {
         {!isMockExam && (
           <Form.Item label="Periodo de aplicacion">
             <DatePicker.RangePicker
+              placeholder={["Fecha de inicio", "Fecha de termino"]}
               showTime
               disabledDate={disabledDate}
               disabledTime={disabledRangeTime}
