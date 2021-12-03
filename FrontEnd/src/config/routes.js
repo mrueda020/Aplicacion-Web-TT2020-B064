@@ -18,6 +18,9 @@ import SettingsEvaluador from "../pages/Evaluador/Menu/Settings/Settings";
 import SignInAdmin from "../pages/Admin/SignIn/SignIn";
 import Evaluadores from "../pages/Admin/Evaluadores/Evaluadores";
 import Evaluados from "../pages/Admin/Evaluados/Evaluados";
+
+import ErrorPage from "../pages/Page404/ErrorPage";
+
 const routes = [
   { path: "/", component: SignIn, exact: true },
 
@@ -52,6 +55,7 @@ const routes = [
         component: Results,
         exact: true,
       },
+      { component: ErrorPage },
     ],
   },
   {
@@ -75,6 +79,7 @@ const routes = [
         exact: true,
         component: SettingsEvaluador,
       },
+      { component: ErrorPage },
     ],
   },
   // {

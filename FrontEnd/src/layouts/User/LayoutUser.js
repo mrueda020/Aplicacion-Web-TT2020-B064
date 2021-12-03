@@ -20,7 +20,7 @@ function LayoutUser(props) {
     );
   } else if (user && user.rol === "evaluado") {
     const pathName = window.location.pathname;
-    if (pathName === "/user") return <Redirect to="/user/question" />;
+    if (pathName === "/user") return <Redirect to="/user/groups" />;
     return (
       <Layout className="layout-user">
         <Navbar />
