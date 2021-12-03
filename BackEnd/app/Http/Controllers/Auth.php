@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use JWTAuth;
 use Tymon\JWTAuth\Facades\JWTFactory;
@@ -144,4 +145,93 @@ class Auth extends Controller
             return response()->json($response,400);
         }
     }
+
+
+    public function Login(Request $request)
+    {
+        $email = $request["email"];
+        $contraseña = $request["password"];
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        {
+            $response = ['error' => 'Email invalido'];
+            return response()->json($response,400);
+        }
+
+        $usuario = DB::table('Evaluador')->where('Evaluador_email', $email)->first();
+        if($usuario && $usuario->Evaluador_email == $email)
+        {  
+            if(!Hash::check($contraseña, $usuario->Evaluador_contraseña))
+            {
+                $response = ['error' => "Las contraseñas no coinciden"];
+                return response()->json($response,400);
+            }
+            //    Access token
+            $data = ['sub'=>[
+                'email' => $usuario->Evaluador_email,
+                'id' => $usuario->Evaluador_id,
+                'rol' => 'evaluador'
+            ]];
+            JWTAuth::factory()->setTTL(180);
+            $customClaims = JWTFactory::customClaims($data);
+            $payload = JWTFactory::make($data);
+            $accessToken = JWTAuth::encode($payload);
+            //   Refresh Token
+            $data = ['sub'=>[
+                'id' => $usuario->Evaluador_id,
+                'rol' => 'evaluador'
+            ]];
+            JWTAuth::factory()->setTTL(43200);
+            $customClaims = JWTFactory::customClaims($data);
+            $payload = JWTFactory::make($data);
+            $refreshToken = JWTAuth::encode($payload);
+            $response = ['accessToken' => $accessToken->get() ,
+                            'refreshToken' =>$refreshToken->get()
+                        ];
+            return response()->json($response,200);
+        }
+
+
+        $usuario = DB::table('evaluado')->where('Eva_email', $email)->first();
+       
+        if($usuario && $usuario->Eva_email == $email)
+        {    
+            if(!Hash::check($contraseña, $usuario->Eva_contraseña))
+            {    
+                $response = ['error' => "Las contraseñas no coinciden"];
+                return response()->json($response,400);
+            }
+         //    Access Token
+            $data = ['sub'=>[
+                'email' => $usuario->Eva_email,
+                'id' => $usuario->Eva_id,
+                'rol' => 'evaluado'
+            ]];
+            JWTAuth::factory()->setTTL(180);
+            $customClaims = JWTFactory::customClaims($data);
+            $payload = JWTFactory::make($data);
+            $accesToken = JWTAuth::encode($payload);
+ 
+         //    Refresh Token
+            $data = ['sub'=>[
+                 'id' => $usuario->Eva_id,
+                 'rol' => 'evaluado'
+            ]];
+            JWTAuth::factory()->setTTL(43200);
+            $customClaims = JWTFactory::customClaims($data);
+            $payload = JWTFactory::make($data);
+            $refreshToken = JWTAuth::encode($payload);
+ 
+            $response = ['accessToken' => $accesToken->get() ,
+                         'refreshToken' =>$refreshToken->get()
+                     ];
+            return response()->json($response,200);
+        }    
+
+
+        $response = ['error' => "No existe el usuario"];
+        return response()->json($response,400);    
+
+    }
+
+
 }

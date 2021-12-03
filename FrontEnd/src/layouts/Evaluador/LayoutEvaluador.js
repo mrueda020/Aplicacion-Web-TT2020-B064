@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import SignIn from "../../pages/Evaluador/SignIn/SignIn";
+import SignIn from "../../pages/User/SignIn/SignIn";
 import { Layout } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Evaluador/Sidebar/Sidebar";
@@ -14,12 +14,14 @@ function LayoutEvaluador(props) {
   if (!user && !isLoading) {
     return (
       <>
-        <Route path="/evaluador/login" component={SignIn} />
-        <Redirect to="/evaluador/login" />
+        <Route path="/" component={SignIn} />
+        <Redirect to="/" />
       </>
     );
   }
   if (user && user.rol === "evaluador") {
+    const pathName = window.location.pathname;
+    if (pathName === "/evaluador") return <Redirect to="/evaluador/question" />;
     return (
       <Layout className="layout-evaluador">
         <Navbar />
@@ -34,7 +36,7 @@ function LayoutEvaluador(props) {
   } else if (user && user.rol === "admin") {
     return <Redirect to="/admin" />;
   }
-  return <Redirect to="/evaluador/question" />;
+  return null;
 }
 
 function LoadRoutes(props) {

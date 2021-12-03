@@ -16,7 +16,7 @@ function LoginForm(props) {
   const [isCaptchaSolved, setIsCaptchaSolved] = useState(false);
   const recaptchaRef = useRef(null);
 
-  const signIn = async (url, data, userType) => {
+  const signIn = async (url, data) => {
     const params = {
       method: "POST",
       body: JSON.stringify(data),
@@ -34,19 +34,9 @@ function LoginForm(props) {
         localStorage.setItem(ACCESS_TOKEN, accessToken);
         localStorage.setItem(REFRESH_TOKEN, refreshToken);
         notification["success"]({ message: "Login correcto" });
-        switch (userType) {
-          case "user":
-            window.location.reload();
-            break;
-          case "evaluador":
-            window.location.reload();
-            break;
-          case "admin":
-            window.location.reload();
-            break;
-          default:
-            break;
-        }
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
     } catch (err) {
       notification["error"]({ message: "Error en el servidor" });
@@ -58,18 +48,8 @@ function LoginForm(props) {
       notification["error"]({ message: "Resuelve el captcha" });
       return;
     }
-    const pathName = window.location.pathname;
-    const userType = pathName.split("/");
-    if (userType[1] === "evaluador") {
-      const url = `${baseURL}/login-evaluador`;
-      await signIn(url, user, userType[1]);
-    } else if (userType[1] === "admin") {
-      const url = `${baseURL}/login-administrador`;
-      await signIn(url, user, userType[1]);
-    } else if (userType[1] === "user") {
-      const url = `${baseURL}/Login`;
-      await signIn(url, user, userType[1]);
-    }
+    const url = `${baseURL}/login`;
+    await signIn(url, user);
   };
 
   const onChange = (e) => {

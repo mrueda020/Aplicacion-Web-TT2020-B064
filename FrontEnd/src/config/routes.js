@@ -19,12 +19,14 @@ import SignInAdmin from "../pages/Admin/SignIn/SignIn";
 import Evaluadores from "../pages/Admin/Evaluadores/Evaluadores";
 import Evaluados from "../pages/Admin/Evaluados/Evaluados";
 const routes = [
+  { path: "/", component: SignIn, exact: true },
+
   {
     path: "/user",
     component: LayoutUser,
     exact: false,
     routes: [
-      { path: "/user/login", component: SignIn, exact: true },
+      // { path: "/user/login", component: SignIn, exact: true },
       {
         path: "/user/groups",
         component: Groups,
@@ -57,7 +59,7 @@ const routes = [
     component: LayoutEvaluador,
     exact: false,
     routes: [
-      { path: "/evaluador/login", exact: true, component: SignInEvaluador },
+      // { path: "/evaluador/login", exact: true, component: SignInEvaluador },
       {
         path: "/evaluador/question",
         exact: true,
@@ -75,24 +77,24 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/admin",
-    component: LayoutAdmin,
-    exact: false,
-    routes: [
-      { path: "/admin/login", exact: true, component: SignInAdmin },
-      {
-        path: "/admin/evaluados",
-        extact: true,
-        component: Evaluados,
-      },
-      {
-        path: "/admin/evaluadores",
-        exact: true,
-        component: Evaluadores,
-      },
-    ],
-  },
+  // {
+  //   path: "/admin",
+  //   component: LayoutAdmin,
+  //   exact: false,
+  //   routes: [
+  //     { path: "/admin/login", exact: true, component: SignInAdmin },
+  //     {
+  //       path: "/admin/evaluados",
+  //       extact: true,
+  //       component: Evaluados,
+  //     },
+  //     {
+  //       path: "/admin/evaluadores",
+  //       exact: true,
+  //       component: Evaluadores,
+  //     },
+  //   ],
+  // },
 ];
 
 export default routes;

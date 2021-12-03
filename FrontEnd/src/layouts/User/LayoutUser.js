@@ -14,11 +14,13 @@ function LayoutUser(props) {
   if (!user && !isLoading) {
     return (
       <>
-        <Route path="/user/login" component={SignIn} />
-        <Redirect to="/user/login" />
+        <Route path="/" component={SignIn} />
+        <Redirect to="/" />
       </>
     );
   } else if (user && user.rol === "evaluado") {
+    const pathName = window.location.pathname;
+    if (pathName === "/user") return <Redirect to="/user/question" />;
     return (
       <Layout className="layout-user">
         <Navbar />
@@ -34,7 +36,7 @@ function LayoutUser(props) {
     return <Redirect to="/admin" />;
   }
 
-  return <Redirect to="/user/groups" />;
+  return null;
 }
 
 function LoadRoutes(props) {

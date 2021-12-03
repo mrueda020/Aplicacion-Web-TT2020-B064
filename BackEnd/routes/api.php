@@ -20,7 +20,7 @@ use App\Http\Middleware\VerificarToken;
 
 //Rutas para Evaluado
 Route::post("/Registro", [ControladorEvaluado::class,"Registro"]);
-Route::post("/Login", [ControladorEvaluado::class,"Login"]);
+// Route::post("/Login", [ControladorEvaluado::class,"Login"]);
 Route::get("/cargar-grupos/{idEvaluado}",[ControladorEvaluado::class,"cargarGrupos"]);
 Route::get("/cargar-examanes/{idEvaluado}/{idGrupo}",[ControladorEvaluado::class,"cargarExamens"]);
 Route::get("/cargar-examen/{idEvaluado}/{idExamen}",[ControladorEvaluado::class,"cargarExamen"]);
@@ -29,7 +29,7 @@ Route::get("/resultados/{idEvaluado}",[ControladorEvaluado::class,"obtenerResult
 Route::post("/actualizar-info/{idEvaluado}",[ControladorEvaluado::class,"actualizarInfo"]);
 
 //Rutas para Evaluador
-Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
+// Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
 Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);;
 Route::get("/preguntas/{id}",[ControladorEvaluador::class,"obtenerPreguntas"]);
 Route::delete("/eliminar-pregunta/{idEvaluador}/{idPregunta}",[ControladorEvaluador::class,"eliminarPregunta"]);
@@ -49,3 +49,4 @@ Route::post("/registrar-evaluador",[ControladorAdmin::class,"registrarEvaluador"
 
 //Rutas para Auth
 Route::post("/refrescar-token",[Auth::class,"refrescarToken"]);
+Route::post("/login",[Auth::class, "Login"]);
