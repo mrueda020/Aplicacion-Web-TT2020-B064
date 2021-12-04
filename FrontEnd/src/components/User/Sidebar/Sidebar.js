@@ -88,10 +88,7 @@ function Sidebar() {
               <span className="sidebar__span-text">Configuracion</span>
             </div>
           </NavLink>
-          <NavLink
-            to="/"
-            className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
-          >
+          <div className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom">
             <div
               className="sidebar__item"
               onClick={() => {
@@ -106,7 +103,7 @@ function Sidebar() {
               />
               <span className="sidebar__span-text">Salir</span>
             </div>
-          </NavLink>
+          </div>
         </div>
       </nav>
 

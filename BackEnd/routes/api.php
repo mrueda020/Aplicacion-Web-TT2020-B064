@@ -5,7 +5,7 @@ use App\Http\Controllers\ControladorAdmin;
 use App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\VerificarTokenEvaluado;
 use App\Http\Middleware\VerificarToken;
 /*
 |--------------------------------------------------------------------------
@@ -21,26 +21,27 @@ use App\Http\Middleware\VerificarToken;
 //Rutas para Evaluado
 Route::post("/Registro", [ControladorEvaluado::class,"Registro"]);
 // Route::post("/Login", [ControladorEvaluado::class,"Login"]);
-Route::get("/cargar-grupos/{idEvaluado}",[ControladorEvaluado::class,"cargarGrupos"]);
-Route::get("/cargar-examanes/{idEvaluado}/{idGrupo}",[ControladorEvaluado::class,"cargarExamens"]);
-Route::get("/cargar-examen/{idEvaluado}/{idExamen}",[ControladorEvaluado::class,"cargarExamen"]);
-Route::post("/enviar-respuestas",[ControladorEvaluado::class,"enviarRespuestas"]);
-Route::get("/resultados/{idEvaluado}",[ControladorEvaluado::class,"obtenerResultados"]);
-Route::post("/actualizar-info/{idEvaluado}",[ControladorEvaluado::class,"actualizarInfo"]);
+Route::get("/cargar-grupos/{idEvaluado}",[ControladorEvaluado::class,"cargarGrupos"])->middleware(VerificarTokenEvaluado::class);
+Route::get("/cargar-examanes/{idEvaluado}/{idGrupo}",[ControladorEvaluado::class,"cargarExamens"])->middleware(VerificarTokenEvaluado::class);
+Route::get("/cargar-examen/{idEvaluado}/{idExamen}/{idGrupo}",[ControladorEvaluado::class,"cargarExamen"])->middleware(VerificarTokenEvaluado::class);
+Route::post("/enviar-respuestas",[ControladorEvaluado::class,"enviarRespuestas"])->middleware(VerificarTokenEvaluado::class);
+Route::get("/resultados/{idEvaluado}",[ControladorEvaluado::class,"obtenerResultados"])->middleware(VerificarTokenEvaluado::class);
+Route::post("/actualizar-info/{idEvaluado}",[ControladorEvaluado::class,"actualizarInfo"])->middleware(VerificarTokenEvaluado::class);
+Route::post("/enviar-respuestasM",[ControladorEvaluado::class,"enviarRespuestasMovil"])->middleware(VerificarTokenEvaluado::class);
 
 //Rutas para Evaluador
 // Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
-Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);;
-Route::get("/preguntas/{id}",[ControladorEvaluador::class,"obtenerPreguntas"]);
-Route::delete("/eliminar-pregunta/{idEvaluador}/{idPregunta}",[ControladorEvaluador::class,"eliminarPregunta"]);
-Route::get("/cargar-preguntas",[ControladorEvaluador::class,"cargarPreguntas"]);
-Route::post("/crear-examen",[ControladorEvaluador::class,"crearExamen"]);
-Route::get("/obtener-evaluados",[ControladorEvaluador::class,"obtenerEvaluados"]);
-Route::post("/crear-grupo",[ControladorEvaluador::class,"crearGrupo"]);
-Route::get("/obtener-examenes",[ControladorEvaluador::class,"obtenerExamenes"]);
-Route::get("/grupos/{idEvaluador}",[ControladorEvaluador::class,"obtenerGrupos"]);
-Route::post("/asignar-examen",[ControladorEvaluador::class,"asignarExamenes"]);
-Route::post("/actualizar-info-evaluador/{idEvaluador}",[ControladorEvaluador::class,"actualizarInfo"]);
+Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);
+Route::get("/preguntas/{id}",[ControladorEvaluador::class,"obtenerPreguntas"])->middleware(VerificarToken::class);
+Route::delete("/eliminar-pregunta/{idEvaluador}/{idPregunta}",[ControladorEvaluador::class,"eliminarPregunta"])->middleware(VerificarToken::class);
+Route::get("/cargar-preguntas",[ControladorEvaluador::class,"cargarPreguntas"])->middleware(VerificarToken::class);
+Route::post("/crear-examen",[ControladorEvaluador::class,"crearExamen"])->middleware(VerificarToken::class);
+Route::get("/obtener-evaluados",[ControladorEvaluador::class,"obtenerEvaluados"])->middleware(VerificarToken::class);
+Route::post("/crear-grupo",[ControladorEvaluador::class,"crearGrupo"])->middleware(VerificarToken::class);
+Route::get("/obtener-examenes",[ControladorEvaluador::class,"obtenerExamenes"])->middleware(VerificarToken::class);
+Route::get("/grupos/{idEvaluador}",[ControladorEvaluador::class,"obtenerGrupos"])->middleware(VerificarToken::class);
+Route::post("/asignar-examen",[ControladorEvaluador::class,"asignarExamenes"])->middleware(VerificarToken::class);
+Route::post("/actualizar-info-evaluador/{idEvaluador}",[ControladorEvaluador::class,"actualizarInfo"])->middleware(VerificarToken::class);
 
 //Rutas para Admin
 Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);

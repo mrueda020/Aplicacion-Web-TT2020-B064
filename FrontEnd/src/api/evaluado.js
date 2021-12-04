@@ -1,10 +1,18 @@
 import { baseURL } from "../utils/constants";
-import { getUserId } from "./auth";
+import { getAccesToken, getUserId } from "./auth";
 
 export const getGroups = () => {
+  const accessToken = getAccesToken();
   const id = getUserId();
   const url = `${baseURL}/cargar-grupos/${id}`;
-  return fetch(url)
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -14,9 +22,17 @@ export const getGroups = () => {
 };
 
 export const getExams = (groupId) => {
+  const accessToken = getAccesToken();
   const id = getUserId();
   const url = `${baseURL}/cargar-examanes/${id}/${groupId}`;
-  return fetch(url)
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -25,10 +41,18 @@ export const getExams = (groupId) => {
     });
 };
 
-export const getEvaluation = (examId) => {
+export const getEvaluation = (examId, groupId) => {
+  const accessToken = getAccesToken();
   const id = getUserId();
-  const url = `${baseURL}/cargar-examen/${id}/${examId}`;
-  return fetch(url)
+  const url = `${baseURL}/cargar-examen/${id}/${examId}/${groupId}`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -38,6 +62,7 @@ export const getEvaluation = (examId) => {
 };
 
 export const sendAnswers = (payload) => {
+  const accessToken = getAccesToken();
   payload.idEvaluado = getUserId();
   const url = `${baseURL}/enviar-respuestas`;
   const params = {
@@ -45,6 +70,7 @@ export const sendAnswers = (payload) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
+      Authorization: accessToken,
     },
   };
   return fetch(url, params).then((response) => {
@@ -53,9 +79,17 @@ export const sendAnswers = (payload) => {
 };
 
 export const getResults = () => {
+  const accessToken = getAccesToken();
   const idEvaluado = getUserId();
   const url = `${baseURL}/resultados/${idEvaluado}`;
-  return fetch(url)
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -65,6 +99,7 @@ export const getResults = () => {
 };
 
 export const updateInfo = (payload) => {
+  const accessToken = getAccesToken();
   const idEvaluado = getUserId();
   const url = `${baseURL}/actualizar-info/${idEvaluado}`;
   const params = {
@@ -72,6 +107,7 @@ export const updateInfo = (payload) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
+      Authorization: accessToken,
     },
   };
   return fetch(url, params).then((response) => {

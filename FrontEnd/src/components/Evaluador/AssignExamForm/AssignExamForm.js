@@ -43,14 +43,14 @@ function AssignExamForm({
 
   useEffect(() => {
     getExams().then((result) => {
-      if (result.data.length) setExams(result.data);
+      if (result.data) setExams(result.data);
     });
     setConfirmReloading(false);
   }, [confirmReloading]);
 
   useEffect(() => {
     getGroups().then((result) => {
-      if (result.data.length) setGroups(result.data);
+      if (result.data) setGroups(result.data);
     });
     setConfirmReloadingGroups(false);
   }, [confirmReloadingGroups]);

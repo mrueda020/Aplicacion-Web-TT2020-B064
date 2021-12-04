@@ -313,7 +313,7 @@ class ControladorEvaluador extends Controller
                 return response()->json($response,400);
             }
 
-            if($contraseña)
+            if($contraseña && $contraseña!="")
             {
                 if($confirmarContraseña != $contraseña)
                 {

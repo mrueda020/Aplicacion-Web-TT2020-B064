@@ -20,8 +20,15 @@ export const addQuestion = async (payload) => {
 
 export const getQuestions = () => {
   const id = getUserId();
+  const accessToken = getAccesToken();
   const url = `${baseURL}/preguntas/${id}`;
-  return fetch(url)
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -31,10 +38,15 @@ export const getQuestions = () => {
 };
 
 export const deleteQuestion = (idPregunta) => {
+  const accessToken = getAccesToken();
   const idEvaluador = getUserId();
   const url = `${baseURL}/eliminar-pregunta/${idEvaluador}/${idPregunta}`;
   const params = {
     method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
   };
   return fetch(url, params)
     .then((response) => {
@@ -46,8 +58,15 @@ export const deleteQuestion = (idPregunta) => {
 };
 
 export const fetchAllQuestions = () => {
+  const accessToken = getAccesToken();
   const url = `${baseURL}/cargar-preguntas`;
-  return fetch(url)
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -57,6 +76,7 @@ export const fetchAllQuestions = () => {
 };
 
 export const createExam = (payload) => {
+  const accessToken = getAccesToken();
   const url = `${baseURL}/crear-examen`;
   payload.idEvaluador = getUserId();
   const params = {
@@ -64,6 +84,7 @@ export const createExam = (payload) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
+      Authorization: accessToken,
     },
   };
 
@@ -73,8 +94,15 @@ export const createExam = (payload) => {
 };
 
 export const getUsers = () => {
+  const accessToken = getAccesToken();
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
   const url = `${baseURL}/obtener-evaluados`;
-  return fetch(url)
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -84,6 +112,7 @@ export const getUsers = () => {
 };
 
 export const createGroup = (payload) => {
+  const accessToken = getAccesToken();
   const url = `${baseURL}/crear-grupo`;
   payload.idEvaluador = getUserId();
   const params = {
@@ -91,6 +120,7 @@ export const createGroup = (payload) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
+      Authorization: accessToken,
     },
   };
 
@@ -100,8 +130,15 @@ export const createGroup = (payload) => {
 };
 
 export const getExams = () => {
+  const accessToken = getAccesToken();
   const url = `${baseURL}/obtener-examenes`;
-  return fetch(url)
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -111,9 +148,16 @@ export const getExams = () => {
 };
 
 export const getGroups = () => {
+  const accessToken = getAccesToken();
   const idEvaluador = getUserId();
   const url = `${baseURL}/grupos/${idEvaluador}`;
-  return fetch(url)
+  const params = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
     .then((response) => {
       return response.json();
     })
@@ -123,6 +167,7 @@ export const getGroups = () => {
 };
 
 export const assignExams = (payload) => {
+  const accessToken = getAccesToken();
   payload.idEvaluador = getUserId();
   const url = `${baseURL}/asignar-examen`;
   const params = {
@@ -130,6 +175,7 @@ export const assignExams = (payload) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
+      Authorization: accessToken,
     },
   };
   return fetch(url, params).then((response) => {
@@ -138,6 +184,7 @@ export const assignExams = (payload) => {
 };
 
 export const updateInfo = (payload) => {
+  const accessToken = getAccesToken();
   const idEvaluador = getUserId();
   const url = `${baseURL}/actualizar-info-evaluador/${idEvaluador}`;
   const params = {
@@ -145,6 +192,7 @@ export const updateInfo = (payload) => {
     body: JSON.stringify(payload),
     headers: {
       "Content-Type": "application/json",
+      Authorization: accessToken,
     },
   };
   return fetch(url, params).then((response) => {

@@ -8,7 +8,8 @@ function GroupList() {
   const [groups, setGroups] = useState([]);
   useEffect(() => {
     getGroups().then((result) => {
-      setGroups(result.data);
+      if (result.data) setGroups(result.data);
+      else setGroups([]);
     });
   }, []);
 

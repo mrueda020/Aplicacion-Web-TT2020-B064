@@ -6,13 +6,15 @@ function Evaluation(props) {
   const [evaluation, setEvaluation] = useState([]);
   const [evaluationInfo, setEvaluationInfo] = useState([]);
   const [groupId, setGroupId] = useState(null);
+  const [isResolved, setIsResolved] = useState(false);
   useEffect(() => {
     const examId = props.match.params.examId;
     const groupId = props.match.params.groupId;
     setGroupId(groupId);
-    getEvaluation(examId).then((result) => {
-      setEvaluation(result.data);
-      setEvaluationInfo(result.examenInfo);
+    getEvaluation(examId, groupId).then((result) => {
+      if (result.data) setEvaluation(result.data);
+      if (result.examenInfo) setEvaluationInfo(result.examenInfo);
+      if (result.data) setIsResolved(true);
     });
   }, []);
 
@@ -22,6 +24,7 @@ function Evaluation(props) {
         evaluation={evaluation}
         evaluationInfo={evaluationInfo}
         groupId={groupId}
+        isResolved={isResolved}
       />
     </div>
   );

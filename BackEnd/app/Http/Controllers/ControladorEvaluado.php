@@ -170,10 +170,22 @@ class ControladorEvaluado extends Controller
     }
 
 
-    public function cargarExamen($idEvaluado, $idExamen)
+    public function cargarExamen($idEvaluado, $idExamen, $idGrupo)
     {
         try {
             //code...
+
+            $tipoExamen = DB::select("select Exa_tipo_de_examen from Examen where Exa_id = ?",[$idExamen]);
+
+            if($tipoExamen[0]->Exa_tipo_de_examen == "0")
+            {
+                $response = DB::select("select * from Resultados where Evaluado_Eva_id = ? and Examen_Exa_id = ? and Grupo_Gr_id = ?", [$idEvaluado, $idExamen, $idGrupo]);
+                if(!empty($response))
+                {
+                    return response()->json(["data"=>"El examen ya fue contestado"],404); 
+                }      
+            }
+
             $idPreguntas = DB::table('Preguntas_En_Examen')->where('Examen_Exa_id', $idExamen)->get();
             $examen = [];
             for($i=0; $i<count($idPreguntas); $i++)
@@ -199,6 +211,50 @@ class ControladorEvaluado extends Controller
         }
         
     }
+
+    public function enviarRespuestasMovil(Request $request)
+    {
+        $data = $request->all();
+        //$respuestas = $data["respuestas"];
+        $examenTipo = $data["tipoExamen"];
+        
+       
+        if($examenTipo == '1')
+        {
+            $response = DB::select("select * from Resultados where Evaluado_Eva_id = ? and  Evaluador_Evaluador_id = ? and Examen_Exa_id = ? and Grupo_Gr_id = ?",
+            [$data["idEvaluado"], $data["idEvaluador"], $data["idExamen"], $data["idGrupo"]]);
+           // $calificacion = $this->evaluarExamen($respuestas);
+            if(empty($response))
+            {   
+                $response = DB::insert("insert into Resultados(Evaluado_Eva_id, Evaluador_Evaluador_id, Examen_Exa_id, Grupo_Gr_id, Resultados_calificacion, Resultados_fecha_de_realizacion) 
+                values(?,?,?,?,?,?)",[$data["idEvaluado"], $data["idEvaluador"], $data["idExamen"], $data["idGrupo"], $data["calificacion"], $data['fechaRealizacion']]);
+                return response()->json($response,200);
+            }
+            $response = DB::update("update Resultados set Resultados_calificacion = ?, Resultados_fecha_de_realizacion = ? where Evaluado_Eva_id = ? and  Evaluador_Evaluador_id = ? and Examen_Exa_id = ? and Grupo_Gr_id = ?",
+            [$data["calificacion"], $data['fechaRealizacion'], $data["idEvaluado"], $data["idEvaluador"], $data["idExamen"], $data["idGrupo"]]);
+            return response()->json($response,200);
+
+        }
+        else
+        {
+            $response = DB::select("select * from Resultados where Evaluado_Eva_id = ? and  Evaluador_Evaluador_id = ? and Examen_Exa_id = ? and Grupo_Gr_id = ?",
+            [$data["idEvaluado"], $data["idEvaluador"], $data["idExamen"], $data["idGrupo"]]);
+            if(!empty($response))
+            {
+                return response()->json(["data"=>"El examen ya fue contestado"],404); 
+            }
+           // $calificacion = $this->evaluarExamen($respuestas);
+            $response = DB::insert("insert into Resultados(Evaluado_Eva_id, Evaluador_Evaluador_id, Examen_Exa_id, Grupo_Gr_id, Resultados_calificacion, Resultados_fecha_de_realizacion) 
+            values(?,?,?,?,?,?)",[$data["idEvaluado"], $data["idEvaluador"], $data["idExamen"], $data["idGrupo"], $data["calificacion"], $data['fechaRealizacion']]);
+            return response()->json($response,200);
+        }
+
+        // $calificacion = $this->evaluarExamen($respuestas);
+        // $response = DB::insert("insert into Resultados(Evaluado_Eva_id, Evaluador_Evaluador_id, Examen_Exa_id, Grupo_Gr_id, Resultados_calificacion) 
+        // values(?,?,?,?,?)",[$data["idEvaluado"], $data["idEvaluador"], $data["idExamen"], $data["idGrupo"], $calificacion]);
+        // return response()->json($response,200);
+    }
+
 
     public function enviarRespuestas(Request $request)
     {
@@ -237,10 +293,6 @@ class ControladorEvaluado extends Controller
             return response()->json($response,200);
         }
 
-        // $calificacion = $this->evaluarExamen($respuestas);
-        // $response = DB::insert("insert into Resultados(Evaluado_Eva_id, Evaluador_Evaluador_id, Examen_Exa_id, Grupo_Gr_id, Resultados_calificacion) 
-        // values(?,?,?,?,?)",[$data["idEvaluado"], $data["idEvaluador"], $data["idExamen"], $data["idGrupo"], $calificacion]);
-        // return response()->json($response,200);
     }
 
     public function evaluarExamen($respuestas)
@@ -298,7 +350,7 @@ class ControladorEvaluado extends Controller
                 return response()->json($response,400);
             }
 
-            if($contraseña)
+            if($contraseña && $contraseña!="")
             {
                 if($confirmarContraseña != $contraseña)
                 {

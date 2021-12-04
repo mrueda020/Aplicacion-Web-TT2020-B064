@@ -1,26 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
 import { sendAnswers } from "../../../api/evaluado";
 import { Modal, notification, Result } from "antd";
-import { siteKey } from "../../../utils/constants";
-import ReCAPTCHA from "react-google-recaptcha";
 import moment from "moment";
+
 import "./Evaluation.scss";
 function Evaluation(props) {
-  const { evaluation, evaluationInfo, groupId } = props;
-  const [isCaptchaSolved, setIsCaptchaSolved] = useState(false);
+  const { evaluation, evaluationInfo, groupId, isResolved } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
   const refExam = useRef(null);
-  const recaptchaRef = useRef(null);
-  const onCaptchaChange = () => {
-    setIsCaptchaSolved(!isCaptchaSolved);
-  };
+
   const submitExam = async (e) => {
     /* name = Pregunta_Pr_id, value[0] = Res_es_correcta , value[1,..]= Res_id*/
     e.preventDefault();
-    if (!isCaptchaSolved) {
-      notification["error"]({ message: "Resuelve el captcha" });
-      return;
-    }
+
     const examData = new FormData(refExam.current);
     const questions = [];
     examData.forEach((value, name) => {
@@ -53,14 +45,14 @@ function Evaluation(props) {
       });
     setIsModalVisible(false);
     setTimeout(() => {
-      window.location.reload();
+      props.history.push(`/user/evaluations/${groupId}`);
     }, 1500);
   };
 
   return (
     <>
       <div className="Evaluation">
-        {evaluationInfo.length > 0 && (
+        {evaluationInfo.length > 0 ? (
           <>
             {(moment(evaluationInfo[0].Exa_fecha_aplicacion_fin).valueOf() >
               moment.now() &&
@@ -90,15 +82,16 @@ function Evaluation(props) {
                     </button>
                   </p>
                 </form>
-                <div className="login-form__captcha">
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={siteKey}
-                    onChange={onCaptchaChange}
-                  />
-                </div>
               </>
             ) : (
+              <>
+                <h3>Examen no Disponible</h3>
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {isResolved && (
               <>
                 <h3>Examen no Disponible</h3>
               </>

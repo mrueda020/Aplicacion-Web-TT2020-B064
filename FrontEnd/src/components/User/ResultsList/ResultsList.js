@@ -8,7 +8,8 @@ function ResultsList() {
   const { Title } = Typography;
   useEffect(() => {
     getResults().then((result) => {
-      if (result) setResults(result);
+      if (result.error) setResults([]);
+      else setResults(result);
     });
   }, []);
 
