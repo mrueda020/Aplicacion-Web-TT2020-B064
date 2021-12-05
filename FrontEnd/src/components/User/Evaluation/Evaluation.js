@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { sendAnswers } from "../../../api/evaluado";
-import { Modal, notification, Result } from "antd";
+import { Modal, notification, Result, Button } from "antd";
 import moment from "moment";
 
 import "./Evaluation.scss";
@@ -45,7 +45,7 @@ function Evaluation(props) {
       });
     setIsModalVisible(false);
     setTimeout(() => {
-      props.history.push(`/user/evaluations/${groupId}`);
+      window.location.replace(`/user/evaluations/${groupId}`);
     }, 1500);
   };
 
@@ -85,16 +85,24 @@ function Evaluation(props) {
               </>
             ) : (
               <>
-                <h3>Examen no Disponible</h3>
+                <Result
+                  status="403"
+                  title="El examen ya no esta disponible"
+                  // subTitle="Sorry, you are not authorized to access this page."
+                  // extra={<Button type="primary">Regresar</Button>}
+                />
               </>
             )}
           </>
         ) : (
           <>
             {isResolved && (
-              <>
-                <h3>Examen no Disponible</h3>
-              </>
+              <Result
+                status="403"
+                title="Ya no pudes volver a resolver el examen"
+                // subTitle="Sorry, you are not authorized to access this page."
+                // extra={<Button type="primary">Regresar</Button>}
+              />
             )}
           </>
         )}
@@ -102,6 +110,8 @@ function Evaluation(props) {
       <Modal
         title="Confirmacion"
         visible={isModalVisible}
+        okText="Si"
+        cancelText="No"
         onOk={(e) => submitExam(e)}
         onCancel={() => setIsModalVisible(false)}
         centered

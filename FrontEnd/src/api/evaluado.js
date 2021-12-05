@@ -114,3 +114,17 @@ export const updateInfo = (payload) => {
     return response;
   });
 };
+
+export const registerUser = (payload) => {
+  const url = `${baseURL}/Registro`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};

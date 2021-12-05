@@ -347,8 +347,15 @@ class ControladorEvaluador extends Controller
             if($apellidos)
             {
                 $apellidos = explode(" ",$apellidos);
+                $apPaterno = " ";
+                $apMaterno = " ";
+                if(count($apellidos) >= 2)
+                {
+                 $apPaterno = $apellidos[0];
+                 $apMaterno = $apellidos[1];
+                }
                 DB::update("update Evaluador set Evaluador_apellido_paterno = ?, Evaluador_apellido_materno = ? where Evaluador_id = ?",
-                [$apellidos[0], $apellidos[1], $idEvaluador]);
+                [$apPaterno, $apMaterno, $idEvaluador]);
             }
 
             $response = ["message"=>"Usuario Actualizado"];

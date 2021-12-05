@@ -18,10 +18,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class ControladorEvaluado extends Controller
 {
     //
-    public function Login(Request $request)
+    public function Login($email, $contraseña)
     {
-       $email = $request["email"];
-       $contraseña = $request["password"];
        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
        {
           $response = ['error' => 'Email invalido'];
@@ -58,7 +56,8 @@ class ControladorEvaluado extends Controller
            $refreshToken = JWTAuth::encode($payload);
 
            $response = ['accessToken' => $accesToken->get() ,
-                        'refreshToken' =>$refreshToken->get()
+                        'refreshToken' =>$refreshToken->get(),
+                        "status" => "Registro Exitoso"
                     ];
            return response()->json($response,200);
        }
@@ -74,8 +73,20 @@ class ControladorEvaluado extends Controller
        $contraseña = $request["password"];
        $confirmarContraseña = $request["confirmarPassword"];
        $nombre = $request["nombre"];
-       $apPaterno = $request["apPaterno"];
-       $apMaterno = $request["apMaterno"];
+       $apellidos = explode(" ",$request["apellidos"]);
+       $apPaterno = " ";
+       $apMaterno = " ";
+       if(count($apellidos) >= 2)
+       {
+        $apPaterno = $apellidos[0];
+        $apMaterno = $apellidos[1];
+       }
+       else {
+           # code...
+           $apPaterno = $request["apellidos"];
+           $apMaterno = " ";
+       }
+       
       
        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
        {
@@ -84,6 +95,12 @@ class ControladorEvaluado extends Controller
        }
        $usuario = DB::table('evaluado')->where('Eva_email', $email)->first();
        if($usuario && $usuario->Eva_email)
+       {
+           $response = ['error' => "Ya existe el email en el sistema"];
+           return response()->json($response,400);
+       }
+       $evaluador = DB::table('evaluador')->where('Evaluador_email', $email)->first();
+       if($evaluador && $evaluador->Evaluador_email)
        {
            $response = ['error' => "Ya existe el email en el sistema"];
            return response()->json($response,400);
@@ -100,18 +117,17 @@ class ControladorEvaluado extends Controller
            return response()->json(['error'=>'La contraseña debe ser de 8 caracteres minimo'],400);
        }
        
-       $contraseña = Hash::make($contraseña);
+    
        
-       $response = DB::insert("insert into evaluado (Eva_nombre,Eva_apellido_paterno,Eva_apellido_materno,Eva_email,Eva_contraseña) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,$contraseña]);
+       $response = DB::insert("insert into evaluado (Eva_nombre,Eva_apellido_paterno,Eva_apellido_materno,Eva_email,Eva_contraseña) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,Hash::make($contraseña)]);
        if($response == 0)
        {    
            $response = ['error' => "Error en el servidor"];
            return response()->json($response,400);
            
        }
-       $response = ['status' => "Usuario creado correctamente"];
-      
-       return response()->json($response,201);
+
+        return $this->Login($email, $contraseña);
     }
 
     public function obtenerUsuarios()
@@ -384,8 +400,15 @@ class ControladorEvaluado extends Controller
             if($apellidos)
             {
                 $apellidos = explode(" ",$apellidos);
+                $apPaterno = " ";
+                $apMaterno = " ";
+                if(count($apellidos) >= 2)
+                {
+                 $apPaterno = $apellidos[0];
+                 $apMaterno = $apellidos[1];
+                }
                 DB::update("update Evaluado set Eva_apellido_paterno = ?, Eva_apellido_materno = ? where Eva_id = ?",
-                [$apellidos[0], $apellidos[1], $idEvaluado]);
+                [$apPaterno, $apMaterno, $idEvaluado]);
             }
 
             $response = ["message"=>"Usuario Actualizado"];
