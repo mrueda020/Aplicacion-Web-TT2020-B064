@@ -199,3 +199,43 @@ export const updateInfo = (payload) => {
     return response;
   });
 };
+
+export const fetchExams = () => {
+  const idEvaluador = getUserId();
+  const url = `${baseURL}/obtener-examenes/${idEvaluador}`;
+  const accessToken = getAccesToken();
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};
+
+export const deleteExam = (idExamen) => {
+  const idEvaluador = getUserId();
+  const url = `${baseURL}/eliminar-examen/${idEvaluador}/${idExamen}`;
+  const accessToken = getAccesToken();
+  const params = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};

@@ -399,8 +399,9 @@ class ControladorEvaluado extends Controller
 
             if($apellidos)
             {
+                $apPaterno = $apellidos;
                 $apellidos = explode(" ",$apellidos);
-                $apPaterno = " ";
+                // $apPaterno = " ";
                 $apMaterno = " ";
                 if(count($apellidos) >= 2)
                 {

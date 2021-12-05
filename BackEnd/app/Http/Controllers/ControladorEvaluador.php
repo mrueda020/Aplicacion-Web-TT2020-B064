@@ -252,6 +252,42 @@ class ControladorEvaluador extends Controller
         }
     }
 
+    public function obtenerExamenesEvaluador($idEvaluador)
+    {
+        try {
+            // code...
+            $examenes = DB::select("select * from Examen where Evaluador_Evaluador_id = ? ",[$idEvaluador]);
+            $response = ["data"=>$examenes];
+            return response()->json($response,200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            return response()->json($response,500);
+        }
+    }
+
+    public function eliminarExamen($idEvaluador, $idExamen)
+    {
+        try {
+            //code...
+            $examenEliminado = DB::delete('delete from examen where Exa_id = ? and Evaluador_Evaluador_id = ? ',[$idExamen, $idEvaluador]);
+            if($examenEliminado)
+            {
+                $response = ["message" => "Examen eliminado"];
+                return response()->json($response,200);
+            }
+            else
+            {
+                $response = ["error" => "No existe el examen"];
+                return response()->json($response,404);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            return response()->json($response,500);
+        }
+    }
+    
     public function obtenerGrupos($idEvaluador)
     {
         try {
@@ -345,9 +381,10 @@ class ControladorEvaluador extends Controller
             }
 
             if($apellidos)
-            {
+            {   
+                $apPaterno = $apellidos;
                 $apellidos = explode(" ",$apellidos);
-                $apPaterno = " ";
+                // $apPaterno = " ";
                 $apMaterno = " ";
                 if(count($apellidos) >= 2)
                 {
