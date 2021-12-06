@@ -5,6 +5,7 @@ import "./Exams.scss";
 import GroupForm from "../../../../components/Evaluador/GroupForm/GroupForm";
 import AssignExamForm from "../../../../components/Evaluador/AssignExamForm/AssignExamForm";
 import ExamsList from "../../../../components/Evaluador/ExamsList/ExamsList";
+import GroupsList from "../../../../components/Evaluador/GroupsList/GroupsList";
 function Exams() {
   const { TabPane } = Tabs;
   const [confirmReloadingExams, setConfirmReloadingExams] = useState(false);
@@ -26,6 +27,12 @@ function Exams() {
         <TabPane tab="Grupos" key="2">
           <div className="Exams__form">
             <GroupForm setConfirmReloading={setConfirmReloadingGroups} />
+            <div className="Exams__list">
+              <GroupsList
+                confirmReloading={confirmReloadingGroups}
+                setConfirmReloading={setConfirmReloadingGroups}
+              />
+            </div>
           </div>
         </TabPane>
         <TabPane tab="Asignar Examenes" key="3">

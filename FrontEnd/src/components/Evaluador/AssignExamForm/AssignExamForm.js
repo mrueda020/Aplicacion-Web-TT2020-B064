@@ -120,7 +120,7 @@ function AssignExamForm({
         showSearch
         oneWay
         render={(item) => {
-          return `${item.Exa_nombre} - ${truncate(item.Exa_description, 15)}`;
+          return `${item.Exa_nombre} - ${truncate(item.Exa_description, 25)}`;
         }}
         onChange={onChange}
       />

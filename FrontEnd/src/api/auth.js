@@ -35,6 +35,7 @@ export const refreshAccessToken = async (refreshToken) => {
   fetch(url, params)
     .then((response) => {
       if (response.status !== 200) {
+        logOut();
         return null;
       }
       return response.json();
@@ -42,6 +43,7 @@ export const refreshAccessToken = async (refreshToken) => {
     .then((result) => {
       if (!result) {
         logOut();
+        window.location.reload();
       } else {
         const { accessToken, refreshToken } = result;
         localStorage.setItem(ACCESS_TOKEN, accessToken);

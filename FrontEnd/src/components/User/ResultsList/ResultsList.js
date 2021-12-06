@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getResults } from "../../../api/evaluado";
-import { Typography, List, Progress } from "antd";
+import { Typography, List, Result, Button } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
 import moment from "moment";
 import "./ResultsList.scss";
 function ResultsList() {
@@ -16,25 +17,45 @@ function ResultsList() {
   return (
     <div className="ResultsList">
       <Title level={2}>Resultados</Title>
-      <List
-        pagination
-        itemLayout="horizontal"
-        dataSource={results}
-        renderItem={(result) => (
-          <List.Item>
-            <List.Item.Meta
-              title={<h5>{result.Exa_nombre}</h5>}
-              description={
-                <Description
-                  score={result.Resultados_calificacion}
-                  groupName={result.Gr_nombre}
-                  date={result.Resultados_fecha_de_realizacion}
+      {results.length > 0 ? (
+        <>
+          <List
+            pagination
+            itemLayout="horizontal"
+            dataSource={results}
+            renderItem={(result) => (
+              <List.Item>
+                <List.Item.Meta
+                  title={<h5>{result.Exa_nombre}</h5>}
+                  description={
+                    <Description
+                      score={result.Resultados_calificacion}
+                      groupName={result.Gr_nombre}
+                      date={result.Resultados_fecha_de_realizacion}
+                    />
+                  }
                 />
-              }
-            />
-          </List.Item>
-        )}
-      />
+              </List.Item>
+            )}
+          />
+        </>
+      ) : (
+        <>
+          <Result
+            icon={<SmileOutlined />}
+            title="Aun no has resuelto alguna prueba"
+            subTitle="Tus resultados se mostraran aqui"
+            extra={
+              <Button
+                type="primary"
+                onClick={() => window.location.replace("/user/groups")}
+              >
+                Regresar
+              </Button>
+            }
+          />
+        </>
+      )}
     </div>
   );
 }

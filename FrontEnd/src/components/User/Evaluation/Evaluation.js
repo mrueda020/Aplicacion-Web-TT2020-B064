@@ -87,7 +87,7 @@ function Evaluation(props) {
               <>
                 <Result
                   status="403"
-                  title="El examen ya no esta disponible"
+                  title="El examen no esta disponible"
                   // subTitle="Sorry, you are not authorized to access this page."
                   // extra={<Button type="primary">Regresar</Button>}
                 />

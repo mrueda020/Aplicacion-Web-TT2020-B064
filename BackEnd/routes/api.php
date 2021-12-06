@@ -44,6 +44,7 @@ Route::post("/asignar-examen",[ControladorEvaluador::class,"asignarExamenes"])->
 Route::post("/actualizar-info-evaluador/{idEvaluador}",[ControladorEvaluador::class,"actualizarInfo"])->middleware(VerificarToken::class);
 Route::get("/obtener-examenes/{idEvaluador}",[ControladorEvaluador::class,"obtenerExamenesEvaluador"])->middleware(VerificarToken::class);
 Route::delete("/eliminar-examen/{idEvaluador}/{idExamen}",[ControladorEvaluador::class,"eliminarExamen"])->middleware(VerificarToken::class);
+Route::delete("/eliminar-grupo/{idEvaluador}/{idGrupo}",[ControladorEvaluador::class,"eliminarGrupo"])->middleware(VerificarToken::class);
 
 //Rutas para Admin
 Route::post("/login-administrador",[ControladorAdmin::class,"Login"]);

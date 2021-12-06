@@ -239,3 +239,23 @@ export const deleteExam = (idExamen) => {
       return result;
     });
 };
+
+export const deleteGroup = (idGroup) => {
+  const idEvaluador = getUserId();
+  const url = `${baseURL}/eliminar-grupo/${idEvaluador}/${idGroup}`;
+  const accessToken = getAccesToken();
+  const params = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};

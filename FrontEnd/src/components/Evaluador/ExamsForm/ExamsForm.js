@@ -106,6 +106,13 @@ function ExamsForm({ setConfirmReloading }) {
         });
         return;
       }
+
+      if (moment(dates[0]).valueOf() < moment.now()) {
+        notification["error"]({
+          message: "La fecha de aplicacion no es valida",
+        });
+        return;
+      }
       payload.dates = dates;
     } else {
       payload.dates = [
@@ -130,7 +137,7 @@ function ExamsForm({ setConfirmReloading }) {
 
   const disabledDate = (current) => {
     // Can not select days before today and today
-    return current && current < moment().endOf("day");
+    return current && current < moment().subtract(1, "days");
   };
   const disabledRangeTime = (_, type) => {
     if (type === "start") {
@@ -158,7 +165,7 @@ function ExamsForm({ setConfirmReloading }) {
             </span>
           ),
           ({ selectedCount, totalCount }) => (
-            <span>{selectedCount} preguntas</span>
+            <span>{totalCount} preguntas</span>
           ),
         ]}
         listStyle={{

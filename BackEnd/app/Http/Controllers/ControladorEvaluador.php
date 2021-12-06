@@ -302,6 +302,28 @@ class ControladorEvaluador extends Controller
         }
     }
 
+    public function eliminarGrupo($idEvaluador, $idGrupo)
+    {
+        try {
+            //code...
+            $grupoEliminado = DB::delete('delete from grupo where Gr_id = ? and Evaluador_Evaluador_id = ? ',[$idGrupo, $idEvaluador]);
+            if($grupoEliminado)
+            {
+                $response = ["message" => "Grupo eliminado"];
+                return response()->json($response,200);
+            }
+            else
+            {
+                $response = ["error" => "No existe el grupo"];
+                return response()->json($response,404);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            $response = ["error" => $th];
+            return response()->json($response,500);
+        }
+    }
+
     public function asignarExamenes(Request $request)
     {
         try {
