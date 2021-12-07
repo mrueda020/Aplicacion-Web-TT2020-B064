@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Carbon\Carbon;
@@ -40,8 +41,9 @@ class VerificarTokenEvaluado
             } 
             $sub = JWTAuth::setToken($token)->getPayload()->get('sub');
             $rol = $sub->rol;
-            if($rol=='evaluado')
-            {
+            $usuario = DB::select("select * from Evaluado where Eva_id = ? ",[$sub->id]);
+            if($rol=='evaluado' && $usuario)
+            {   
                 return $next($request);
             }
             $response = ['error'=>'No tienes el permiso para acceder'];

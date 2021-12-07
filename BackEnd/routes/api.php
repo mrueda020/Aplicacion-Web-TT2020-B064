@@ -31,6 +31,7 @@ Route::post("/enviar-respuestasM",[ControladorEvaluado::class,"enviarRespuestasM
 
 //Rutas para Evaluador
 // Route::post("/login-evaluador", [ControladorEvaluador::class,"Login"]);
+Route::post("/Registro-Evaluador",[ControladorEvaluador::class,"registrarEvaluador"]);
 Route::post("/agregar-pregunta",[ControladorEvaluador::class,"agregarPregunta"])->middleware(VerificarToken::class);
 Route::get("/preguntas/{id}",[ControladorEvaluador::class,"obtenerPreguntas"])->middleware(VerificarToken::class);
 Route::delete("/eliminar-pregunta/{idEvaluador}/{idPregunta}",[ControladorEvaluador::class,"eliminarPregunta"])->middleware(VerificarToken::class);

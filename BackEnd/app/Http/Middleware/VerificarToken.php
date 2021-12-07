@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use JWTAuth;
 use Carbon\Carbon;
 class VerificarToken
@@ -40,7 +41,8 @@ class VerificarToken
             } 
             $sub = JWTAuth::setToken($token)->getPayload()->get('sub');
             $rol = $sub->rol;
-            if($rol=='evaluador')
+            $usuario = DB::select("select * from Evaluador where Evaluador_id = ? ",[$sub->id]);
+            if($rol=='evaluador' && $usuario)
             {
                 return $next($request);
             }

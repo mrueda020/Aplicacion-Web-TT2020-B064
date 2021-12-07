@@ -36,6 +36,8 @@ class ControladorEvaluado extends Controller
            }
         //    Access Token
            $data = ['sub'=>[
+               "nombre" => $usuario->Eva_nombre,
+               "apellido"=> $usuario->Eva_apellido_paterno,
                'email' => $usuario->Eva_email,
                'id' => $usuario->Eva_id,
                'rol' => 'evaluado'

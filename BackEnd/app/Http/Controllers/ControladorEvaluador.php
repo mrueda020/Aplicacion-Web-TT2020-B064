@@ -14,13 +14,13 @@ use Tymon\JWTAuth\Facades\JWTFactory;
 class ControladorEvaluador extends Controller
 {
     //
-    public function Login(Request $request)
+    public function Login($email, $contraseña)
     {
        
        try {
            //code...
-            $email = $request["email"];
-            $contraseña = $request["password"];
+            // $email = $request["email"];
+            // $contraseña = $request["password"];
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
             {
                 $response = ['error' => 'Email invalido'];
@@ -36,6 +36,8 @@ class ControladorEvaluador extends Controller
                 }
                 //    Access token
                 $data = ['sub'=>[
+                    "nombre" => $usuario->Evaluador_nombre,
+                    "apellido"=> $usuario->Evaluador_apellido_paterno,
                     'email' => $usuario->Evaluador_email,
                     'id' => $usuario->Evaluador_id,
                     'rol' => 'evaluador'
@@ -54,7 +56,8 @@ class ControladorEvaluador extends Controller
                 $payload = JWTFactory::make($data);
                 $refreshToken = JWTAuth::encode($payload);
                 $response = ['accessToken' => $accessToken->get() ,
-                                'refreshToken' =>$refreshToken->get()
+                             'refreshToken' =>$refreshToken->get(),
+                             "status" => "Registro Exitoso"
                             ];
                 return response()->json($response,200);
             }
@@ -67,6 +70,70 @@ class ControladorEvaluador extends Controller
        }
        
     }
+
+    public function registrarEvaluador(Request $request)
+    {
+       //Todo verificar que el email no exista en evaluado , admin 
+       $email = $request["email"];
+       $contraseña = $request["password"];
+       $confirmarContraseña = $request["confirmarPassword"];
+       $nombre = $request["nombre"];
+       $apellidos = explode(" ",$request["apellidos"]);
+       $apPaterno = " ";
+       $apMaterno = " ";
+       if(count($apellidos) >= 2)
+       {
+        $apPaterno = $apellidos[0];
+        $apMaterno = $apellidos[1];
+       }
+       else {
+           # code...
+           $apPaterno = $request["apellidos"];
+           $apMaterno = " ";
+       }
+      
+       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
+       {
+          $response = ['error' => 'Email invalido'];
+          return response()->json($response,400);
+       }
+       $usuario = DB::table('evaluador')->where('Evaluador_email', $email)->first();
+       if($usuario && $usuario->Evaluador_email)
+       {
+           $response = ['error' => "Ya existe el email en el sistema"];
+           return response()->json($response,400);
+       }
+
+       $evaluado = DB::table('evaluado')->where('Eva_email', $email)->first();
+       if($evaluado && $evaluado->Eval_email)
+       {
+           $response = ['error' => "Ya existe el email en el sistema"];
+           return response()->json($response,400);
+       }
+
+
+       if($confirmarContraseña != $contraseña)
+       {
+           $response = ['error' => "Las contraseñas no coinciden"];
+           return response()->json($response,400);
+       }
+      
+       if(strlen($contraseña) < 8)
+       {
+           return response()->json(['error'=>'La contraseña debe ser de 8 caracteres minimo'],400);
+       }
+     
+       
+       $response = DB::insert("insert into evaluador (Evaluador_nombre,Evaluador_apellido_paterno,Evaluador_apellido_materno,Evaluador_email,Evaluador_contraseña) values (?,?,?,?,?)",[$nombre,$apPaterno,$apMaterno,$email,Hash::make($contraseña)]);
+       if($response == 0)
+       {    
+           $response = ['error' => "Error en el servidor"];
+           return response()->json($response,400);
+           
+       }
+       return $this->Login($email, $contraseña);
+    }
+
 
     public function agregarPregunta(Request $request)
     {

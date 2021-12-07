@@ -117,8 +117,19 @@ class ControladorAdmin extends Controller
        $contraseña = $request["password"];
        $confirmarContraseña = $request["confirmarPassword"];
        $nombre = $request["nombre"];
-       $apPaterno = $request["apPaterno"];
-       $apMaterno = $request["apMaterno"];
+       $apellidos = explode(" ",$request["apellidos"]);
+       $apPaterno = " ";
+       $apMaterno = " ";
+       if(count($apellidos) >= 2)
+       {
+        $apPaterno = $apellidos[0];
+        $apMaterno = $apellidos[1];
+       }
+       else {
+           # code...
+           $apPaterno = $request["apellidos"];
+           $apMaterno = " ";
+       }
       
        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) 
        {
@@ -131,6 +142,14 @@ class ControladorAdmin extends Controller
            $response = ['error' => "Ya existe el email en el sistema"];
            return response()->json($response,400);
        }
+
+       $evaluado = DB::table('evaluado')->where('Eva_email', $email)->first();
+       if($evaluado && $evaluado->Eval_email)
+       {
+           $response = ['error' => "Ya existe el email en el sistema"];
+           return response()->json($response,400);
+       }
+
 
        if($confirmarContraseña != $contraseña)
        {

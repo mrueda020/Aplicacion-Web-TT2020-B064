@@ -1,5 +1,5 @@
-FROM node:12-alpine
-# RUN apk add --no-cache python g++ make
+FROM node:12
+# RUN apk add --no-cache g++ python make
 WORKDIR /front
 COPY package*.json .
 # RUN apk --no-cache --virtual build-dependencies add \
@@ -8,4 +8,4 @@ COPY package*.json .
 #         g++
 RUN npm install
 COPY . .
-EXPOSE 3000
+EXPOSE 3000 

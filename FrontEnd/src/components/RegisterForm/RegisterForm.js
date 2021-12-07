@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Button, Form, Input, notification } from "antd";
+import { Button, Form, Input, Select, notification } from "antd";
 import { registerUser } from "../../api/evaluado";
+import { registerTeacher } from "../../api/evaluador";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../../utils/constants";
 function RegisterForm() {
+  const [typeUser, setTypeUser] = useState("evaluado");
+
   const { Item } = Form;
   const [user, setUser] = useState({
     nombre: "",
@@ -13,25 +16,48 @@ function RegisterForm() {
   });
 
   const register = async () => {
-    console.log(user);
-    const response = await registerUser(user);
-    const result = await response.json();
-    if (result.error) {
-      notification["error"]({ message: result.error });
-      return;
-    }
+    if (typeUser === "evaluado") {
+      const response = await registerUser(user);
+      const result = await response.json();
+      if (result.error) {
+        notification["error"]({ message: result.error });
+        return;
+      }
 
-    if (response.status === 200) {
-      notification["success"]({ message: result.status });
-      const { accessToken, refreshToken } = result;
-      localStorage.setItem(ACCESS_TOKEN, accessToken);
-      localStorage.setItem(REFRESH_TOKEN, refreshToken);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-      return;
+      if (response.status === 200) {
+        notification["success"]({ message: result.status });
+        const { accessToken, refreshToken } = result;
+        localStorage.setItem(ACCESS_TOKEN, accessToken);
+        localStorage.setItem(REFRESH_TOKEN, refreshToken);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        return;
+      }
+    } else if (typeUser === "evaluador") {
+      const response = await registerTeacher(user);
+      const result = await response.json();
+      if (result.error) {
+        notification["error"]({ message: result.error });
+        return;
+      }
+
+      if (response.status === 200) {
+        notification["success"]({ message: result.status });
+        const { accessToken, refreshToken } = result;
+        localStorage.setItem(ACCESS_TOKEN, accessToken);
+        localStorage.setItem(REFRESH_TOKEN, refreshToken);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        return;
+      }
     }
   };
+  const handleChange = (value) => {
+    setTypeUser(value);
+  };
+
   return (
     <Form onFinish={register}>
       <Item
@@ -103,6 +129,12 @@ function RegisterForm() {
             setUser({ ...user, confirmarPassword: e.target.value });
           }}
         ></Input.Password>
+      </Item>
+      <Item label="Registrarse como">
+        <Select defaultValue="evaluado" onChange={handleChange}>
+          <Select.Option value={"evaluado"}>Evaluado</Select.Option>
+          <Select.Option value={"evaluador"}>Evaluador</Select.Option>
+        </Select>
       </Item>
       <Item>
         <Button style={{ width: "100%" }} type="primary" htmlType="submit">

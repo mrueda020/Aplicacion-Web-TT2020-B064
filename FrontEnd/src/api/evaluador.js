@@ -259,3 +259,17 @@ export const deleteGroup = (idGroup) => {
       return result;
     });
 };
+
+export const registerTeacher = (payload) => {
+  const url = `${baseURL}/Registro-Evaluador`;
+  const params = {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(url, params).then((response) => {
+    return response;
+  });
+};
