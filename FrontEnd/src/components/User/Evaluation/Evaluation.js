@@ -52,7 +52,7 @@ function Evaluation(props) {
   return (
     <>
       <div className="Evaluation">
-        {evaluationInfo.length > 0 ? (
+        {evaluationInfo.length > 0 && evaluation.length ? (
           <>
             {(moment(evaluationInfo[0].Exa_fecha_aplicacion_fin).valueOf() >
               moment.now() &&
