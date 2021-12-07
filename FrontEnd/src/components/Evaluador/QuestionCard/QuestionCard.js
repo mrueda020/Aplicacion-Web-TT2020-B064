@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { deleteQuestion } from "../../../api/evaluador";
 function QuestionCard(props) {
-  const { Pr_pregunta, Pr_id } = props;
+  const { Pr_pregunta, Pr_id, index } = props;
   const { setConfirmReloading } = props;
 
   return (
@@ -35,7 +35,7 @@ function QuestionCard(props) {
         // <EditOutlined key="edit" style={{ color: "green" }} />,
       ]}
     >
-      <Card.Meta title={`Pregunta ${Pr_id}`} description={Pr_pregunta} />
+      <Card.Meta title={`Pregunta ${index + 1}`} description={Pr_pregunta} />
     </Card>
   );
 }

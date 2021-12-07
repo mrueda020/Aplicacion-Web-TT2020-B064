@@ -33,6 +33,7 @@ function QuestionList(props) {
           {questions.map((question, index) => (
             <QuestionCard
               {...question}
+              index={index}
               key={index}
               setConfirmReloading={setConfirmReloading}
             />
