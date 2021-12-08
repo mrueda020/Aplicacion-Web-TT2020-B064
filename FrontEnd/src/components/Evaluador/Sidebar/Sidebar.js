@@ -5,6 +5,7 @@ import {
   MdCollectionsBookmark,
   MdPowerSettingsNew,
   MdClose,
+  MdAssignment,
 } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { logOut } from "../../../api/auth";
@@ -75,6 +76,19 @@ function Sidebar() {
             </div>
           </NavLink>
           <NavLink
+            to="/evaluador/results"
+            className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
+          >
+            <div className="sidebar__item">
+              <MdAssignment
+                fontSize={30}
+                alignmentBaseline="middle"
+                className="w3-margin-right"
+              />
+              <span className="sidebar__span-text">Resultados</span>
+            </div>
+          </NavLink>
+          <NavLink
             to="/evaluador/settings"
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
@@ -87,14 +101,14 @@ function Sidebar() {
               <span className="sidebar__span-text">Configuracion</span>
             </div>
           </NavLink>
-          <div className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom">
-            <div
-              className="sidebar__item"
-              onClick={() => {
-                logOut();
-                window.location.reload();
-              }}
-            >
+          <div
+            onClick={() => {
+              logOut();
+              window.location.reload();
+            }}
+            className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
+          >
+            <div className="sidebar__item">
               <MdPowerSettingsNew
                 fontSize={30}
                 alignmentBaseline="middle"

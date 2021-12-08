@@ -493,4 +493,23 @@ class ControladorEvaluador extends Controller
         }
     }
 
+    public function obtenerResultados($idEvaluador)
+        {
+            $resultados = [];
+            $response = DB::select("select * from Resultados where Evaluado_Eva_id = ?",[$idEvaluador]);
+
+            for($i=0; $i<count($response); $i++)
+            {
+                $data = [];    
+                $grupo = DB::select("select Gr_nombre from Grupo where Gr_id = ?",[$response[$i]->Grupo_Gr_id]);
+                $examen = DB::select("select Exa_nombre from Examen where Exa_id = ?",[$response[$i]->Examen_Exa_id]);
+                $evaluado = DB::select("select Eva_nombre, Eva_apellido_paterno, Eva_apellido_materno from Evaluado where Eva_id = ? ",[$response[$i]->Evaluado_Eva_id]);
+                array_push($data,  (object)array_merge((array)$grupo[0], (array)$examen[0], (array)$evaluado[0]));
+                array_push($resultados, array_merge((array)$data[0], (array)$response[$i]));
+
+            }
+
+            return response()->json($resultados,200);
+        }
+
 }

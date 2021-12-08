@@ -1,7 +1,7 @@
 import React from "react";
 import {
   MdSettingsInputComponent,
-  MdComputer,
+  MdAssignment,
   MdHome,
   MdPowerSettingsNew,
   MdClose,
@@ -66,7 +66,7 @@ function Sidebar() {
             className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
           >
             <div className="sidebar__item">
-              <MdComputer
+              <MdAssignment
                 fontSize={30}
                 alignmentBaseline="middle"
                 className="w3-margin-right"
@@ -88,14 +88,14 @@ function Sidebar() {
               <span className="sidebar__span-text">Configuracion</span>
             </div>
           </NavLink>
-          <div className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom">
-            <div
-              className="sidebar__item"
-              onClick={() => {
-                logOut();
-                window.location.reload();
-              }}
-            >
+          <div
+            onClick={() => {
+              logOut();
+              window.location.reload();
+            }}
+            className="w3-bar-item w3-button w3-padding w3-round-xxlarge w3-margin-bottom"
+          >
+            <div className="sidebar__item">
               <MdPowerSettingsNew
                 fontSize={30}
                 alignmentBaseline="middle"
