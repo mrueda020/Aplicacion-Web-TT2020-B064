@@ -14,6 +14,8 @@ import SignInEvaluador from "../pages/Evaluador/SignIn/SignIn";
 import Questions from "../pages/Evaluador/Menu/Questions/Questions";
 import Exams from "../pages/Evaluador/Menu/Exams/Exams";
 import SettingsEvaluador from "../pages/Evaluador/Menu/Settings/Settings";
+import Results2 from "../pages/Evaluador/Menu/Results/Results";
+
 //Admin pages
 import SignInAdmin from "../pages/Admin/SignIn/SignIn";
 import Evaluadores from "../pages/Admin/Evaluadores/Evaluadores";
@@ -78,6 +80,11 @@ const routes = [
         path: "/evaluador/settings",
         exact: true,
         component: SettingsEvaluador,
+      },
+      {
+        path: "/evaluador/results",
+        component: Results2,
+        exact: true,
       },
       { component: ErrorPage },
     ],

@@ -259,3 +259,23 @@ export const deleteGroup = (idGroup) => {
       return result;
     });
 };
+
+export const getResults = () => {
+  const accessToken = getAccesToken();
+  const idEvaluador = getUserId();
+  const url = `${baseURL}/resultados-evaluador/${idEvaluador}`;
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: accessToken,
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    });
+};
